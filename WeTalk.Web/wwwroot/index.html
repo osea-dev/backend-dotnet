@@ -1,0 +1,76 @@
+<!DOCTYPE html><meta charset="utf-8" /><title>jsmoEditor demo</title>
+<script src="./editor-page/app/resource/script/jquery.min.js"></script>
+<script src="./editor-page/lib/jsmoEditor.umd.min.js"></script>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    body {
+        box-sizing: border-box;
+        padding-top: 100px;
+
+        background: #fff;
+    }
+    .editor-container {
+        position: relative;
+
+        width: 800px;
+        min-height: 500px;
+        margin: 0 auto;
+
+        border: 1px solid rgb(245 245 245);
+    }
+</style>
+<body>
+    <div class="editor-container"></div>
+</body>
+<script>
+    const testData =
+        "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";
+
+    $(".editor-container").each((i, dom) => {
+        jsmoEditor
+            .createPageEditor(dom, {
+                appName: "custom",
+                // 指向 app 文件夹的路径
+                appPath: "/editor-page/app/",
+                editorData: testData,
+                // 是否开启线上页面库
+                pageShop: false,
+                // 是否允许上传代码
+                removeUpload: false,
+                // 模块管理
+                moduleLib: {
+                    // 是否开启线上模块库
+                    online: false,
+                    // type: "MODULES" | "MODULES_FOOTER";
+                    type: "MODULES",
+                    // 表单模块管理
+                    formModule: {
+                        // 禁止使用的表单类型
+                        disable: ["image", "attachment"],
+                    },
+                },
+                // 上传相关参数配置
+                // uploadConfig: {
+                //     uploadPath: string;
+                //     uploadName: string;
+                //     publicPath: string;
+                //     resourceLink: string;
+                //     uploadFileSize: number;
+                //     uploadFileExt: string[];
+                //     uploadData: { [key: string]: string };
+                //     imageUploadSize: number;
+                //     imageDataPath: number;
+                // };
+                on: {
+                    saveEditor({data, encrypt_data, hasChange}) {
+                        alert("保存");
+                        console.log(data, encrypt_data, hasChange);
+                    },
+                },
+            })
+            .init();
+    });
+</script>

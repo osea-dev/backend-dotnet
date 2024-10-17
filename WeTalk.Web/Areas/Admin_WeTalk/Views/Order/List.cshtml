@@ -1,0 +1,298 @@
+﻿@using WeTalk.Web.ViewModels.News;
+@using Microsoft.AspNetCore.Mvc.Localization
+@using WeTalk.Interfaces
+@inject IHtmlLocalizer<LangResource> Localizer
+@section HeadCss{
+	<link href="@Url.Content("/assets/css/icon.css")" rel="stylesheet" />
+	<link href="@Url.Content("/assets/css/plugins/datapicker/datepicker3.css")" rel="stylesheet" />
+}
+
+<div class="row" >
+	<div class="col-12">
+		<div class="card">
+			<div class="card-body">
+				<div class="input-group">
+					<span class="input-group-btn">
+						<select class="form-control m-b" name="sel_status" id="sel_status">
+							<option value="">@Localizer["状态"]</option>
+							<option value="0">@Localizer["待付款"]</option>
+							<option value="1">@Localizer["已付款"]</option>
+						</select>
+                    </span>
+                    <span class="input-group-btn">
+                        <select class="form-control m-b" name="sel_user_deleted" id="sel_user_deleted">
+                            <option value="">@Localizer["是否用户取消"]</option>
+                            <option value="0">@Localizer["未取消"]</option>
+                            <option value="1">@Localizer["已取消"]</option>
+                        </select>
+                    </span>
+					<span class="input-group-btn">
+						<input type="text" placeholder="@Localizer["关键词"]" id="input_keys" class="form-control" />
+					</span>
+					<span class="input-group-btn">
+						<div class="input-daterange input-group">
+							<input type="text" id="input_begintime" class="input-sm form-control datepicker" name="start" placeholder="@Localizer["创建起始时间"]" />
+							<span class="input-group-addon">-</span>
+							<input type="text" id="input_endtime" class="input-sm form-control datepicker" name="end" placeholder="@Localizer["创建结束时间"]" />
+						</div>
+					</span>
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-outline-info search" onclick="mainGrid.doSearch();"> <i class="fa fa-search"></i>@Localizer["搜索"]</button>
+					</span>
+				</div>
+				<table id="table_view" />
+			</div>
+		</div>
+	</div> <!-- end col -->
+</div>
+<div id="win" />
+
+@section Scripts{
+
+	<script src="@Url.Content("/assets/plugins/datapicker/bootstrap-datepicker.js")"></script>
+	<script>
+        $('.datepicker').datepicker({
+            keyboardNavigation: false,
+            forceParse: false,
+            autoclose: true
+        });
+
+		var actionURL = "ListData";
+        var fillDataContralId = "table_view";
+        var mainGrid = {
+            databind: function () {
+                /*开始加载数据*/
+                $('#' + fillDataContralId).datagrid({
+                    url: actionURL,
+                    idField: 'Orderid', //主键
+                    width: (($(window).width()-60) * 0.98),
+                    height: (($(window).height() - 70) * 0.98),
+                    fitColumns: true,
+                    singleSelect: false, //单选
+                    pageList: [10, 20, 50, 100],
+                    pageSize: 20,
+                    pagination: true,
+					toolbar: [{
+                        id: 'del',
+                        text: '@Localizer["删除"]',
+						iconCls: 'icon-remove',
+                        handler: function () {
+							mainGrid.del();
+                        }
+                    }
+                    ],
+                    onDblClickRow: function (rowIndex, rowData) {
+                        if ($('#a_edit').size() > 0) {
+                            mainGrid.edit();
+                        }
+                    },
+                    onLoadSuccess: function () {
+		                @Html.Raw(ViewBag.ScriptStr)
+                    },
+                    columns: [
+                        [
+							{ title: '选择', checkbox: true, field: 'id', width: 30, sortable: true },
+							{ title: 'ID', field: true, field: 'Orderid', width: 50, sortable: true },
+							{
+								title: '@Localizer["图片"]', field: true, field: 'Img', width: 150,  formatter: function (value, row) {
+									var e = '<a href="'+value+'" target="_blank"><img src="'+ value +'" width=\"150\"></a> ';
+									return e;
+								}
+                            },
+							{ title: '@Localizer["订单号"]', field: 'OrderSn', width: 80, sortable: true },
+							{ title: '@Localizer["课程名称"]', field: 'Title', width: 80, sortable: true },
+							{ title: '@Localizer["上课方式"]', field: 'Type', width: 150, sortable: true},
+							{ title: '@Localizer["课时"]', field: 'ClassHour', width: 60, sortable: true },
+							{ title: '@Localizer["购买人"]', field: 'Name', width: 80},
+							{ title: '@Localizer["购买人邮箱"]', field: 'Email', width: 80 },
+							{ title: '@Localizer["购买人手机"]', field: 'Mobile', width: 80 },
+							{ title: '@Localizer["价格"]', field: 'Amount', width: 80, sortable: true },
+							{ title: '@Localizer["币种"]', field: 'CurrencyCode', width: 80, sortable: true },
+							{ title: '@Localizer["创建时间"]', field: 'Dtime', width: 80, sortable: true },
+							{ title: '@Localizer["用户取消"]', field: 'UserDeleted', width: 40, sortable: true, formatter: function (value, row) {
+                                    var e = '';
+                                    switch(value){
+                                        case 0:
+                                            e = "@Localizer["未取消"]";
+                                            break;
+                                        case 1:
+                                            e = "<font color='red'>@Localizer["已取消"]</font>";
+                                            break;
+                                    }
+                                    return e;
+                                }
+                            },
+                            {
+                                title: '@Localizer["状态"]', field: 'Status', width: 40, sortable: true, formatter: function (value, row) {
+                                    var e = '';
+                                    switch (value) {
+                                        case 0:
+                                            e = "<font color='red'>@Localizer["待付款"]</font>";
+                                            break;
+                                        case 1:
+                                            e = "<font color='green'>@Localizer["已付款"]</font>";
+                                            break;
+                                        case 2:
+                                            e = "<font color='red'>@Localizer["付款关闭"]</font>";
+                                            break;
+                                        case -1:
+                                            e = "@Localizer["已删除"]";
+                                            break;
+                                    }
+                                    return e;
+                                }
+                            },
+                            {
+                                title: '@Localizer["操作"]', field: 'operation', align: 'center', width: 60, formatter: function (value, row) {
+                                    var e = '<a href="javascript:void(0);" class="edit mr-2" onclick="mainGrid.editrow(' + row.Orderid + ');"><i class="fas fa-edit text-info font-16"></i></a> ';
+                                    e += '<a href="javascript:void(0);" onclick="mainGrid.delrow(' + row.Orderid + ')"><i class="fas fa-trash-alt text-danger font-16"></i></a>';
+                                    return e;
+                                }
+                            }
+                        ]]
+                });
+                var p = $('#' + fillDataContralId).datagrid('getPager');
+                $(p).pagination({
+                    onBeforeRefresh: function () {
+                        //alert('before refresh');
+                    }
+                });
+            },
+            getSelected: function () {
+                return $('#' + fillDataContralId).datagrid('getSelected');
+            },
+            getSelections: function () {
+                return $('#' + fillDataContralId).datagrid('getSelections');
+            },
+            Reflesh: function () {
+                $('#' + fillDataContralId).datagrid("reload");
+            },
+            doSearch: function () {
+                $('#' + fillDataContralId).datagrid('clearSelections');
+                $('#' + fillDataContralId).datagrid('load', {
+                    keys: $('#input_keys').val(),
+                    status: $('#sel_status').val(),
+                    user_deleted: $('#sel_user_deleted').val(),
+                    recommend: $('#sel_recommend').val(),
+                    begintime: $('#input_begintime').val(),
+                    endtime: $('#input_endtime').val()
+                });
+            },
+            edit: function () {
+                var rowdata = mainGrid.getSelected()
+                if (rowdata) {
+                    $('#win').window({
+                        width: $(window).width() * 0.9,
+                        height: $(window).height() * 0.9,
+                        modal: true,
+                        title: "@Localizer["修改订单"]"
+                    });
+                    $('#win').html("<iframe id='if1' src='ListAdd?Orderid=" + rowdata.Orderid + "'>");
+                    $('#win').window({
+                        onResize: function () { //当面板关闭之前触发的事件
+                            $("#win iframe").width($(this).width() - 15);
+                            $("#win iframe").height($(this).height() - 15);
+                        }
+                    });
+                } else {
+                    alert('@Localizer["请选择要修改的行"]。');
+                }
+            },
+            editrow: function (id) {
+
+                if (id) {
+                    $('#win').window({
+                        width: $(window).width() * 0.9,
+                        height: $(window).height() * 0.9,
+                        modal: true,
+                        title: "@Localizer["修改订单"]"
+                    });
+                    $('#win').html("<iframe id='if1' src='ListAdd?Orderid=" + id + "&dtime=" + new Date() + "'>");
+                    $('#win').window({
+                        onResize: function () { //当面板关闭之前触发的事件
+                            $("#win iframe").width($(this).width() - 15);
+                            $("#win iframe").height($(this).height() - 15);
+                        }
+                    });
+                } else {
+                    alert('@Localizer["请选择要修改的行"]。');
+                }
+            },
+            delrow: function (id) {
+                if (confirm("@Localizer["您确定要删除"]?")) {
+                    if (id > 0) {
+                        $.get(actionURL + "?action=del&Orderids=" + id, function (data) {
+                            var json = eval("(" + data + ")");
+                            if (json.errorcode == 0) $('#' + fillDataContralId).datagrid('reload');
+							$.messager.show({ title: '@Localizer["删除订单"]', msg: json.msg, timeout: 3000, showType: 'slide' });
+                        });
+                    } else {
+                        alert('@Localizer["请选择要修改的行"]。');
+                    }
+                }
+            },
+            del: function () {
+                var Orderids = "0";
+                var rowdata = mainGrid.getSelections();
+                if (confirm("@Localizer["您确定要删除"]?")) {
+                    if (rowdata.length > 0) {
+                        for (var i = 0; i < rowdata.length; i++) {
+                            Orderids = Orderids + "," + rowdata[i].Orderid;
+                        }
+                        $.get(actionURL + "?action=del&Orderids=" + Orderids, function (data) {
+                            var json = eval("(" + data + ")");
+                            if (json.errorcode == 0) $('#' + fillDataContralId).datagrid('reload');
+							$.messager.show({ title: '@Localizer["删除订单"]', msg: json.msg, timeout: 3000, showType: 'slide' });
+                        });
+                    } else {
+                        alert('@Localizer["请选择要修改的行"]。');
+                    }
+                }
+            },
+			enableu: function () {
+				var Orderids = "0";
+				var rowdata = mainGrid.getSelections();
+				if (rowdata.length > 0) {
+					for (var i = 0; i < rowdata.length; i++) {
+						Orderids = Orderids + "," + rowdata[i].Orderid;
+					}
+                    $.get(actionURL + "?action=enableu&Orderids=" + Orderids, function (data) {
+                        var json = eval("(" + data + ")");
+                        if (json.errorcode == 0) $('#' + fillDataContralId).datagrid('reload');
+						$.messager.show({
+							title: '@Localizer["启用订单"]', msg: json.msg, timeout: 3000, showType: 'slide' });
+                    });
+                } else {
+                    alert('@Localizer["请选择要修改的行"]。');
+                }
+
+			}, enablef: function () {
+				var Orderids = "0";
+				var rowdata = mainGrid.getSelections();
+				if (rowdata.length > 0) {
+					for (var i = 0; i < rowdata.length; i++) {
+						Orderids = Orderids + "," + rowdata[i].Orderid;
+					}
+					$.get(actionURL + "?action=enablef&Orderids=" + Orderids, function (data) {
+                        var json = eval("(" + data + ")");
+                        if (json.errorcode == 0) $('#' + fillDataContralId).datagrid('reload');
+						$.messager.show({ title: '@Localizer["禁用订单"]', msg: json.msg, timeout: 3000, showType: 'slide' });
+                    });
+                } else {
+                    alert('@Localizer["请选择要修改的行"]。');
+                }
+
+            }
+        }
+        $(function () {
+            mainGrid.databind();
+        });
+        //监听，页面变化重画宽高；
+        $(window).resize(function () {
+            $('#' + fillDataContralId).datagrid('resize', {
+                width: function () { return document.body.clientWidth; },
+                height: function () { return document.body.clientHeight; },
+            });
+        });
+	</script>
+}

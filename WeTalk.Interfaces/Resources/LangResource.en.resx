@@ -1,0 +1,2571 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="0表示不设置上限" xml:space="preserve">
+    <value>0 means no upper limit is set</value>
+  </data>
+  <data name="0表示不设置下限" xml:space="preserve">
+    <value>0 means no lower limit is set</value>
+  </data>
+  <data name="1个小时内只能提交一次试听申请,请等待客服安排排课，如需加急申请，可联系在线客服" xml:space="preserve">
+    <value>You can only submit one application for the trial lesson within one hour. Please wait for customer service to schedule lessons. For any urgent applications, please contact online customer service.</value>
+  </data>
+  <data name="ICP备案号" xml:space="preserve">
+    <value>ICP Record No</value>
+  </data>
+  <data name="IP名单" xml:space="preserve">
+    <value>IP list</value>
+  </data>
+  <data name="一句话介绍" xml:space="preserve">
+    <value>One sentence introduction</value>
+  </data>
+  <data name="上下课时间" xml:space="preserve">
+    <value>Class time</value>
+  </data>
+  <data name="上传文件异常" xml:space="preserve">
+    <value>File uploading exception</value>
+  </data>
+  <data name="上传类型" xml:space="preserve">
+    <value>Upload Type</value>
+  </data>
+  <data name="上课方式" xml:space="preserve">
+    <value>Class mode</value>
+  </data>
+  <data name="上课时间" xml:space="preserve">
+    <value>Class time</value>
+  </data>
+  <data name="上课积极性" xml:space="preserve">
+    <value>Class enthusiasm</value>
+  </data>
+  <data name="不允许后台创建订单" xml:space="preserve">
+    <value>Order creation in the background is not allowed.</value>
+  </data>
+  <data name="不允许在网站后台创建课节报告" xml:space="preserve">
+    <value>Creating lesson reports in the background of the website is not allowed.</value>
+  </data>
+  <data name="不允许在网站后台添加学生课程操作" xml:space="preserve">
+    <value>It is not allowed to add student course operations in the background of the website.</value>
+  </data>
+  <data name="不允许在网站后台进行排课操作" xml:space="preserve">
+    <value>Lesson scheduling is not allowed in the background of the website.</value>
+  </data>
+  <data name="不允许添加相同的用户账号" xml:space="preserve">
+    <value>It is not allowed to add the same user account.</value>
+  </data>
+  <data name="不允许添加评论" xml:space="preserve">
+    <value>Do not allow adding comments</value>
+  </data>
+  <data name="不允许选持本分类下的直系菜单，这将会造成死循环，请后退重选" xml:space="preserve">
+    <value>It is not allowed to select the direct menu under this category. Otherwise, it will cause a dead loop. Please go back and reselect.</value>
+  </data>
+  <data name="不允许选持本功能控件的直系功能控件，这将会造成死循环，请后退重选" xml:space="preserve">
+    <value>It is not allowed to select the direct function control of this function control. Otherwise, it will cause a dead loop. Please go back and reselect.</value>
+  </data>
+  <data name="不允许重复发布相同参数的SKU" xml:space="preserve">
+    <value>SKUs with the same parameters are not allowed to be launched repeatedly.</value>
+  </data>
+  <data name="不存在此用户" xml:space="preserve">
+    <value>This user does not exist.</value>
+  </data>
+  <data name="两次填写的密码不一致" xml:space="preserve">
+    <value>The two passwords you entered are different.</value>
+  </data>
+  <data name="临时授权码失效" xml:space="preserve">
+    <value>Temporary authorization code invalid</value>
+  </data>
+  <data name="二级分类下不允许再创建子分类" xml:space="preserve">
+    <value>Sub-categories cannot be created under secondary category.</value>
+  </data>
+  <data name="交作业" xml:space="preserve">
+    <value>to hand in an assignment</value>
+  </data>
+  <data name="仅支持同步最近一天的数据" xml:space="preserve">
+    <value>Only the data of the last day can be synchronized</value>
+  </data>
+  <data name="仅未支付订单可以取消" xml:space="preserve">
+    <value>Only unpaid orders can be canceled.</value>
+  </data>
+  <data name="付款方式" xml:space="preserve">
+    <value>Mode of payment</value>
+  </data>
+  <data name="付款时间" xml:space="preserve">
+    <value>Payment time</value>
+  </data>
+  <data name="代创建用户" xml:space="preserve">
+    <value>Create user on behalf</value>
+  </data>
+  <data name="以用户最后一次登录的时区为准" xml:space="preserve">
+    <value>Subject to the time zone when the user last logged in</value>
+  </data>
+  <data name="价格" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="众语课程" xml:space="preserve">
+    <value>WeTalk Course</value>
+  </data>
+  <data name="优于黑名单" xml:space="preserve">
+    <value>Better than blacklist</value>
+  </data>
+  <data name="会员管理" xml:space="preserve">
+    <value>Membership management</value>
+  </data>
+  <data name="作业完成情况" xml:space="preserve">
+    <value>Operation completion</value>
+  </data>
+  <data name="作业点评" xml:space="preserve">
+    <value>Operation comments</value>
+  </data>
+  <data name="使用平台" xml:space="preserve">
+    <value>Use platform</value>
+  </data>
+  <data name="保存上课类型成功" xml:space="preserve">
+    <value>Class type saved successfully</value>
+  </data>
+  <data name="保存信息" xml:space="preserve">
+    <value>Save information</value>
+  </data>
+  <data name="保存信息成功" xml:space="preserve">
+    <value>Information saved successfully</value>
+  </data>
+  <data name="保存分类成功" xml:space="preserve">
+    <value>Classification saved successfully</value>
+  </data>
+  <data name="保存功能控件信息功能控件成功" xml:space="preserve">
+    <value>Information function control saved successfully</value>
+  </data>
+  <data name="保存广告成功" xml:space="preserve">
+    <value>Save advertisement successfully</value>
+  </data>
+  <data name="保存成功" xml:space="preserve">
+    <value>Saved successfully</value>
+  </data>
+  <data name="保存数据字段" xml:space="preserve">
+    <value>Save data field</value>
+  </data>
+  <data name="保存标签成功" xml:space="preserve">
+    <value>Label saved successfully</value>
+  </data>
+  <data name="信息管理" xml:space="preserve">
+    <value>Information management</value>
+  </data>
+  <data name="修改" xml:space="preserve">
+    <value>Modify</value>
+  </data>
+  <data name="修改上课方式" xml:space="preserve">
+    <value>Modify the class method</value>
+  </data>
+  <data name="修改上课类型信息" xml:space="preserve">
+    <value>Modify class type information</value>
+  </data>
+  <data name="修改个人信息失败" xml:space="preserve">
+    <value>Failed to modify personal information</value>
+  </data>
+  <data name="修改个人信息成功" xml:space="preserve">
+    <value>Personal information modified successfully</value>
+  </data>
+  <data name="修改信息" xml:space="preserve">
+    <value>Modify information</value>
+  </data>
+  <data name="修改分类" xml:space="preserve">
+    <value>Modify classification</value>
+  </data>
+  <data name="修改功能控制项" xml:space="preserve">
+    <value>Modify function control item</value>
+  </data>
+  <data name="修改子课程" xml:space="preserve">
+    <value>Modify sub-course</value>
+  </data>
+  <data name="修改子课程1" xml:space="preserve">
+    <value>Modify sub course</value>
+  </data>
+  <data name="修改学生课程" xml:space="preserve">
+    <value>Modify student courses</value>
+  </data>
+  <data name="修改学生课程信息" xml:space="preserve">
+    <value>Modify student course information</value>
+  </data>
+  <data name="修改密码" xml:space="preserve">
+    <value>Modify password</value>
+  </data>
+  <data name="修改已排课节" xml:space="preserve">
+    <value>Modify scheduled lesson</value>
+  </data>
+  <data name="修改币种" xml:space="preserve">
+    <value>Modify Currency</value>
+  </data>
+  <data name="修改性别" xml:space="preserve">
+    <value>Modify gender</value>
+  </data>
+  <data name="修改所属语言" xml:space="preserve">
+    <value>Modify the language</value>
+  </data>
+  <data name="修改拓课云课程" xml:space="preserve">
+    <value>Modify the Talk-Cloud course</value>
+  </data>
+  <data name="修改拓课云课程导致上课方式变更" xml:space="preserve">
+    <value>Modification of Talk-Cloud course leads to change of class method</value>
+  </data>
+  <data name="修改拓课云课程导致网站课程ID变更" xml:space="preserve">
+    <value>Modification of Talk-Cloud course results in change of website course ID</value>
+  </data>
+  <data name="修改数据字典信息成功" xml:space="preserve">
+    <value>Data dictionary information modified successfully</value>
+  </data>
+  <data name="修改新闻" xml:space="preserve">
+    <value>Edit News</value>
+  </data>
+  <data name="修改新闻评论" xml:space="preserve">
+    <value>Modify news comments</value>
+  </data>
+  <data name="修改时区" xml:space="preserve">
+    <value>Modify time zone</value>
+  </data>
+  <data name="修改显示状态" xml:space="preserve">
+    <value>Modify display status</value>
+  </data>
+  <data name="修改来源" xml:space="preserve">
+    <value>Modify source</value>
+  </data>
+  <data name="修改标签" xml:space="preserve">
+    <value>Modify Label</value>
+  </data>
+  <data name="修改标签信息" xml:space="preserve">
+    <value>Modify label information</value>
+  </data>
+  <data name="修改标题" xml:space="preserve">
+    <value>Modify title</value>
+  </data>
+  <data name="修改模板代码" xml:space="preserve">
+    <value>Modify template code</value>
+  </data>
+  <data name="修改模板名称" xml:space="preserve">
+    <value>Modify template name</value>
+  </data>
+  <data name="修改消息" xml:space="preserve">
+    <value>Modify message</value>
+  </data>
+  <data name="修改消息内容" xml:space="preserve">
+    <value>Modify message content</value>
+  </data>
+  <data name="修改状态" xml:space="preserve">
+    <value>Modify status</value>
+  </data>
+  <data name="修改用户" xml:space="preserve">
+    <value>Modify User</value>
+  </data>
+  <data name="修改用户信息" xml:space="preserve">
+    <value>Modify user information</value>
+  </data>
+  <data name="修改用户课节信息" xml:space="preserve">
+    <value>Modify user lesson information</value>
+  </data>
+  <data name="修改电子邮件" xml:space="preserve">
+    <value>Modify email</value>
+  </data>
+  <data name="修改短消息" xml:space="preserve">
+    <value>Modify SMS</value>
+  </data>
+  <data name="修改简介" xml:space="preserve">
+    <value>Modify introduction</value>
+  </data>
+  <data name="修改管理员信息成功" xml:space="preserve">
+    <value>Administrator information modified successfully</value>
+  </data>
+  <data name="修改老师" xml:space="preserve">
+    <value>Modify teacher</value>
+  </data>
+  <data name="修改老师1" xml:space="preserve">
+    <value>Modify teacher</value>
+  </data>
+  <data name="修改菜单" xml:space="preserve">
+    <value>Modify Menu</value>
+  </data>
+  <data name="修改菜单信息菜单" xml:space="preserve">
+    <value>Modify menu information menu</value>
+  </data>
+  <data name="修改角色" xml:space="preserve">
+    <value>Modify Role</value>
+  </data>
+  <data name="修改角色权限" xml:space="preserve">
+    <value>Modify role permissions</value>
+  </data>
+  <data name="修改订单" xml:space="preserve">
+    <value>Modify order</value>
+  </data>
+  <data name="修改语言" xml:space="preserve">
+    <value>update language</value>
+  </data>
+  <data name="修改语言信息" xml:space="preserve">
+    <value>Modify language information</value>
+  </data>
+  <data name="修改课时总数" xml:space="preserve">
+    <value>Modify total class hours</value>
+  </data>
+  <data name="修改课程" xml:space="preserve">
+    <value>Modify course</value>
+  </data>
+  <data name="修改课程SKU" xml:space="preserve">
+    <value>Modify course SKU</value>
+  </data>
+  <data name="修改课程组" xml:space="preserve">
+    <value>Modify course group</value>
+  </data>
+  <data name="修改课节报告" xml:space="preserve">
+    <value>Modify lesson report</value>
+  </data>
+  <data name="修改货币信息" xml:space="preserve">
+    <value>Modify currency information</value>
+  </data>
+  <data name="修改过内容" xml:space="preserve">
+    <value>Modified content</value>
+  </data>
+  <data name="修改过头像" xml:space="preserve">
+    <value>Modified profile photo</value>
+  </data>
+  <data name="修改过密码" xml:space="preserve">
+    <value>Modified password</value>
+  </data>
+  <data name="修改邮件标题" xml:space="preserve">
+    <value>Modify email title</value>
+  </data>
+  <data name="修改邮件模板" xml:space="preserve">
+    <value>Modify email template</value>
+  </data>
+  <data name="修改配置失败" xml:space="preserve">
+    <value>Configuration modification failed</value>
+  </data>
+  <data name="修改配置成功" xml:space="preserve">
+    <value>Configuration modification succeeded</value>
+  </data>
+  <data name="停用" xml:space="preserve">
+    <value>Deactivate</value>
+  </data>
+  <data name="免费获取验证码" xml:space="preserve">
+    <value>Get verification code for free</value>
+  </data>
+  <data name="公司名称" xml:space="preserve">
+    <value>corporate name</value>
+  </data>
+  <data name="公司名称1" xml:space="preserve">
+    <value>corporate name</value>
+  </data>
+  <data name="关联[拓课云]课程" xml:space="preserve">
+    <value>Associate [TalkCloud] courses</value>
+  </data>
+  <data name="关联失败" xml:space="preserve">
+    <value>Association failed</value>
+  </data>
+  <data name="关联学生" xml:space="preserve">
+    <value>Related students</value>
+  </data>
+  <data name="关联学生ID" xml:space="preserve">
+    <value>Associated Student ID</value>
+  </data>
+  <data name="关联已购课程" xml:space="preserve">
+    <value>Associate purchased courses</value>
+  </data>
+  <data name="关联成功" xml:space="preserve">
+    <value>Association succeeded</value>
+  </data>
+  <data name="关联拓课云" xml:space="preserve">
+    <value>Associate TalkCloud</value>
+  </data>
+  <data name="关联拓课云的学生ID" xml:space="preserve">
+    <value>Student ID associated with TalkCloud</value>
+  </data>
+  <data name="关联拓课云的老师ID" xml:space="preserve">
+    <value>The teacher ID associated with TalkCloud</value>
+  </data>
+  <data name="关联网站相关ID" xml:space="preserve">
+    <value>Associated website related ID</value>
+  </data>
+  <data name="关联老师" xml:space="preserve">
+    <value>Related teachers</value>
+  </data>
+  <data name="关联老师ID" xml:space="preserve">
+    <value>Associated teacher ID</value>
+  </data>
+  <data name="关键词" xml:space="preserve">
+    <value>key word</value>
+  </data>
+  <data name="关闭全部选项卡" xml:space="preserve">
+    <value>Close all tabs</value>
+  </data>
+  <data name="关闭其他选项卡" xml:space="preserve">
+    <value>Close Other Tabs</value>
+  </data>
+  <data name="关闭提示信息" xml:space="preserve">
+    <value>Close the prompt message</value>
+  </data>
+  <data name="关闭操作" xml:space="preserve">
+    <value>Close operation</value>
+  </data>
+  <data name="其它关键词" xml:space="preserve">
+    <value>Other keywords</value>
+  </data>
+  <data name="内容" xml:space="preserve">
+    <value>content</value>
+  </data>
+  <data name="内链或外链" xml:space="preserve">
+    <value>Inner or outer chain</value>
+  </data>
+  <data name="写" xml:space="preserve">
+    <value>Write</value>
+  </data>
+  <data name="冻结" xml:space="preserve">
+    <value>frozen</value>
+  </data>
+  <data name="冻结失败,不存在此用户" xml:space="preserve">
+    <value>Failed to freeze. This user does not exist.</value>
+  </data>
+  <data name="冻结成功" xml:space="preserve">
+    <value>Frozen successfully</value>
+  </data>
+  <data name="冻结用户" xml:space="preserve">
+    <value>Freeze Users</value>
+  </data>
+  <data name="出生地" xml:space="preserve">
+    <value>birthplace</value>
+  </data>
+  <data name="出生日期" xml:space="preserve">
+    <value>Date of birth</value>
+  </data>
+  <data name="分类名称" xml:space="preserve">
+    <value>Classification name</value>
+  </data>
+  <data name="分类图片" xml:space="preserve">
+    <value>Category Picture</value>
+  </data>
+  <data name="分钟" xml:space="preserve">
+    <value>Minute(s)</value>
+  </data>
+  <data name="切换语言之前请先保存当前页信息, 确认要切换吗" xml:space="preserve">
+    <value>Please save the current page information before switching languages. Are you sure to switch?</value>
+  </data>
+  <data name="创建时间" xml:space="preserve">
+    <value>Creation time</value>
+  </data>
+  <data name="创建结束时间" xml:space="preserve">
+    <value>Creation end time</value>
+  </data>
+  <data name="创建课节" xml:space="preserve">
+    <value>Create a lesson</value>
+  </data>
+  <data name="创建起始时间" xml:space="preserve">
+    <value>Creation start time</value>
+  </data>
+  <data name="删除" xml:space="preserve">
+    <value>delete</value>
+  </data>
+  <data name="删除上课方式" xml:space="preserve">
+    <value>Delete class method</value>
+  </data>
+  <data name="删除信息" xml:space="preserve">
+    <value>Delete information</value>
+  </data>
+  <data name="删除分类" xml:space="preserve">
+    <value>Delete Category</value>
+  </data>
+  <data name="删除图片" xml:space="preserve">
+    <value>Delete Picture</value>
+  </data>
+  <data name="删除失败,不存在此记录" xml:space="preserve">
+    <value>Deletion failed. This record does not exist.</value>
+  </data>
+  <data name="删除失败,锁定语言不允许删除" xml:space="preserve">
+    <value>Failed to delete. Locked language cannot be deleted.</value>
+  </data>
+  <data name="删除子课程" xml:space="preserve">
+    <value>Delete Sub course</value>
+  </data>
+  <data name="删除学生课程" xml:space="preserve">
+    <value>Delete Student Course</value>
+  </data>
+  <data name="删除已排课节" xml:space="preserve">
+    <value>Delete scheduled lesson</value>
+  </data>
+  <data name="删除币种" xml:space="preserve">
+    <value>Delete Currency</value>
+  </data>
+  <data name="删除成功" xml:space="preserve">
+    <value>Deleted successfully</value>
+  </data>
+  <data name="删除文件" xml:space="preserve">
+    <value>Delete file</value>
+  </data>
+  <data name="删除新闻" xml:space="preserve">
+    <value>Delete News</value>
+  </data>
+  <data name="删除新闻评论" xml:space="preserve">
+    <value>Delete news comment</value>
+  </data>
+  <data name="删除服务器文件失败" xml:space="preserve">
+    <value>Failed to delete server file</value>
+  </data>
+  <data name="删除权限组" xml:space="preserve">
+    <value>Delete permission group</value>
+  </data>
+  <data name="删除标签" xml:space="preserve">
+    <value>delete a tap</value>
+  </data>
+  <data name="删除管理员失败,无权限或不存在此记录" xml:space="preserve">
+    <value>Failed to delete administrator, no permission, or this record does not exist.</value>
+  </data>
+  <data name="删除管理员成功" xml:space="preserve">
+    <value>Administrator deleted successfully</value>
+  </data>
+  <data name="删除老师" xml:space="preserve">
+    <value>Delete teacher</value>
+  </data>
+  <data name="删除菜单" xml:space="preserve">
+    <value>Delete Menu</value>
+  </data>
+  <data name="删除订单" xml:space="preserve">
+    <value>Delete Order</value>
+  </data>
+  <data name="删除试听申请" xml:space="preserve">
+    <value>Delete audition application</value>
+  </data>
+  <data name="删除语言" xml:space="preserve">
+    <value>Delete Language</value>
+  </data>
+  <data name="删除课程" xml:space="preserve">
+    <value>Delete Course</value>
+  </data>
+  <data name="删除课程SKU" xml:space="preserve">
+    <value>Delete course SKU</value>
+  </data>
+  <data name="删除课程将同步删除所有未上课节信息,您确定要删除?" xml:space="preserve">
+    <value>Deleting a course will delete all the information of the non-class section synchronously. Are you sure you want to delete it?</value>
+  </data>
+  <data name="删除课程组" xml:space="preserve">
+    <value>Delete course group</value>
+  </data>
+  <data name="删除邮件模板" xml:space="preserve">
+    <value>Delete Mail Template</value>
+  </data>
+  <data name="前台" xml:space="preserve">
+    <value>Reception</value>
+  </data>
+  <data name="前台不展示" xml:space="preserve">
+    <value>The front desk is not displayed</value>
+  </data>
+  <data name="前台启用" xml:space="preserve">
+    <value>Foreground Enable</value>
+  </data>
+  <data name="前台展示" xml:space="preserve">
+    <value>Front display</value>
+  </data>
+  <data name="前台是否关闭" xml:space="preserve">
+    <value>Whether the front desk is closed</value>
+  </data>
+  <data name="前台试听课申请" xml:space="preserve">
+    <value>Application for the trial lesson</value>
+  </data>
+  <data name="前台课程咨询" xml:space="preserve">
+    <value>Course consultation</value>
+  </data>
+  <data name="前后台" xml:space="preserve">
+    <value>Front and rear table</value>
+  </data>
+  <data name="剩余课时不足,请在线续课或联系客服续课" xml:space="preserve">
+    <value>The remaining class hours are insufficient. Please renew the class online or by contacting customer service.</value>
+  </data>
+  <data name="功能控件" xml:space="preserve">
+    <value>Function control</value>
+  </data>
+  <data name="功能控件管理" xml:space="preserve">
+    <value>Function control management</value>
+  </data>
+  <data name="动作" xml:space="preserve">
+    <value>action</value>
+  </data>
+  <data name="动作(Action)" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="区域" xml:space="preserve">
+    <value>region</value>
+  </data>
+  <data name="区域 (Area)" xml:space="preserve">
+    <value>Area</value>
+  </data>
+  <data name="原价" xml:space="preserve">
+    <value>Original price</value>
+  </data>
+  <data name="原密码" xml:space="preserve">
+    <value>Original password</value>
+  </data>
+  <data name="发布时间" xml:space="preserve">
+    <value>Release time</value>
+  </data>
+  <data name="发送国际短信失败" xml:space="preserve">
+    <value>Failed to send international SMS</value>
+  </data>
+  <data name="发送方状态" xml:space="preserve">
+    <value>Sender Status</value>
+  </data>
+  <data name="发送短信失败" xml:space="preserve">
+    <value>Failed to send SMS</value>
+  </data>
+  <data name="发送者" xml:space="preserve">
+    <value>sender</value>
+  </data>
+  <data name="发送邮件smtp服务器" xml:space="preserve">
+    <value>Send mail smtp server</value>
+  </data>
+  <data name="发送邮箱名称" xml:space="preserve">
+    <value>Send mailbox name</value>
+  </data>
+  <data name="发送邮箱地址" xml:space="preserve">
+    <value>Send email address</value>
+  </data>
+  <data name="发送邮箱密码" xml:space="preserve">
+    <value>Send Email Password</value>
+  </data>
+  <data name="取消原因" xml:space="preserve">
+    <value>Reason for cancellation</value>
+  </data>
+  <data name="取消排课申请" xml:space="preserve">
+    <value>Application for class scheduling cancellation</value>
+  </data>
+  <data name="取消课节" xml:space="preserve">
+    <value>Cancel the lesson</value>
+  </data>
+  <data name="各国价格" xml:space="preserve">
+    <value>Prices in other countries</value>
+  </data>
+  <data name="同步关联完成" xml:space="preserve">
+    <value>Synchronization association completed</value>
+  </data>
+  <data name="同步拉取失败" xml:space="preserve">
+    <value>Fail to synchronize and obtain</value>
+  </data>
+  <data name="同步拓课云排课信息" xml:space="preserve">
+    <value>Synchronize TalkCloud course scheduling information</value>
+  </data>
+  <data name="同步时间[{0}],拉取成功" xml:space="preserve">
+    <value>Synchronization time [{0}], obtain successfully</value>
+  </data>
+  <data name="同级控件不允许出现相同的控件ID" xml:space="preserve">
+    <value>The same control ID is not allowed for controls of the same level.</value>
+  </data>
+  <data name="同菜单下不允许出现相同的方法名" xml:space="preserve">
+    <value>The same method name is not allowed under the same menu.</value>
+  </data>
+  <data name="名" xml:space="preserve">
+    <value>name</value>
+  </data>
+  <data name="后台只允许创建[众语课程]" xml:space="preserve">
+    <value>Background only allows creation of [WeTalk courses]</value>
+  </data>
+  <data name="后台菜单" xml:space="preserve">
+    <value>Background menu</value>
+  </data>
+  <data name="听" xml:space="preserve">
+    <value>Hear</value>
+  </data>
+  <data name="启用" xml:space="preserve">
+    <value>Enable</value>
+  </data>
+  <data name="启用上课方式" xml:space="preserve">
+    <value>Enable class mode</value>
+  </data>
+  <data name="启用分类信息" xml:space="preserve">
+    <value>Enable classification information</value>
+  </data>
+  <data name="启用失败,不存在此记录" xml:space="preserve">
+    <value>Enabling failed. This record does not exist.</value>
+  </data>
+  <data name="启用子课程" xml:space="preserve">
+    <value>Enable Sub course</value>
+  </data>
+  <data name="启用成功" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="启用新闻" xml:space="preserve">
+    <value>Enable News</value>
+  </data>
+  <data name="启用新闻评论" xml:space="preserve">
+    <value>Enable news comments</value>
+  </data>
+  <data name="启用权限组" xml:space="preserve">
+    <value>Enable permission group</value>
+  </data>
+  <data name="启用标签" xml:space="preserve">
+    <value>Enable Label</value>
+  </data>
+  <data name="启用短消息" xml:space="preserve">
+    <value>Enable SMS</value>
+  </data>
+  <data name="启用管理员失败,无权限或不存在此记录" xml:space="preserve">
+    <value>Failed to enable administrator, no permission, or this record does not exist.</value>
+  </data>
+  <data name="启用管理员成功" xml:space="preserve">
+    <value>Administrator enabled</value>
+  </data>
+  <data name="启用老师" xml:space="preserve">
+    <value>Enable Teacher</value>
+  </data>
+  <data name="启用订单" xml:space="preserve">
+    <value>Enable Order</value>
+  </data>
+  <data name="启用课程" xml:space="preserve">
+    <value>Enable course</value>
+  </data>
+  <data name="启用课程组" xml:space="preserve">
+    <value>Enable course group</value>
+  </data>
+  <data name="启用邮件模板" xml:space="preserve">
+    <value>Enable mail template</value>
+  </data>
+  <data name="咨询" xml:space="preserve">
+    <value>Consulting service</value>
+  </data>
+  <data name="咨询课程" xml:space="preserve">
+    <value>Consulting courses</value>
+  </data>
+  <data name="哲学修养" xml:space="preserve">
+    <value>Philosophy Cultivation</value>
+  </data>
+  <data name="售价" xml:space="preserve">
+    <value>Sale price</value>
+  </data>
+  <data name="商城管理" xml:space="preserve">
+    <value>Mall management</value>
+  </data>
+  <data name="固定角色不可删改,您确定要删除" xml:space="preserve">
+    <value>Fixed roles cannot be deleted or modified. Are you sure you want to delete them</value>
+  </data>
+  <data name="国家" xml:space="preserve">
+    <value>country</value>
+  </data>
+  <data name="国家代码" xml:space="preserve">
+    <value>Country code</value>
+  </data>
+  <data name="图标" xml:space="preserve">
+    <value>Icon</value>
+  </data>
+  <data name="图标字" xml:space="preserve">
+    <value>Icon word</value>
+  </data>
+  <data name="图片" xml:space="preserve">
+    <value>Picture</value>
+  </data>
+  <data name="图片上传" xml:space="preserve">
+    <value>Image upload</value>
+  </data>
+  <data name="在[拓课云]后台找到相应课节后，将学生从本次课节中移除。【特别注意】每次移除完必需重新编辑一次课节信息，编辑内容可不做任何改动直接确定保存" xml:space="preserve">
+    <value>Remove students from this class after finding the corresponding class in the background of [Talk-Cloud]. [Special Note] The class information must be re-edited after each removal. The edited content can be directly confirmed and saved without any change.</value>
+  </data>
+  <data name="基础配置" xml:space="preserve">
+    <value>Basic configuration</value>
+  </data>
+  <data name="备注" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="复制" xml:space="preserve">
+    <value>copy</value>
+  </data>
+  <data name="复制成功" xml:space="preserve">
+    <value>Copy succeeded</value>
+  </data>
+  <data name="复制返回值" xml:space="preserve">
+    <value>Copy Return Value</value>
+  </data>
+  <data name="多个标签用英文逗号隔开" xml:space="preserve">
+    <value>Multiple labels are separated by English commas</value>
+  </data>
+  <data name="多语言" xml:space="preserve">
+    <value>Multilingual</value>
+  </data>
+  <data name="大州" xml:space="preserve">
+    <value>Dazhou</value>
+  </data>
+  <data name="大文件上传" xml:space="preserve">
+    <value>Large file upload</value>
+  </data>
+  <data name="头像" xml:space="preserve">
+    <value>Head portrait</value>
+  </data>
+  <data name="女" xml:space="preserve">
+    <value>female</value>
+  </data>
+  <data name="如果不修改密码,请勿填写内容" xml:space="preserve">
+    <value>If you do not change the password, please do not fill in the content</value>
+  </data>
+  <data name="姓" xml:space="preserve">
+    <value>Surname</value>
+  </data>
+  <data name="姓名" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="子课程" xml:space="preserve">
+    <value>Sub courses</value>
+  </data>
+  <data name="子课程名称" xml:space="preserve">
+    <value>Sub course name</value>
+  </data>
+  <data name="字段Key" xml:space="preserve">
+    <value>Field Key</value>
+  </data>
+  <data name="字段Value" xml:space="preserve">
+    <value>Field Value</value>
+  </data>
+  <data name="字段名" xml:space="preserve">
+    <value>Field Name</value>
+  </data>
+  <data name="字段描述" xml:space="preserve">
+    <value>Field Description</value>
+  </data>
+  <data name="学习情况" xml:space="preserve">
+    <value>Learning</value>
+  </data>
+  <data name="学员年龄" xml:space="preserve">
+    <value>Trainee age</value>
+  </data>
+  <data name="学生" xml:space="preserve">
+    <value>Student</value>
+  </data>
+  <data name="学生列表" xml:space="preserve">
+    <value>List of students</value>
+  </data>
+  <data name="学生名称" xml:space="preserve">
+    <value>Student name</value>
+  </data>
+  <data name="学生姓名" xml:space="preserve">
+    <value>Student Name</value>
+  </data>
+  <data name="学生手机" xml:space="preserve">
+    <value>Student's mobile phone</value>
+  </data>
+  <data name="学生手机(不填国家区号)" xml:space="preserve">
+    <value>Student mobile phone (without country code)</value>
+  </data>
+  <data name="学生最小年龄为2岁" xml:space="preserve">
+    <value>Minimum age of student is 2 years old</value>
+  </data>
+  <data name="学生有效时长" xml:space="preserve">
+    <value>Effective duration of students</value>
+  </data>
+  <data name="学生电话" xml:space="preserve">
+    <value>Student telephone</value>
+  </data>
+  <data name="学生考勤" xml:space="preserve">
+    <value>Student attendance</value>
+  </data>
+  <data name="学生课程名称" xml:space="preserve">
+    <value>Student course name</value>
+  </data>
+  <data name="学生资料" xml:space="preserve">
+    <value>Student information</value>
+  </data>
+  <data name="学生邮件" xml:space="preserve">
+    <value>Student Email</value>
+  </data>
+  <data name="完成购课提醒" xml:space="preserve">
+    <value>A reminder to complete lesson purchase </value>
+  </data>
+  <data name="宗教信仰" xml:space="preserve">
+    <value>Religious belief</value>
+  </data>
+  <data name="定位当前选项卡" xml:space="preserve">
+    <value>Locate the current tab</value>
+  </data>
+  <data name="实付款" xml:space="preserve">
+    <value>Actual payment</value>
+  </data>
+  <data name="客户端币种取值异常" xml:space="preserve">
+    <value>Value of client currency exception</value>
+  </data>
+  <data name="家庭作业不存在" xml:space="preserve">
+    <value>Homework does not exist.</value>
+  </data>
+  <data name="密码" xml:space="preserve">
+    <value>password</value>
+  </data>
+  <data name="密码必需包含字母和数字，且在6-18位之间" xml:space="preserve">
+    <value>The password must contain letters and numbers and must be between 6 and 18 digits.</value>
+  </data>
+  <data name="密码必需包含字母和数字，且在6-18位之间1" xml:space="preserve">
+    <value>The password must contain letters and numbers and must be between 6 and 18 digits.</value>
+  </data>
+  <data name="密码必需大于6位并小于20位" xml:space="preserve">
+    <value>Password must be between 6 and 20 digits.</value>
+  </data>
+  <data name="密码较验失败" xml:space="preserve">
+    <value>Password verification failed</value>
+  </data>
+  <data name="对应订单号" xml:space="preserve">
+    <value>Corresponding order No</value>
+  </data>
+  <data name="导出明细" xml:space="preserve">
+    <value>Export Details</value>
+  </data>
+  <data name="小时" xml:space="preserve">
+    <value>Hour(s)</value>
+  </data>
+  <data name="展示类型" xml:space="preserve">
+    <value>Display type</value>
+  </data>
+  <data name="展示语言" xml:space="preserve">
+    <value>Display language</value>
+  </data>
+  <data name="已付款" xml:space="preserve">
+    <value>Paid</value>
+  </data>
+  <data name="已关联" xml:space="preserve">
+    <value>Associated</value>
+  </data>
+  <data name="已冻结" xml:space="preserve">
+    <value>Frozen</value>
+  </data>
+  <data name="已删除" xml:space="preserve">
+    <value>Deleted</value>
+  </data>
+  <data name="已取消" xml:space="preserve">
+    <value>Canceled</value>
+  </data>
+  <data name="已同意" xml:space="preserve">
+    <value>Agreed</value>
+  </data>
+  <data name="已启用" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="已审核" xml:space="preserve">
+    <value>Reviewed</value>
+  </data>
+  <data name="已布置" xml:space="preserve">
+    <value>Arranged</value>
+  </data>
+  <data name="已拒绝" xml:space="preserve">
+    <value>Rejected</value>
+  </data>
+  <data name="已排课节" xml:space="preserve">
+    <value>Scheduled lesson</value>
+  </data>
+  <data name="已排课节不存在" xml:space="preserve">
+    <value>Scheduled lesson does not exist.</value>
+  </data>
+  <data name="已提交" xml:space="preserve">
+    <value>Submitted</value>
+  </data>
+  <data name="已注册正式用户" xml:space="preserve">
+    <value>Registered official user</value>
+  </data>
+  <data name="已用课时" xml:space="preserve">
+    <value>Class hours used</value>
+  </data>
+  <data name="已结课" xml:space="preserve">
+    <value>Course completed</value>
+  </data>
+  <data name="已读" xml:space="preserve">
+    <value>Read</value>
+  </data>
+  <data name="已购课程" xml:space="preserve">
+    <value>Purchased courses</value>
+  </data>
+  <data name="已购课程ID" xml:space="preserve">
+    <value>Purchased course ID</value>
+  </data>
+  <data name="已过期" xml:space="preserve">
+    <value>Expired</value>
+  </data>
+  <data name="已通过" xml:space="preserve">
+    <value>Passed</value>
+  </data>
+  <data name="已锁定" xml:space="preserve">
+    <value>Locked</value>
+  </data>
+  <data name="币种" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="币种代码" xml:space="preserve">
+    <value>Currency code</value>
+  </data>
+  <data name="布置作业" xml:space="preserve">
+    <value>Assignment</value>
+  </data>
+  <data name="常用语言" xml:space="preserve">
+    <value>Common language</value>
+  </data>
+  <data name="年龄" xml:space="preserve">
+    <value>Age</value>
+  </data>
+  <data name="广告管理" xml:space="preserve">
+    <value>Advertising management</value>
+  </data>
+  <data name="广告类型" xml:space="preserve">
+    <value>Advertising type</value>
+  </data>
+  <data name="广告说明" xml:space="preserve">
+    <value>Advertising description</value>
+  </data>
+  <data name="座右铭" xml:space="preserve">
+    <value>Motto</value>
+  </data>
+  <data name="开发专用菜单" xml:space="preserve">
+    <value>Special menu for development</value>
+  </data>
+  <data name="开发栏目" xml:space="preserve">
+    <value>Development column</value>
+  </data>
+  <data name="开发者菜单" xml:space="preserve">
+    <value>Developer menu</value>
+  </data>
+  <data name="开课时间" xml:space="preserve">
+    <value>Course start date</value>
+  </data>
+  <data name="开课结束时间" xml:space="preserve">
+    <value>Start and end time</value>
+  </data>
+  <data name="开课起始时间" xml:space="preserve">
+    <value>Start time</value>
+  </data>
+  <data name="异常" xml:space="preserve">
+    <value>Abnormal</value>
+  </data>
+  <data name="当前" xml:space="preserve">
+    <value>Current</value>
+  </data>
+  <data name="当前分类级别" xml:space="preserve">
+    <value>Current classification level</value>
+  </data>
+  <data name="当前用户如定位不属于指定国家则自动采用默认价格结算" xml:space="preserve">
+    <value>The current user will automatically adopt the default price for settlement if the location does not belong to the specified country</value>
+  </data>
+  <data name="待上传" xml:space="preserve">
+    <value>To be uploaded</value>
+  </data>
+  <data name="待付款" xml:space="preserve">
+    <value>To be paid</value>
+  </data>
+  <data name="待完善" xml:space="preserve">
+    <value>Incomplete</value>
+  </data>
+  <data name="待审核" xml:space="preserve">
+    <value>To be reviewed</value>
+  </data>
+  <data name="忘记密码" xml:space="preserve">
+    <value>Forgot password</value>
+  </data>
+  <data name="思" xml:space="preserve">
+    <value>thinking</value>
+  </data>
+  <data name="性别" xml:space="preserve">
+    <value>Gender</value>
+  </data>
+  <data name="总课时" xml:space="preserve">
+    <value>Total class hours</value>
+  </data>
+  <data name="总课时数" xml:space="preserve">
+    <value>Total class hours</value>
+  </data>
+  <data name="总课时数不能小于已上课时数" xml:space="preserve">
+    <value>Total class hours cannot be less than class hours attended</value>
+  </data>
+  <data name="您两次输入的新密码不相同" xml:space="preserve">
+    <value>The two new passwords you entered are different.</value>
+  </data>
+  <data name="您已提交申请,请等待客服与您联系,也可以点击页面右下角的在线客服沟通取消课程" xml:space="preserve">
+    <value>You have submitted the application. Please wait for customer service to contact you. You can also click the online customer service in the lower right corner of the page to cancel the course.</value>
+  </data>
+  <data name="您已被禁止登录，请联系管理员进行处理" xml:space="preserve">
+    <value>You have been banned from logging in. Please contact the administrator for handling.</value>
+  </data>
+  <data name="您所填写的邮箱不存在,请尝试其它邮箱" xml:space="preserve">
+    <value>The email address you entered does not exist. Please try another email address.</value>
+  </data>
+  <data name="您无权操作此课节报告" xml:space="preserve">
+    <value>You are not authorized to operate this lesson report.</value>
+  </data>
+  <data name="您无权限创建学生信息" xml:space="preserve">
+    <value>You have no permission to create student information</value>
+  </data>
+  <data name="您没有操作权限" xml:space="preserve">
+    <value>You do not have operation permission.</value>
+  </data>
+  <data name="您没有评价权限" xml:space="preserve">
+    <value>You do not have evaluation permission.</value>
+  </data>
+  <data name="您的手机号不存在，请联系管理员维护" xml:space="preserve">
+    <value>Your phone number does not exist. Please contact the administrator for maintenance.</value>
+  </data>
+  <data name="您的手机验证码不正确，或验证超时" xml:space="preserve">
+    <value>Your phone verification code is incorrect, or verification timeout.</value>
+  </data>
+  <data name="您的账号已被锁定,离解锁时间还需{60}分钟" xml:space="preserve">
+    <value>Your account has been locked and needs {60} minutes to be unlocked.</value>
+  </data>
+  <data name="您的链接不完整" xml:space="preserve">
+    <value>Your link is incomplete.</value>
+  </data>
+  <data name="您的验证码为{123456},请勿泄露于他人!" xml:space="preserve">
+    <value>Your verification code is {123456}. Please do not disclose it to others!</value>
+  </data>
+  <data name="您确定要冻结" xml:space="preserve">
+    <value>Are you sure you want to freeze</value>
+  </data>
+  <data name="您确定要拒绝" xml:space="preserve">
+    <value>Are you sure you want to decline</value>
+  </data>
+  <data name="您确定需要重复提交" xml:space="preserve">
+    <value>Are you sure you need to submit repeatedly</value>
+  </data>
+  <data name="您输入的原密码不正确" xml:space="preserve">
+    <value>Incorrect original password</value>
+  </data>
+  <data name="情商" xml:space="preserve">
+    <value>EQ</value>
+  </data>
+  <data name="我的课程不存在" xml:space="preserve">
+    <value>My course does not exist.</value>
+  </data>
+  <data name="房间号" xml:space="preserve">
+    <value>Room number</value>
+  </data>
+  <data name="所在地时区" xml:space="preserve">
+    <value>Local time zone</value>
+  </data>
+  <data name="所在时区" xml:space="preserve">
+    <value>Time zone</value>
+  </data>
+  <data name="所属分类" xml:space="preserve">
+    <value>Classification</value>
+  </data>
+  <data name="所属菜单" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="所属角色" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="所属语言" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="所属课程" xml:space="preserve">
+    <value>Course</value>
+  </data>
+  <data name="所属课程名称" xml:space="preserve">
+    <value>Course name</value>
+  </data>
+  <data name="所有上课学生" xml:space="preserve">
+    <value>All students in class</value>
+  </data>
+  <data name="所选中的分类中涉及锁定分类" xml:space="preserve">
+    <value>The selected classification involves locked classification</value>
+  </data>
+  <data name="所选课程" xml:space="preserve">
+    <value>Selected course</value>
+  </data>
+  <data name="所选课程不存在" xml:space="preserve">
+    <value>Selected course does not exist.</value>
+  </data>
+  <data name="手工修改订单为已付款，需要在【操作日志】处填写原因" xml:space="preserve">
+    <value>To manually modify the order as the paid one, please fill in the reason in the [Operation Log].</value>
+  </data>
+  <data name="手工同步拓课云" xml:space="preserve">
+    <value>Manually synchronize TalkCloud</value>
+  </data>
+  <data name="手机" xml:space="preserve">
+    <value>Mobile phone</value>
+  </data>
+  <data name="手机号码" xml:space="preserve">
+    <value>phone number</value>
+  </data>
+  <data name="手机已存在，不允许重名" xml:space="preserve">
+    <value>This mobile phone number has already existed, and a duplicate name is not allowed.</value>
+  </data>
+  <data name="报告情况" xml:space="preserve">
+    <value>Reporting</value>
+  </data>
+  <data name="报告未出" xml:space="preserve">
+    <value>Report not issued</value>
+  </data>
+  <data name="报告未生成" xml:space="preserve">
+    <value>Report does not generate.</value>
+  </data>
+  <data name="报表管理" xml:space="preserve">
+    <value>Statement management</value>
+  </data>
+  <data name="拆扣" xml:space="preserve">
+    <value>Unbuckle</value>
+  </data>
+  <data name="拒绝失败,不存在此记录" xml:space="preserve">
+    <value>Fail to reject. This record does not exist.</value>
+  </data>
+  <data name="拒绝成功" xml:space="preserve">
+    <value>Rejected successfully</value>
+  </data>
+  <data name="拒绝试听申请" xml:space="preserve">
+    <value>Reject audition application</value>
+  </data>
+  <data name="拓-课程ID" xml:space="preserve">
+    <value>TalkCloud course ID</value>
+  </data>
+  <data name="拓-课节ID" xml:space="preserve">
+    <value>TalkCloud Lesson ID</value>
+  </data>
+  <data name="拓课云" xml:space="preserve">
+    <value>TalkCloud</value>
+  </data>
+  <data name="拓课云房间号" xml:space="preserve">
+    <value>TalkCloud room number</value>
+  </data>
+  <data name="拓课云查询学生失败" xml:space="preserve">
+    <value>Failed to query students on the Talk-Cloud</value>
+  </data>
+  <data name="拓课云查询老师失败" xml:space="preserve">
+    <value>Failed to query teachers on the Talk-Cloud</value>
+  </data>
+  <data name="拓课云试听课节" xml:space="preserve">
+    <value>TalkCloud Trial Lesson</value>
+  </data>
+  <data name="拓课云课程" xml:space="preserve">
+    <value>TalkCloud course</value>
+  </data>
+  <data name="拓课云课程名称" xml:space="preserve">
+    <value>TalkCloud course name</value>
+  </data>
+  <data name="拓课云课节" xml:space="preserve">
+    <value>TalkCloud lesson</value>
+  </data>
+  <data name="拓课云课节名称" xml:space="preserve">
+    <value>TalkCloud lesson name</value>
+  </data>
+  <data name="授权动作" xml:space="preserve">
+    <value>Authorized action</value>
+  </data>
+  <data name="授权区域" xml:space="preserve">
+    <value>Authorized Area</value>
+  </data>
+  <data name="授权控制器" xml:space="preserve">
+    <value>Authorized Controller</value>
+  </data>
+  <data name="授权用户不存在" xml:space="preserve">
+    <value>Authorized user does not exist.</value>
+  </data>
+  <data name="授权码异常" xml:space="preserve">
+    <value>Authorization code exception</value>
+  </data>
+  <data name="授权码超出24小时,已失效" xml:space="preserve">
+    <value>The authorization code has expired for exceeding 24 hours.</value>
+  </data>
+  <data name="授权语言" xml:space="preserve">
+    <value>Licensing Language</value>
+  </data>
+  <data name="排序" xml:space="preserve">
+    <value>sort</value>
+  </data>
+  <data name="排序字段" xml:space="preserve">
+    <value>sort field</value>
+  </data>
+  <data name="排序字段相同的情况下，按发布时间倒序排列（最新时间排前面）" xml:space="preserve">
+    <value>If the sorting fields are the same, they should be arranged in reverse order according to the publishing time (before the latest time)</value>
+  </data>
+  <data name="排课时间" xml:space="preserve">
+    <value>Lesson scheduling date</value>
+  </data>
+  <data name="排课申请" xml:space="preserve">
+    <value>Lesson scheduling application</value>
+  </data>
+  <data name="排课管理" xml:space="preserve">
+    <value>Class scheduling management</value>
+  </data>
+  <data name="接口日志" xml:space="preserve">
+    <value>Interface log</value>
+  </data>
+  <data name="接收方状态" xml:space="preserve">
+    <value>Receiver Status</value>
+  </data>
+  <data name="接收时间" xml:space="preserve">
+    <value>Receiving time</value>
+  </data>
+  <data name="接收者" xml:space="preserve">
+    <value>recipient</value>
+  </data>
+  <data name="控件ID" xml:space="preserve">
+    <value>Control ID</value>
+  </data>
+  <data name="控件介绍" xml:space="preserve">
+    <value>Introduction to controls</value>
+  </data>
+  <data name="控件名称" xml:space="preserve">
+    <value>Control Name</value>
+  </data>
+  <data name="控件方法名" xml:space="preserve">
+    <value>Control Method Name</value>
+  </data>
+  <data name="控制器" xml:space="preserve">
+    <value>controller</value>
+  </data>
+  <data name="控制器(Controller)" xml:space="preserve">
+    <value>Controller</value>
+  </data>
+  <data name="推送管理" xml:space="preserve">
+    <value>Push management</value>
+  </data>
+  <data name="提交值过长，暂存至文本日志中" xml:space="preserve">
+    <value>The submitted value is too long and is temporarily saved in the text log.</value>
+  </data>
+  <data name="提交的值解析失败" xml:space="preserve">
+    <value>Submitted value parsing failed</value>
+  </data>
+  <data name="搜索" xml:space="preserve">
+    <value>search</value>
+  </data>
+  <data name="操作" xml:space="preserve">
+    <value>operation</value>
+  </data>
+  <data name="操作日志" xml:space="preserve">
+    <value>Operation log</value>
+  </data>
+  <data name="操作页" xml:space="preserve">
+    <value>Operation Page</value>
+  </data>
+  <data name="支付参数不完整" xml:space="preserve">
+    <value>Incomplete payment parameters</value>
+  </data>
+  <data name="支付币种" xml:space="preserve">
+    <value>payment currency</value>
+  </data>
+  <data name="支付平台的流水单号或线下转账银行凭证号" xml:space="preserve">
+    <value>Serial number or offline transfer bank voucher number of the payment platform</value>
+  </data>
+  <data name="支付流水号" xml:space="preserve">
+    <value>Payment serial number</value>
+  </data>
+  <data name="支付类型不存在" xml:space="preserve">
+    <value>Payment type does not exist.</value>
+  </data>
+  <data name="教育" xml:space="preserve">
+    <value>education</value>
+  </data>
+  <data name="数字标签" xml:space="preserve">
+    <value>Digital label</value>
+  </data>
+  <data name="数据字典" xml:space="preserve">
+    <value>Data dictionary</value>
+  </data>
+  <data name="文件大小" xml:space="preserve">
+    <value>File size</value>
+  </data>
+  <data name="文化程度" xml:space="preserve">
+    <value>Degree of education</value>
+  </data>
+  <data name="文本字段" xml:space="preserve">
+    <value>Text Field</value>
+  </data>
+  <data name="新密码" xml:space="preserve">
+    <value>New Password</value>
+  </data>
+  <data name="新闻不存在" xml:space="preserve">
+    <value>News does not exist.</value>
+  </data>
+  <data name="新闻分类" xml:space="preserve">
+    <value>News category</value>
+  </data>
+  <data name="新闻列表" xml:space="preserve">
+    <value>News list</value>
+  </data>
+  <data name="方法名称" xml:space="preserve">
+    <value>Method Name</value>
+  </data>
+  <data name="无" xml:space="preserve">
+    <value>Nothing</value>
+  </data>
+  <data name="无档案" xml:space="preserve">
+    <value>No file</value>
+  </data>
+  <data name="无此日志" xml:space="preserve">
+    <value>No such log</value>
+  </data>
+  <data name="日志时间" xml:space="preserve">
+    <value>Log Time</value>
+  </data>
+  <data name="早退" xml:space="preserve">
+    <value>Leave early</value>
+  </data>
+  <data name="时区" xml:space="preserve">
+    <value>time zone</value>
+  </data>
+  <data name="是否已读" xml:space="preserve">
+    <value>Read or not</value>
+  </data>
+  <data name="是否操作业页" xml:space="preserve">
+    <value>Whether to operate the business page</value>
+  </data>
+  <data name="是否有中文基础" xml:space="preserve">
+    <value>Have you learned any Chinese or not?</value>
+  </data>
+  <data name="是否有目标学习语言基础" xml:space="preserve">
+    <value>Whether there is a basis for listening to the language</value>
+  </data>
+  <data name="是否用户取消" xml:space="preserve">
+    <value>Whether the user cancels</value>
+  </data>
+  <data name="是否通用" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="显示在学生会员中心已购课程列表中" xml:space="preserve">
+    <value>Displayed in the list of purchased courses in the student member center</value>
+  </data>
+  <data name="显示状态" xml:space="preserve">
+    <value>Show Status</value>
+  </data>
+  <data name="普通" xml:space="preserve">
+    <value>ordinary</value>
+  </data>
+  <data name="普通菜单" xml:space="preserve">
+    <value>General menu</value>
+  </data>
+  <data name="普通话" xml:space="preserve">
+    <value>mandarin</value>
+  </data>
+  <data name="暂无" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="最后登陆时间" xml:space="preserve">
+    <value>Last login time</value>
+  </data>
+  <data name="最大年龄" xml:space="preserve">
+    <value>Maximum age</value>
+  </data>
+  <data name="最小年龄" xml:space="preserve">
+    <value>Minimum age</value>
+  </data>
+  <data name="有" xml:space="preserve">
+    <value>Have</value>
+  </data>
+  <data name="有效时间" xml:space="preserve">
+    <value>Effective time</value>
+  </data>
+  <data name="有效结束时间" xml:space="preserve">
+    <value>Effective end time</value>
+  </data>
+  <data name="有效起始时间" xml:space="preserve">
+    <value>Effective start time</value>
+  </data>
+  <data name="未关联" xml:space="preserve">
+    <value>Not associated</value>
+  </data>
+  <data name="未取消" xml:space="preserve">
+    <value>Not cancelled</value>
+  </data>
+  <data name="未启用" xml:space="preserve">
+    <value>not enabled</value>
+  </data>
+  <data name="未完善" xml:space="preserve">
+    <value>Incomplete</value>
+  </data>
+  <data name="未完善手机号码,不能修改状态为已启用" xml:space="preserve">
+    <value>The mobile phone number is not completed, and the status cannot be changed to enabled.</value>
+  </data>
+  <data name="未布置" xml:space="preserve">
+    <value>Not arranged</value>
+  </data>
+  <data name="未开始" xml:space="preserve">
+    <value>Not Started</value>
+  </data>
+  <data name="未提交" xml:space="preserve">
+    <value>Not submitted</value>
+  </data>
+  <data name="未点评" xml:space="preserve">
+    <value>No comments</value>
+  </data>
+  <data name="未登录" xml:space="preserve">
+    <value>Not logged in</value>
+  </data>
+  <data name="未知" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="未读" xml:space="preserve">
+    <value>Unread</value>
+  </data>
+  <data name="未通过" xml:space="preserve">
+    <value>Failed</value>
+  </data>
+  <data name="权限" xml:space="preserve">
+    <value>jurisdiction</value>
+  </data>
+  <data name="权限组" xml:space="preserve">
+    <value>Permission group</value>
+  </data>
+  <data name="查看/修改" xml:space="preserve">
+    <value>View/Modify</value>
+  </data>
+  <data name="查看报告" xml:space="preserve">
+    <value>View Report</value>
+  </data>
+  <data name="查看用户" xml:space="preserve">
+    <value>View Users</value>
+  </data>
+  <data name="查阅" xml:space="preserve">
+    <value>consult</value>
+  </data>
+  <data name="查阅取消排课申请" xml:space="preserve">
+    <value>View the cancellation of course scheduling application</value>
+  </data>
+  <data name="查阅详情" xml:space="preserve">
+    <value>See details</value>
+  </data>
+  <data name="标签" xml:space="preserve">
+    <value>label</value>
+  </data>
+  <data name="标签管理" xml:space="preserve">
+    <value>Label management</value>
+  </data>
+  <data name="标签类型" xml:space="preserve">
+    <value>Label Type</value>
+  </data>
+  <data name="标题备注" xml:space="preserve">
+    <value>Title remarks</value>
+  </data>
+  <data name="根控件" xml:space="preserve">
+    <value>Root Control</value>
+  </data>
+  <data name="根菜单" xml:space="preserve">
+    <value>Root menu</value>
+  </data>
+  <data name="模板不存在" xml:space="preserve">
+    <value>Template does not exist.</value>
+  </data>
+  <data name="模板介绍" xml:space="preserve">
+    <value>Template introduction</value>
+  </data>
+  <data name="模板代码" xml:space="preserve">
+    <value>Template Code</value>
+  </data>
+  <data name="模板名称" xml:space="preserve">
+    <value>Template Name</value>
+  </data>
+  <data name="欢迎使用众语时代管理后台" xml:space="preserve">
+    <value>Welcome to the management background of the popular language era</value>
+  </data>
+  <data name="正在加载" xml:space="preserve">
+    <value>Loading</value>
+  </data>
+  <data name="正常" xml:space="preserve">
+    <value>normal</value>
+  </data>
+  <data name="正课排课申请" xml:space="preserve">
+    <value>Application for regular lesson scheduling</value>
+  </data>
+  <data name="此手机号对应学生不存在" xml:space="preserve">
+    <value>The student corresponding to this mobile number does not exist</value>
+  </data>
+  <data name="此手机用户不存在" xml:space="preserve">
+    <value>This mobile user does not exist</value>
+  </data>
+  <data name="此电子邮件已存在，不允许重名" xml:space="preserve">
+    <value>This email address has already existed, and the duplicate name is not allowed.</value>
+  </data>
+  <data name="母语" xml:space="preserve">
+    <value>Mother language</value>
+  </data>
+  <data name="每个用户只能提交一次试听,如需多次申请，请联系在线客服" xml:space="preserve">
+    <value>Each user can only submit one application for the trial lesson. If you need multiple applications, please contact online customer service.</value>
+  </data>
+  <data name="每个用户试听一次,如需多次试听，请联系在线客服" xml:space="preserve">
+    <value>Each user has one chance for the trial lesson. For any extra trials, please contact online customer service.</value>
+  </data>
+  <data name="注册情况" xml:space="preserve">
+    <value>Registration</value>
+  </data>
+  <data name="注册手机已存在" xml:space="preserve">
+    <value>Registered mobile phone already exists</value>
+  </data>
+  <data name="注册时间" xml:space="preserve">
+    <value>Registration time</value>
+  </data>
+  <data name="注册邮箱已存在" xml:space="preserve">
+    <value>The registered mailbox already exists</value>
+  </data>
+  <data name="注意" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="注意:发送给老师的邮件会切换成老师常用语言发送" xml:space="preserve">
+    <value>Note: The email sent to the teacher will be switched to the teacher's common language</value>
+  </data>
+  <data name="注意:填0表示系统消息" xml:space="preserve">
+    <value>Note: 0 indicates system message</value>
+  </data>
+  <data name="注意:已购课程,不允许变更号码" xml:space="preserve">
+    <value>Note: The number of purchased courses cannot be changed</value>
+  </data>
+  <data name="注意:已购课程,更换号码,相当于在拓课云新建一个账号" xml:space="preserve">
+    <value>Note: Purchased courses,Changing the number is equivalent to creating a new account in Talk-Cloud</value>
+  </data>
+  <data name="注意:更换号码,相当于在拓课云新建一个账号" xml:space="preserve">
+    <value>Note: Changing the number is equivalent to creating a new account in Talk-Cloud</value>
+  </data>
+  <data name="注意:用于该控件对应的执行方法，必需和程序中的执行方法名一致，不含参数" xml:space="preserve">
+    <value>Note: The execution method used for this control must be consistent with the name of the execution method in the program, without parameters</value>
+  </data>
+  <data name="注意:禁用和锁定状态下,会同步删除所有已安排但未上课的课节" xml:space="preserve">
+    <value>Note: In the disabled and locked states, all scheduled but not attended classes will be deleted synchronously</value>
+  </data>
+  <data name="注意:该控件在页面的标识（重复ID默认为同一个ID）Html控件属性group或class中含 iscontol表示受控，服务端控件ID必需为此处填写的控件ID，匹配上才可以受控）" xml:space="preserve">
+    <value>Note: The control contains iscontol in the identification of the page (the duplicate ID defaults to the same ID). The attribute group or class of the Html control indicates that it is controlled. The server control ID must be the control ID filled in here, and it can be controlled only when matching)</value>
+  </data>
+  <data name="注意力" xml:space="preserve">
+    <value>Attention</value>
+  </data>
+  <data name="浏览器不支持快捷复制,请选中内容后" xml:space="preserve">
+    <value>The browser does not support quick copy. Please select the content</value>
+  </data>
+  <data name="消息不存在" xml:space="preserve">
+    <value>Message does not exist.</value>
+  </data>
+  <data name="添加" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="添加上课方式" xml:space="preserve">
+    <value>Add class method</value>
+  </data>
+  <data name="添加上课类型信息" xml:space="preserve">
+    <value>Add class type information</value>
+  </data>
+  <data name="添加信息" xml:space="preserve">
+    <value>Add information</value>
+  </data>
+  <data name="添加功能控制项" xml:space="preserve">
+    <value>Add function control item</value>
+  </data>
+  <data name="添加备注" xml:space="preserve">
+    <value>Add Comments</value>
+  </data>
+  <data name="添加子控件" xml:space="preserve">
+    <value>Add Child Control</value>
+  </data>
+  <data name="添加子类" xml:space="preserve">
+    <value>Add Subclass</value>
+  </data>
+  <data name="添加子课程" xml:space="preserve">
+    <value>Add Sub course</value>
+  </data>
+  <data name="添加币种" xml:space="preserve">
+    <value>Add Currency</value>
+  </data>
+  <data name="添加数据字典信息成功" xml:space="preserve">
+    <value>Data dictionary information added successfully</value>
+  </data>
+  <data name="添加新语言需要管理员同步修改配置文件" xml:space="preserve">
+    <value>Adding a new language requires the administrator to modify the configuration file synchronously</value>
+  </data>
+  <data name="添加新闻" xml:space="preserve">
+    <value>Add News</value>
+  </data>
+  <data name="添加标签" xml:space="preserve">
+    <value>Add Label</value>
+  </data>
+  <data name="添加标签信息" xml:space="preserve">
+    <value>Add label information</value>
+  </data>
+  <data name="添加用户" xml:space="preserve">
+    <value>Add User</value>
+  </data>
+  <data name="添加用户信息" xml:space="preserve">
+    <value>Add user information</value>
+  </data>
+  <data name="添加短消息" xml:space="preserve">
+    <value>Add SMS</value>
+  </data>
+  <data name="添加管理员信息成功" xml:space="preserve">
+    <value>Administrator information added successfully</value>
+  </data>
+  <data name="添加老师" xml:space="preserve">
+    <value>Add teacher</value>
+  </data>
+  <data name="添加菜单" xml:space="preserve">
+    <value>Add menu</value>
+  </data>
+  <data name="添加角色" xml:space="preserve">
+    <value>Add Role</value>
+  </data>
+  <data name="添加语言" xml:space="preserve">
+    <value>Add language</value>
+  </data>
+  <data name="添加语言信息" xml:space="preserve">
+    <value>Add language information</value>
+  </data>
+  <data name="添加课程" xml:space="preserve">
+    <value>Add Course</value>
+  </data>
+  <data name="添加课程组" xml:space="preserve">
+    <value>Add course group</value>
+  </data>
+  <data name="添加邮件模板" xml:space="preserve">
+    <value>Add Mail Template</value>
+  </data>
+  <data name="照片" xml:space="preserve">
+    <value>Photo</value>
+  </data>
+  <data name="爱商" xml:space="preserve">
+    <value>Love business</value>
+  </data>
+  <data name="父控件页" xml:space="preserve">
+    <value>Parent Control Page</value>
+  </data>
+  <data name="父级分类" xml:space="preserve">
+    <value>Parent Classification</value>
+  </data>
+  <data name="父菜单" xml:space="preserve">
+    <value>Parent Menu</value>
+  </data>
+  <data name="状态" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="用户" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="用户ID不存在" xml:space="preserve">
+    <value>User ID does not exist.</value>
+  </data>
+  <data name="用户不存在" xml:space="preserve">
+    <value>User does not exist.</value>
+  </data>
+  <data name="用户信息未完善" xml:space="preserve">
+    <value>Incomplete user information</value>
+  </data>
+  <data name="用户取消" xml:space="preserve">
+    <value>User Cancel</value>
+  </data>
+  <data name="用户名" xml:space="preserve">
+    <value>User name</value>
+  </data>
+  <data name="用户密码" xml:space="preserve">
+    <value>User Password</value>
+  </data>
+  <data name="用户已注册第一步,可引导用户在网站完成第二步注册" xml:space="preserve">
+    <value>The user has registered in the first step and can be guided to complete the second step of registration on the website.</value>
+  </data>
+  <data name="用户已注册第一步,可引导用户在网站完成第二步注册,并在[拓课云]后台的课程[通用试听课程]下创建试听课节" xml:space="preserve">
+    <value>The user has registered in the first step and can be guided to complete the second step of registration on the website and create a trial lesson under the course [General Trial Lesson] in the courses of [Talk-Cloud].</value>
+  </data>
+  <data name="用户手机号码资料不完整" xml:space="preserve">
+    <value>The subscriber's mobile phone number is incomplete.</value>
+  </data>
+  <data name="用户无此权限" xml:space="preserve">
+    <value>User does not have this permission.</value>
+  </data>
+  <data name="用户登录超时退出" xml:space="preserve">
+    <value>User login timeout and exit</value>
+  </data>
+  <data name="申请/咨询课程" xml:space="preserve">
+    <value>Application/Consulting Course</value>
+  </data>
+  <data name="申请中" xml:space="preserve">
+    <value>Applying</value>
+  </data>
+  <data name="申请原因" xml:space="preserve">
+    <value>Reason for application</value>
+  </data>
+  <data name="申请取消订单" xml:space="preserve">
+    <value>Apply for order cancellation</value>
+  </data>
+  <data name="申请取消课节" xml:space="preserve">
+    <value>Apply for cancellation of lesson</value>
+  </data>
+  <data name="申请排课课程" xml:space="preserve">
+    <value>Apply for course scheduling</value>
+  </data>
+  <data name="申请时间" xml:space="preserve">
+    <value>Application time</value>
+  </data>
+  <data name="申请类型" xml:space="preserve">
+    <value>Application Type</value>
+  </data>
+  <data name="申请结束时间" xml:space="preserve">
+    <value>Application end time</value>
+  </data>
+  <data name="申请起始时间" xml:space="preserve">
+    <value>Application starting time</value>
+  </data>
+  <data name="电子邮件" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="电子邮件已存在，不允许重名" xml:space="preserve">
+    <value>This email address has already existed, and duplicate names are not allowed.</value>
+  </data>
+  <data name="电子邮箱" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="电话区号" xml:space="preserve">
+    <value>Area Code</value>
+  </data>
+  <data name="男" xml:space="preserve">
+    <value>male</value>
+  </data>
+  <data name="登 录" xml:space="preserve">
+    <value>Sign in</value>
+  </data>
+  <data name="登录" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="登录失败" xml:space="preserve">
+    <value>Login failed</value>
+  </data>
+  <data name="登录时间" xml:space="preserve">
+    <value>login time</value>
+  </data>
+  <data name="登录说明" xml:space="preserve">
+    <value>Login Instructions</value>
+  </data>
+  <data name="登录超时，请重新登录" xml:space="preserve">
+    <value>Login timed out, please log in again.</value>
+  </data>
+  <data name="登陆次数" xml:space="preserve">
+    <value>Number of logins</value>
+  </data>
+  <data name="白名单" xml:space="preserve">
+    <value>White list</value>
+  </data>
+  <data name="直播课" xml:space="preserve">
+    <value>Live online course</value>
+  </data>
+  <data name="真实姓名" xml:space="preserve">
+    <value>Real name</value>
+  </data>
+  <data name="短信验证码" xml:space="preserve">
+    <value>SMS verification code</value>
+  </data>
+  <data name="短信验证码异常" xml:space="preserve">
+    <value>SMS verification code exception</value>
+  </data>
+  <data name="短信验证码超时失效" xml:space="preserve">
+    <value>SMS verification code timeout</value>
+  </data>
+  <data name="短信验证码较验失败" xml:space="preserve">
+    <value>SMS verification code verification failed</value>
+  </data>
+  <data name="短消息内容" xml:space="preserve">
+    <value>SMS content</value>
+  </data>
+  <data name="确定要导出" xml:space="preserve">
+    <value>Confirm to export</value>
+  </data>
+  <data name="禁用" xml:space="preserve">
+    <value>Disable</value>
+  </data>
+  <data name="禁用上课方式" xml:space="preserve">
+    <value>Disable class method</value>
+  </data>
+  <data name="禁用分类信息" xml:space="preserve">
+    <value>Disable classification information</value>
+  </data>
+  <data name="禁用失败,不存在此记录" xml:space="preserve">
+    <value>Disabling failed. This record does not exist.</value>
+  </data>
+  <data name="禁用子课程" xml:space="preserve">
+    <value>Disable Subcourse</value>
+  </data>
+  <data name="禁用成功" xml:space="preserve">
+    <value>Disabled successfully</value>
+  </data>
+  <data name="禁用新闻" xml:space="preserve">
+    <value>Disable News</value>
+  </data>
+  <data name="禁用新闻评论" xml:space="preserve">
+    <value>Disable news comments</value>
+  </data>
+  <data name="禁用权限组" xml:space="preserve">
+    <value>Disable permission group</value>
+  </data>
+  <data name="禁用标签" xml:space="preserve">
+    <value>Disable Label</value>
+  </data>
+  <data name="禁用短消息" xml:space="preserve">
+    <value>Disable SMS</value>
+  </data>
+  <data name="禁用管理员失败,无权限或不存在此记录" xml:space="preserve">
+    <value>Failed to disable administrator, no permission, or this record does not exist.</value>
+  </data>
+  <data name="禁用管理员成功" xml:space="preserve">
+    <value>Administrator disabled successfully</value>
+  </data>
+  <data name="禁用老师" xml:space="preserve">
+    <value>Disable teacher</value>
+  </data>
+  <data name="禁用订单" xml:space="preserve">
+    <value>Disable Order</value>
+  </data>
+  <data name="禁用课程组" xml:space="preserve">
+    <value>Disable course group</value>
+  </data>
+  <data name="禁用邮件模板" xml:space="preserve">
+    <value>Disable mail template</value>
+  </data>
+  <data name="简介" xml:space="preserve">
+    <value>brief introduction</value>
+  </data>
+  <data name="管理员列表" xml:space="preserve">
+    <value>List of administrators</value>
+  </data>
+  <data name="管理员角色" xml:space="preserve">
+    <value>Administrator role</value>
+  </data>
+  <data name="系统参数" xml:space="preserve">
+    <value>system parameter</value>
+  </data>
+  <data name="系统日志" xml:space="preserve">
+    <value>System log</value>
+  </data>
+  <data name="系统管理" xml:space="preserve">
+    <value>System management</value>
+  </data>
+  <data name="系统级参数不允许删除" xml:space="preserve">
+    <value>System level parameters cannot be deleted</value>
+  </data>
+  <data name="结束时间" xml:space="preserve">
+    <value>End time</value>
+  </data>
+  <data name="结算价" xml:space="preserve">
+    <value>Settlement price</value>
+  </data>
+  <data name="续课提醒" xml:space="preserve">
+    <value>Lesson renewal reminder</value>
+  </data>
+  <data name="缩略图" xml:space="preserve">
+    <value>thumbnail</value>
+  </data>
+  <data name="缺勤" xml:space="preserve">
+    <value>Absence</value>
+  </data>
+  <data name="缺课" xml:space="preserve">
+    <value>Absence from classes</value>
+  </data>
+  <data name="网站Description" xml:space="preserve">
+    <value>Site Description</value>
+  </data>
+  <data name="网站Meta里的关键字" xml:space="preserve">
+    <value>Keywords in website Meta</value>
+  </data>
+  <data name="网站关键字" xml:space="preserve">
+    <value>Website keywords</value>
+  </data>
+  <data name="网站关闭时，提示的信息" xml:space="preserve">
+    <value>Prompt information when the website is closed</value>
+  </data>
+  <data name="网站地址" xml:space="preserve">
+    <value>Website address</value>
+  </data>
+  <data name="网站底部信息" xml:space="preserve">
+    <value>Information at the bottom of the website</value>
+  </data>
+  <data name="网站版权信息" xml:space="preserve">
+    <value>Website copyright information</value>
+  </data>
+  <data name="网站的访问地址(尾部请不要加“/”)" xml:space="preserve">
+    <value>Visit address of the website (please do not add "/" at the end)</value>
+  </data>
+  <data name="网站维护期间，可以关闭网站" xml:space="preserve">
+    <value>During website maintenance, you can close the website</value>
+  </data>
+  <data name="网站课程名称" xml:space="preserve">
+    <value>Website course name</value>
+  </data>
+  <data name="网页Title" xml:space="preserve">
+    <value>Page Title</value>
+  </data>
+  <data name="美元" xml:space="preserve">
+    <value>dollar</value>
+  </data>
+  <data name="老师" xml:space="preserve">
+    <value>Teacher</value>
+  </data>
+  <data name="老师列表" xml:space="preserve">
+    <value>List of teachers</value>
+  </data>
+  <data name="老师名称" xml:space="preserve">
+    <value>Name of teacher</value>
+  </data>
+  <data name="老师姓名" xml:space="preserve">
+    <value>Teacher's name</value>
+  </data>
+  <data name="老师尚未给出课堂报告" xml:space="preserve">
+    <value>The teacher has not yet given a class report</value>
+  </data>
+  <data name="老师手机" xml:space="preserve">
+    <value>Teacher's mobile phone</value>
+  </data>
+  <data name="老师手机号码资料不完整" xml:space="preserve">
+    <value>The information about the teacher's mobile phone number is incomplete.</value>
+  </data>
+  <data name="老师最小年龄为20岁" xml:space="preserve">
+    <value>The minimum age of the teacher is 20</value>
+  </data>
+  <data name="老师有效时长" xml:space="preserve">
+    <value>Effective duration of teacher</value>
+  </data>
+  <data name="老师电话" xml:space="preserve">
+    <value>Teacher's telephone</value>
+  </data>
+  <data name="老师管理" xml:space="preserve">
+    <value>Teacher management</value>
+  </data>
+  <data name="老师考勤表" xml:space="preserve">
+    <value>Teacher attendance sheet</value>
+  </data>
+  <data name="老师评价密码" xml:space="preserve">
+    <value>Teacher evaluation password</value>
+  </data>
+  <data name="英语" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="菜单名称" xml:space="preserve">
+    <value>Menu Name</value>
+  </data>
+  <data name="菜单标题" xml:space="preserve">
+    <value>menu title</value>
+  </data>
+  <data name="菜单类型" xml:space="preserve">
+    <value>Menu Type</value>
+  </data>
+  <data name="菜单默认基础查询功能不允许编辑" xml:space="preserve">
+    <value>The menu default basic query function cannot be edited</value>
+  </data>
+  <data name="角色" xml:space="preserve">
+    <value>role</value>
+  </data>
+  <data name="角色名称" xml:space="preserve">
+    <value>Role Name</value>
+  </data>
+  <data name="角色管理" xml:space="preserve">
+    <value>Role management</value>
+  </data>
+  <data name="解冻失败,不存在此用户" xml:space="preserve">
+    <value>Failed to unfreeze. This user does not exist.</value>
+  </data>
+  <data name="解冻成功" xml:space="preserve">
+    <value>Unfrozen successfully</value>
+  </data>
+  <data name="解锁" xml:space="preserve">
+    <value>Unlock</value>
+  </data>
+  <data name="解锁学生课程" xml:space="preserve">
+    <value>Unlock student courses</value>
+  </data>
+  <data name="订单" xml:space="preserve">
+    <value>order</value>
+  </data>
+  <data name="订单ID与订单号均不存在" xml:space="preserve">
+    <value>Order ID and order number do not exist.</value>
+  </data>
+  <data name="订单不存在" xml:space="preserve">
+    <value>Order does not exist.</value>
+  </data>
+  <data name="订单取消原因" xml:space="preserve">
+    <value>Order cancellation reason</value>
+  </data>
+  <data name="订单号" xml:space="preserve">
+    <value>Order number</value>
+  </data>
+  <data name="订单日期" xml:space="preserve">
+    <value>Order date</value>
+  </data>
+  <data name="订单管理" xml:space="preserve">
+    <value>Order management</value>
+  </data>
+  <data name="记住我" xml:space="preserve">
+    <value>Remember me</value>
+  </data>
+  <data name="设置为已处理" xml:space="preserve">
+    <value>Set as Processed</value>
+  </data>
+  <data name="设置为未处理" xml:space="preserve">
+    <value>Set as unprocessed</value>
+  </data>
+  <data name="设置子课程" xml:space="preserve">
+    <value>Set up sub courses</value>
+  </data>
+  <data name="设置文件上传文件大小的限制,M(注:单位是M. 0表示不能上传文件)" xml:space="preserve">
+    <value>Set the size limit of the file to upload, M (Note: if the unit is M. 0, the file cannot be uploaded)</value>
+  </data>
+  <data name="设置文件上传类型,请用半角逗号“,”隔开" xml:space="preserve">
+    <value>To set the file upload type, please separate it with a comma ","</value>
+  </data>
+  <data name="设置课程组" xml:space="preserve">
+    <value>Set up course team</value>
+  </data>
+  <data name="评论人" xml:space="preserve">
+    <value>Reviewer</value>
+  </data>
+  <data name="评论人手机" xml:space="preserve">
+    <value>Mobile phone of reviewer</value>
+  </data>
+  <data name="评论内容" xml:space="preserve">
+    <value>Comment content</value>
+  </data>
+  <data name="评论时间" xml:space="preserve">
+    <value>Comment time</value>
+  </data>
+  <data name="评语" xml:space="preserve">
+    <value>comment</value>
+  </data>
+  <data name="试听" xml:space="preserve">
+    <value>Audition</value>
+  </data>
+  <data name="试听申请" xml:space="preserve">
+    <value>Application for the trial lesson</value>
+  </data>
+  <data name="试听语种" xml:space="preserve">
+    <value>Test language</value>
+  </data>
+  <data name="语言" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="语言代码" xml:space="preserve">
+    <value>Language code</value>
+  </data>
+  <data name="语言版本" xml:space="preserve">
+    <value>Language version</value>
+  </data>
+  <data name="语言管理" xml:space="preserve">
+    <value>Language management</value>
+  </data>
+  <data name="说" xml:space="preserve">
+    <value>say</value>
+  </data>
+  <data name="请上传jpg格式图片" xml:space="preserve">
+    <value>Please upload pictures in jpg format</value>
+  </data>
+  <data name="请上传jpg格式图片,尺寸建议:" xml:space="preserve">
+    <value>Please upload pictures in jpg format. Recommended size:</value>
+  </data>
+  <data name="请关联老师" xml:space="preserve">
+    <value>Please contact the teacher</value>
+  </data>
+  <data name="请勿重复提交申请" xml:space="preserve">
+    <value>Do not submit applications again.</value>
+  </data>
+  <data name="请在[拓课云]后台的课程[通用试听课程(绝对不允许删除)]下创建试听课节" xml:space="preserve">
+    <value>Please create a trial lesson under [General Trial Lesson (deletion is absolutely not allowed)] in the courses of [Talk-Cloud].</value>
+  </data>
+  <data name="请在[拓课云]后台的课程[通用试听课程]下创建试听课节" xml:space="preserve">
+    <value>Please create a trial lesson under [General Trial Lesson] in the courses of [Talk-Cloud].</value>
+  </data>
+  <data name="请在[拓课云]后台的课程下创建课节" xml:space="preserve">
+    <value>Please create a lesson under the courses of [Talk-Cloud].</value>
+  </data>
+  <data name="请填写上标单位" xml:space="preserve">
+    <value>Please fill in the superscript unit</value>
+  </data>
+  <data name="请填写下标单位" xml:space="preserve">
+    <value>Please fill in the subscript unit</value>
+  </data>
+  <data name="请填写密码" xml:space="preserve">
+    <value>Please fill in the password</value>
+  </data>
+  <data name="请填写描述" xml:space="preserve">
+    <value>Please fill in the description</value>
+  </data>
+  <data name="请填写数字" xml:space="preserve">
+    <value>Please fill in the number</value>
+  </data>
+  <data name="请填写用户名" xml:space="preserve">
+    <value>Please fill in the user name</value>
+  </data>
+  <data name="请求URL" xml:space="preserve">
+    <value>Request URL</value>
+  </data>
+  <data name="请求方式" xml:space="preserve">
+    <value>Request method</value>
+  </data>
+  <data name="请跟进超时未付款订单" xml:space="preserve">
+    <value>Please follow up on overtime unpaid orders.</value>
+  </data>
+  <data name="请输入密码" xml:space="preserve">
+    <value>Please input a password</value>
+  </data>
+  <data name="请输入网站Meta里的Description" xml:space="preserve">
+    <value>Please enter the Description in the website meta</value>
+  </data>
+  <data name="请输入网站Meta里的keywords" xml:space="preserve">
+    <value>Please enter the keywords in the website meta</value>
+  </data>
+  <data name="请输入网站Meta里的Title" xml:space="preserve">
+    <value>Please enter the title in the website meta</value>
+  </data>
+  <data name="请输入账号" xml:space="preserve">
+    <value>Please enter the account number</value>
+  </data>
+  <data name="请选择[拓课云]关联课程" xml:space="preserve">
+    <value>Please select the associated course of [Talk-Cloud].</value>
+  </data>
+  <data name="请选择上课方式" xml:space="preserve">
+    <value>Please select the class method</value>
+  </data>
+  <data name="请选择小班课课程" xml:space="preserve">
+    <value>Please select a course（Multi-person course）</value>
+  </data>
+  <data name="请选择展示语言" xml:space="preserve">
+    <value>Please select the presentation language</value>
+  </data>
+  <data name="请选择拓课云课程" xml:space="preserve">
+    <value>Please select Talk-Cloud course</value>
+  </data>
+  <data name="请选择拓课云课程和课时数" xml:space="preserve">
+    <value>Please select Talk-Cloud courses and class hours</value>
+  </data>
+  <data name="请选择用户角色" xml:space="preserve">
+    <value>Please select a user role</value>
+  </data>
+  <data name="请选择要修改的行" xml:space="preserve">
+    <value>Please select the row to modify</value>
+  </data>
+  <data name="请选择要拒绝的行" xml:space="preserve">
+    <value>Please select a row to reject</value>
+  </data>
+  <data name="读" xml:space="preserve">
+    <value>read</value>
+  </data>
+  <data name="课堂综合表现" xml:space="preserve">
+    <value>Comprehensive performance in class</value>
+  </data>
+  <data name="课时" xml:space="preserve">
+    <value>Class hours</value>
+  </data>
+  <data name="课时数" xml:space="preserve">
+    <value>Class hours</value>
+  </data>
+  <data name="课程" xml:space="preserve">
+    <value>Courses</value>
+  </data>
+  <data name="课程不存在" xml:space="preserve">
+    <value>Course does not exist.</value>
+  </data>
+  <data name="课程介绍" xml:space="preserve">
+    <value>Course introduction</value>
+  </data>
+  <data name="课程体系" xml:space="preserve">
+    <value>Curriculum system</value>
+  </data>
+  <data name="课程列表" xml:space="preserve">
+    <value>Course list</value>
+  </data>
+  <data name="课程名称" xml:space="preserve">
+    <value>Course name</value>
+  </data>
+  <data name="课程咨询" xml:space="preserve">
+    <value>Course consultation</value>
+  </data>
+  <data name="课程大纲" xml:space="preserve">
+    <value>Course outline</value>
+  </data>
+  <data name="课程标签" xml:space="preserve">
+    <value>Course label</value>
+  </data>
+  <data name="课程标题" xml:space="preserve">
+    <value>Course Title</value>
+  </data>
+  <data name="课程特色" xml:space="preserve">
+    <value>Course features</value>
+  </data>
+  <data name="课程目标" xml:space="preserve">
+    <value>Course Objectives</value>
+  </data>
+  <data name="课程等级" xml:space="preserve">
+    <value>Course grade</value>
+  </data>
+  <data name="课程管理" xml:space="preserve">
+    <value>Course management</value>
+  </data>
+  <data name="课程类型" xml:space="preserve">
+    <value>Class type</value>
+  </data>
+  <data name="课程组" xml:space="preserve">
+    <value>Course team</value>
+  </data>
+  <data name="课程组名称" xml:space="preserve">
+    <value>Course group name</value>
+  </data>
+  <data name="课程缩略图" xml:space="preserve">
+    <value>Course thumbnail</value>
+  </data>
+  <data name="课程订单" xml:space="preserve">
+    <value>Course order</value>
+  </data>
+  <data name="课节不存在" xml:space="preserve">
+    <value>Lesson does not exist.</value>
+  </data>
+  <data name="课节取消原因" xml:space="preserve">
+    <value>Reason for cancellation</value>
+  </data>
+  <data name="课节名称" xml:space="preserve">
+    <value>Lesson name</value>
+  </data>
+  <data name="课节已取消,请勿重复提交" xml:space="preserve">
+    <value>The class has been canceled. Please do not submit it again.</value>
+  </data>
+  <data name="课节报告" xml:space="preserve">
+    <value>Lesson report</value>
+  </data>
+  <data name="课节时间" xml:space="preserve">
+    <value>Lesson time</value>
+  </data>
+  <data name="课节状态" xml:space="preserve">
+    <value>Lesson status</value>
+  </data>
+  <data name="调整对应拓课云课程" xml:space="preserve">
+    <value>Adjust the corresponding courses of Talk-Cloud</value>
+  </data>
+  <data name="账号密码输入错误" xml:space="preserve">
+    <value>Incorrect account password</value>
+  </data>
+  <data name="货币管理" xml:space="preserve">
+    <value>Currency management</value>
+  </data>
+  <data name="购买人" xml:space="preserve">
+    <value>Buyer</value>
+  </data>
+  <data name="购买人IP" xml:space="preserve">
+    <value>Buyer IP</value>
+  </data>
+  <data name="购买人国家" xml:space="preserve">
+    <value>Buyer's country</value>
+  </data>
+  <data name="购买人手机" xml:space="preserve">
+    <value>Buyer's mobile phone</value>
+  </data>
+  <data name="购买人电话" xml:space="preserve">
+    <value>Buyer's telephone</value>
+  </data>
+  <data name="购买人邮箱" xml:space="preserve">
+    <value>Buyer's e-mail</value>
+  </data>
+  <data name="购买时间" xml:space="preserve">
+    <value>Time of purchase</value>
+  </data>
+  <data name="购买课时" xml:space="preserve">
+    <value>Purchased class hours</value>
+  </data>
+  <data name="起始时间" xml:space="preserve">
+    <value>Start time</value>
+  </data>
+  <data name="超级管理员" xml:space="preserve">
+    <value>Super administrator</value>
+  </data>
+  <data name="超过{7}天,无法修改评价" xml:space="preserve">
+    <value>Evaluation cannot be modified for exceeding {7} days.</value>
+  </data>
+  <data name="返回值过长，暂存至文本日志中" xml:space="preserve">
+    <value>The returned value is too long and is temporarily saved in the text log.</value>
+  </data>
+  <data name="返回时间" xml:space="preserve">
+    <value>Return time</value>
+  </data>
+  <data name="进出教室时间" xml:space="preserve">
+    <value>Time of entering and leaving the classroom</value>
+  </data>
+  <data name="进行中" xml:space="preserve">
+    <value>have in hand</value>
+  </data>
+  <data name="进贤进能" xml:space="preserve">
+    <value>Teachers</value>
+  </data>
+  <data name="迟到" xml:space="preserve">
+    <value>Late</value>
+  </data>
+  <data name="退出" xml:space="preserve">
+    <value>Sign out</value>
+  </data>
+  <data name="适合人群" xml:space="preserve">
+    <value>Suitable for people</value>
+  </data>
+  <data name="逆商" xml:space="preserve">
+    <value>Inverse quotient</value>
+  </data>
+  <data name="选择标签" xml:space="preserve">
+    <value>Select Label</value>
+  </data>
+  <data name="通用" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="通用基础功能" xml:space="preserve">
+    <value>General basic functions</value>
+  </data>
+  <data name="通知消息" xml:space="preserve">
+    <value>Notification message</value>
+  </data>
+  <data name="邮件标题" xml:space="preserve">
+    <value>Message Header</value>
+  </data>
+  <data name="邮件模板" xml:space="preserve">
+    <value>Mail template</value>
+  </data>
+  <data name="邮箱" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="重复新密码" xml:space="preserve">
+    <value>Repeat new password</value>
+  </data>
+  <data name="重新发送" xml:space="preserve">
+    <value>Resend</value>
+  </data>
+  <data name="链接" xml:space="preserve">
+    <value>Link</value>
+  </data>
+  <data name="锁定" xml:space="preserve">
+    <value>locking</value>
+  </data>
+  <data name="锁定分类无法删除" xml:space="preserve">
+    <value>The locked category cannot be deleted</value>
+  </data>
+  <data name="锁定操作将会自动删除课程下所有已排课未上课的信息,您确认要锁定吗" xml:space="preserve">
+    <value>The locking operation will automatically delete all the information about the scheduled courses under the course. Are you sure you want to lock it</value>
+  </data>
+  <data name="锁定操作将会自动删除课程下所有已排课未上课的信息,您确认要锁定吗1" xml:space="preserve">
+    <value>The locking operation will automatically delete all the information about the scheduled courses under the course. Are you sure you want to lock it</value>
+  </data>
+  <data name="锁定状态" xml:space="preserve">
+    <value>Lock status</value>
+  </data>
+  <data name="锁定状态的语言不允许删除" xml:space="preserve">
+    <value>The locked language is not allowed to be deleted</value>
+  </data>
+  <data name="长字段值" xml:space="preserve">
+    <value>Long field value</value>
+  </data>
+  <data name="非注册用户,可引导用户在网站注册" xml:space="preserve">
+    <value>Unregistered users can be guided to register on the website.</value>
+  </data>
+  <data name="页面访问参数" xml:space="preserve">
+    <value>Page Access Parameters</value>
+  </data>
+  <data name="预览" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="首页" xml:space="preserve">
+    <value>home page</value>
+  </data>
+  <data name="黑名单" xml:space="preserve">
+    <value>blacklist</value>
+  </data>
+  <data name="默认价格" xml:space="preserve">
+    <value>Default Price</value>
+  </data>
+  <data name="默认原价" xml:space="preserve">
+    <value>Default original price</value>
+  </data>
+  <data name="默认售价" xml:space="preserve">
+    <value>Default selling price</value>
+  </data>
+  <data name="默认折扣" xml:space="preserve">
+    <value>Default Discount</value>
+  </data>
+</root>

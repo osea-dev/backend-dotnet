@@ -1,0 +1,63 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <SatelliteResourceLanguages>zh-Hans</SatelliteResourceLanguages>
+    <UserSecretsId>687d9049-a6a5-4263-b110-d33936c90f02</UserSecretsId>
+  </PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DefineConstants></DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Aliyun.OSS.SDK.NetCore" Version="2.13.0" />
+		<PackageReference Include="Aspose.Cells" Version="21.6.0" />
+		<PackageReference Include="Aspose.Slides.NET" Version="21.6.0" />
+		<PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
+		<PackageReference Include="Autofac.Extras.DynamicProxy" Version="6.0.0" />
+		<PackageReference Include="CSRedisCore" Version="3.6.6" />
+		<PackageReference Include="log4net" Version="2.0.13" />
+		<PackageReference Include="Microsoft.AspNetCore.Localization" Version="2.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.9" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.9" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Log4Net.AspNetCore" Version="5.0.4" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+		<PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.2.22" />
+		<PackageReference Include="SixLabors.ImageSharp" Version="1.0.3" />
+		<PackageReference Include="SixLabors.ImageSharp.Web" Version="1.0.3" />
+		<PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+		<PackageReference Include="UEditorNetCore" Version="1.1.0" />
+
+	</ItemGroup>
+
+
+
+	<ItemGroup>
+		<ProjectReference Include="..\WeTalk.Common\WeTalk.Common.csproj" />
+		<ProjectReference Include="..\WeTalk.Extensions\WeTalk.Extensions.csproj" />
+		<ProjectReference Include="..\WeTalk.Interfaces\WeTalk.Interfaces.csproj" />
+		<ProjectReference Include="..\WeTalk.Models\WeTalk.Models.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Update="Areas\Admin_WeTalk\Views\Course\OnlineList.cshtml">
+	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </Content>
+	  <Content Update="Config\log4netcore.config">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
+	<ProjectExtensions>
+		<VisualStudio>
+			<UserProperties appsettings_1json__JsonSchema="" />
+		</VisualStudio>
+	</ProjectExtensions>
+
+</Project>

@@ -1,0 +1,228 @@
+﻿@using WeTalk.Web.ViewModels.Order;
+@using Microsoft.AspNetCore.Mvc.Localization
+@using WeTalk.Interfaces
+@inject IHtmlLocalizer<LangResource> Localizer
+@model ListAdd
+@section HeadCss{
+	<link href="/assets/css/plugins/datapicker/bootstrap-datetimepicker.css" rel="stylesheet" />
+	<link href="@Url.Content("/assets/css/plugins/switchery/switchery.css")" rel="Stylesheet" type="text/css" />
+	<style>
+		.col-sm-8{
+			padding-top:7px;
+		}
+	</style>
+}
+<form asp-action="OfflineListAdd" enctype="multipart/form-data">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["订单"]ID</label>
+								<div class="col-sm-8">
+                                    @Model.Orderid
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["订单号"]</label>
+								<div class="col-sm-8">
+                                    @Model.OrderSn
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["购买人"]</label>
+								<div class="col-sm-8">
+									@Model.Name
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["购买人邮箱"]</label>
+								<div class="col-sm-8">
+									@Model.Email
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["购买人电话"]</label>
+								<div class="col-sm-8">
+									@Model.Mobile
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["购买人IP"]</label>
+								<div class="col-sm-8">
+									@Model.Ip
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["购买人国家"]</label>
+								<div class="col-sm-8">
+									@Model.CountryCode
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["课程标题"]</label>
+								<div class="col-sm-8">
+									@Model.Title
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["课程缩略图"]</label>
+								<div class="col-sm-8">
+									<a href="@Model.Img" target="_blank" style="margin-left:30px;"><img src="@Model.Img" width="150" /></a>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["课时数"]</label>
+								<div class="col-sm-8">
+									@Model.LessonCount
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["线下上课时间"]</label>
+								<div class="col-sm-8">
+									@Model.LessonStart
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["结算价"]</label>
+								<div class="col-sm-8">
+									@Model.Amount (@Model.CurrencyCode)
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["付款方式"]</label>
+								<div class="col-sm-8">
+									@Localizer[Model.PayTitle]
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["支付流水号"]</label>
+								<div class="col-sm-8">
+									<input asp-for="TransactionId" class="form-control" />
+									<span class="help-block m-b-none"><i class="fa fa-info-circle"></i> @Localizer["支付平台的流水单号或线下转账银行凭证号"]</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["支付币种"]</label>
+								<div class="col-sm-8"> 
+									<select asp-for="CurrencyCode" asp-items="Model.CurrencyCodeItem" class="form-control" >
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["实付款"]</label>
+								<div class="col-sm-8">
+									<input asp-for="Payment" step="0.01" min="0" class="form-control" required type="number" />
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["付款时间"]</label>
+								<div class="col-sm-8">
+									@(Model.Status>=1?Model.Paytime.ToString():"")
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-number-input" class="col-sm-3 col-form-label text-right">@Localizer["创建时间"]</label>
+								<div class="col-sm-8">
+									@Model.Dtime
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["是否用户取消"]</label>
+								<div class="col-sm-8">
+									@if (Model.UserDeleted == 1)									
+									{
+										@Localizer["已取消"]
+									}
+									else
+									{
+										@Localizer["未取消"]
+									}
+								</div>
+							</div>
+							@if (Model.UserDeleted == 1)
+							{
+								<div class="form-group row">
+									<label for="example-number-input" class="col-sm-3 col-form-label text-right">@Localizer["取消时间"]</label>
+									<div class="col-sm-8">
+										@Model.CancelTime
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="example-number-input" class="col-sm-3 col-form-label text-right">@Localizer["取消原因"]</label>
+									<div class="col-sm-8">
+										@Model.CancelMessage
+									</div>
+								</div>
+							}
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["状态"]</label>
+								<div class="col-sm-8">
+									<select asp-for="Status" class="form-control">
+										<option value="0">@Localizer["待付款"]</option>
+										<option value="1">@Localizer["已付款"]</option>
+									</select>
+								</div>
+							</div>
+                            <div class="form-group row">
+                                <label for="example-number-input" class="col-sm-3 col-form-label text-right">@Localizer["创建时间"]</label>
+                                <div class="col-sm-8">
+                                    @Model.Dtime
+                                </div>
+                            </div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["备注"]：</label>
+								<div class="col-sm-8">
+									<textarea asp-for="Message" class="form-control" style="width:70%;height:94px;"></textarea>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-8 ml-auto">
+									<input asp-for="Orderid" type="hidden" />
+									<button type="submit" class="btn btn-primary dictionaryadd dictionaryedit" id="btn_save">@Localizer["保存信息"]</button>
+								</div>
+							</div>
+							<br>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["操作日志"]</label>
+								<div class="col-sm-8">
+									@Html.Raw(Model.Remark)
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div><!--end card-body-->
+			</div><!--end card-->
+		</div><!--end col-->
+	</div><!--end row-->
+</form>
+
+@section Scripts{
+	<!-- Required datatable js -->
+	<script type="text/javascript" src="@Url.Content("/assets/js/jquery.easyui.min.js")"></script>
+	<script type="text/javascript" src="@Url.Content("/assets/plugins/datapicker/bootstrap-datetimepicker.min.js")"></script>
+	<script src="@Url.Content("/assets/plugins/switchery/switchery.js")"></script>
+	
+	<script type="text/javascript">
+		@Html.Raw(ViewBag.ScriptStr)
+
+		var switchery = new Switchery($(".js-switch")[0], {
+			color: '#1AB394'
+		});
+		
+		$(document).ready(function () {
+			$('.datetimepicker').datetimepicker({
+				//language: 'zh-CN',//显示中文
+				forceParse: true,
+				format: 'yyyy-mm-dd hh:ii:ss',//显示格式
+				initialDate: new Date().Format("yyyy-MM-dd hh:mm:ss"),
+				autoclose: true,//选中自动关闭
+				todayBtn: true,//显示今日按钮*/
+				minuteStep: 1
+			});
+		});
+	</script>
+}

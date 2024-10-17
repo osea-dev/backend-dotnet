@@ -1,0 +1,88 @@
+﻿@using WeTalk.Interfaces;
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<LangResource> Localizer
+@using WeTalk.Web.ViewModels.Course;
+@model ChooseKeys
+@section HeadCss{
+}
+
+<form asp-action="FontAdd" enctype="multipart/form-data">
+	<div class="row" style="margin-top:10px;">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-body">
+					<div class="input-group">
+						<div class="col-lg-6">
+							<span class="input-group-btn">
+								<input type="hidden" asp-for="Keysids" />
+								<input type="text" placeholder="关键词" id="input_keys" class="form-control" />
+							</span>
+						</div>
+						<div class="col-lg-2">
+							<span class="input-group-btn">
+								<button type="button" id="btn_choose_search" class="btn btn-outline-info search"> <i class="fa fa-search"></i>@Localizer["搜索"]</button>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div> <!-- end col -->
+	</div>
+
+	<div class="row" style="margin-top:10px;">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-body">
+					<div class="row" id="div_list">
+						@Html.Raw(Model.List_Keys)
+					</div>
+
+					<div class="row" style="padding-top:10px;">
+						<div class="col-sm-7 ml-auto">
+							<button type="button" id="btn_choose" class="btn btn-primary dictionaryadd dictionaryedit">@Localizer["选择标签"]</button>
+						</div>
+					</div>
+				</div><!--end card-body-->
+			</div><!--end card-->
+		</div><!--end col-->
+	</div><!--end row-->
+</form>
+
+<div id="win1" />
+@section Scripts{
+	<!-- Required datatable js -->
+	<script type="text/javascript" src="@Url.Content("/assets/js/jquery.easyui.min.js")"></script>
+	<script>
+		@Html.Raw(ViewBag.ScriptStr)
+
+		$("#btn_choose_search").click(function () {
+			sea();
+		});
+		function sea() {
+			$.post("ChooseKeys", {
+				keys: $("#input_keys").val(),
+				keysids: $("#Keysids").val()
+			}, function (data) {
+				$("#div_list").html(data);
+			});
+		}
+		$("#btn_choose").click(function () {
+			var vals = "",valids = "";
+			var chks = $("input[type=checkbox]");
+			for (var i = 0; i < chks.length; i++) {
+				if (chks[i].checked) {
+					var arr = chks[i].value.split("|");
+					if (vals.length > 0) {
+						vals += ",";
+						valids += ",";
+					}
+					vals += arr[0];
+					valids += arr[1];
+				}
+			}
+			parent.$('#@Model.ControlID').val(vals);
+			parent.$('#Keysids').val(valids);
+			parent.$('#win1').window('close');
+		});
+	</script>
+}

@@ -1,0 +1,369 @@
+﻿@using WeTalk.Common;
+@using WeTalk.Web.ViewModels.User;
+@using Microsoft.AspNetCore.Mvc.Localization
+@using WeTalk.Interfaces
+@inject IHtmlLocalizer<LangResource> Localizer
+@section HeadCss{
+	<link href="@Url.Content("/assets/css/icon.css")" rel="stylesheet" />
+	<link href="@Url.Content("/assets/css/plugins/datapicker/datepicker3.css")" rel="stylesheet" />
+}
+
+<div class="row" >
+	<div class="col-12">
+		<div class="card">
+			<div class="card-body">
+				<div class="input-group">
+					<span class="input-group-btn">
+						<select class="form-control m-b" name="account" id="sel_menke_state">
+							<option value="">@Localizer["课节状态"]</option>
+                            <option value="0">@Localizer["已取消"]</option>
+                            <option value="1">@Localizer["未开始"]</option>
+                            <option value="2">@Localizer["进行中"]</option>
+                            <option value="3">@Localizer["已结课"]</option>
+                            <option value="4">@Localizer["已过期"]</option>
+						</select>
+                    </span>
+                    <span class="input-group-btn">
+                        <select class="form-control m-b" name="account" id="sel_is_user_courseid">
+                            <option value="">@Localizer["关联已购课程"]</option>
+                            <option value="0">@Localizer["未关联"]</option>
+                            <option value="1">@Localizer["关联"]</option>
+                        </select>
+                    </span>
+                    <span class="input-group-btn">
+                        <select class="form-control m-b" name="account" id="sel_istrial">
+                            <option value="">@Localizer["是否试听"]</option>
+                            <option value="0">@Localizer["否"]</option>
+                            <option value="1">@Localizer["是"]</option>
+                        </select>
+                    </span>
+					<span class="input-group-btn">
+						<input type="text" placeholder="@Localizer["关键词"]" id="input_keys" class="form-control" />
+					</span>
+					<span class="input-group-btn">
+						<div class="input-daterange input-group">
+							<input type="text" id="input_begintime" class="input-sm form-control datepicker" name="start" placeholder="@Localizer["开课起始时间"]" />
+							<span class="input-group-addon">-</span>
+							<input type="text" id="input_endtime" class="input-sm form-control datepicker" name="end" placeholder="@Localizer["开课结束时间"]" />
+						</div>
+					</span>
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-outline-info search" onclick="mainGrid.doSearch();"> <i class="fa fa-search"></i>@Localizer["搜索"]</button>
+					</span>
+				</div>
+				<table id="table_view" />
+			</div>
+		</div>
+	</div> <!-- end col -->
+</div>
+<div id="win" />
+
+@section Scripts{
+
+	<script src="@Url.Content("/assets/plugins/datapicker/bootstrap-datepicker.js")"></script>
+	<script>
+        $('.datepicker').datepicker({
+            keyboardNavigation: false,
+            forceParse: false,
+            autoclose: true
+        });
+
+		var actionURL = "UserLessonReadData";
+        var fillDataContralId = "table_view";
+        var mainGrid = {
+            databind: function () {
+                /*开始加载数据*/
+                $('#' + fillDataContralId).datagrid({
+                    url: actionURL,
+                    idField: 'UserLessonid', //主键
+                    width: (($(window).width()-60) * 0.98),
+                    height: (($(window).height() - 70) * 0.98),
+                    fitColumns: true,
+                    singleSelect: false, //单选
+                    pageList: [10, 20, 50, 100],
+                    pageSize: 20,
+                    pagination: true,
+					toolbar: [
+                    {
+                        id: 'sync',
+                        text: '@Localizer["手工同步拓课云"]',
+                        iconCls: 'icon-reload',
+                        handler: function () {
+                            mainGrid.sync();
+                        }
+                    }
+                    ],
+                    onDblClickRow: function (rowIndex, rowData) {
+                        if ($('#a_edit').size() > 0) {
+                            mainGrid.edit();
+                        }
+                    },
+                    onLoadSuccess: function () {
+		                @Html.Raw(ViewBag.ScriptStr)
+                            },
+                    columns: [
+                        [
+                            { title: '选择', checkbox: true, field: 'id', width: 30, sortable: true },
+                            { title: 'ID', field: true, field: 'UserLessonid', width: 40, sortable: true },
+							{ title: '@Localizer["课程类型"]', field: 'Type', width: 60, sortable: true, formatter: function (value, row) {
+                                var e=''; 
+                                switch (value) {
+                                    case 1:
+                                            e = '@Localizer["直播课"]';
+                                        break;
+                                    case 0:
+                                            e = '@Localizer["众语课程"]';
+                                        break;
+                                    } 
+                                    return e;
+                                }
+                            },
+                            {
+                                title: '@(Localizer["已购课程ID"])', field: 'UserCourseid', width: 40, formatter: function (value, row) {
+                                    var e = "";
+                                    if (value > 0) {
+                                        e = value;
+                                    } else {
+                                        e = "<font color=\"red\">@Localizer["未关联"]</font>";
+                                    }
+                                    return e;
+                                }
+                            },
+                            {
+                                title: '@Localizer["学生姓名"]', field: 'Userid', width: 100, sortable: true, formatter: function (value, row) {
+                                    var e = "";
+                                    if (value > 0) {
+                                        e = "<a href=\"javasript:void(0);\" onclick=\"mainGrid.open_user(" + row.Userid + ");\" style=\"color:green\">" + row.MenkeStudentName + "</a>";
+                                    } else {
+                                        e = "<a href=\"javasript:void(0);\" onclick=\"mainGrid.union_student(" + row.Userid + ");\" style=\"color:red\">@Localizer["未注册"]</a>";
+                                    }
+                                    return e;
+                                }
+                            },
+                            {
+                                title: '@Localizer["老师姓名"]', field: 'Teacherid', width: 100, sortable: true, formatter: function (value, row) {
+                                    var e = "";
+                                    if (value > 0) {
+                                        e = "<a href=\"javasript:void(0);\" onclick=\"mainGrid.open_teacher(" + row.Teacherid + ");\" style=\"color:green\">" + row.MenkeTeacherName + "</a>";
+                                    } else {
+                                        e = "<a href=\"javasript:void(0);\" onclick=\"mainGrid.union_teacher(" + row.Teacherid + ");\" style=\"color:red\">@Localizer["无档案"]</a>";
+                                    }
+                                    return e;
+                                }
+                            },
+                            { title: '@(Localizer["拓-课程ID"])', field: 'MenkeCourseId', width: 60 },
+                            { title: '@(Localizer["拓-课节ID"])', field: 'MenkeLessonId', width: 60 },
+                            { title: '@(Localizer["房间号"])', field: 'MenkeLiveSerial', width: 80 },
+                            { title: '@Localizer["学生手机"]', field: 'MenkeStudentMobile', width: 100 },
+                            //{ title: '@Localizer["电子邮件"]', field: 'Email', width: 100, sortable: true },
+                            { title: '@(Localizer["拓课云课程"])', field: 'MenkeName', width: 200, sortable: true },
+                            { title: '@(Localizer["拓课云课节"])', field: 'MenkeLessonName', width: 100, sortable: true },
+                            { title: '@Localizer["课节时间"]', field: 'MenkeTime', width: 120 },
+                            { title: '@Localizer["创建时间"]', field: 'Dtime', width: 80, sortable: true },
+                            {
+                                title: '@Localizer["课节报告"]', field: 'Report', width: 60, sortable: true, formatter: function (value, row) {
+                                    var e = '';
+                                    if (row.IsReport == 1) {
+                                        e = "<a href=\"javascript:void(0);\" onclick=\"mainGrid.open_report(" + row.UserLessonid + "," + row.MenkeUserId + ");\">[@Localizer["查看报告"]]</a>";
+                                    } else {
+                                        e = "@Localizer["报告未出"]";
+                                    }
+                                    return e;
+                                }
+                            },
+                            {
+                                title: '@Localizer["布置作业"]', field: 'Homework', width: 60, sortable: true, formatter: function (value, row) {
+                                    var e = '';
+                                    if (row.IsHomework == 1) {
+                                        e = "<font color=\"green\">@Localizer["已布置"]</font>";
+                                    } else {
+                                        e = "<font color=\"red\">@Localizer["未布置"]</font>";
+                                    }
+                                    return e;
+                                }
+                            },
+                            {
+                                title: '@Localizer["交作业"]', field: 'HomeworkSubmit', width: 60, sortable: true, formatter: function (value, row) {
+                                    var e = '';
+                                    if (row.IsHomeworkSubmit == 1) {
+                                        e = "<font color=\"green\">@Localizer["已提交"]</font>";
+                                    } else {
+                                        e = "<font color=\"red\">@Localizer["未提交"]</font>";
+                                    }
+                                    return e;
+                                }
+                            },
+                            {
+                                title: '@Localizer["作业点评"]', field: 'IsPass', width: 60, sortable: true, formatter: function (value, row) {
+                                    var e = '';
+                                    switch (row.IsPass) {
+                                        case 0:
+                                            e = "<font color=\"red\">@Localizer["未通过"]</font>";
+                                            break;
+                                        case 1:
+                                            e = "<font color=\"green\">@Localizer["已通过"]</font>";
+                                            break;
+                                        default:
+                                            e = "@Localizer["未点评"]";
+                                            break;
+                                    }
+                                    return e;
+                                }
+                            },
+                            { title: '@Localizer["试听"]', field: true, field: 'Istrial', width: 40, sortable: true },
+                            {
+                                title: '@Localizer["课节状态"]', field: 'MenkeState', width: 50, sortable: true, formatter: function (value, row) {
+                                    var e = ''; //1未开始2进行中3已结课4已过期
+                                    if (row.MenkeDeleteTime > 0 || row.Status == "0") {
+                                        e = '<font color="red">@Localizer["已取消"]</font>';
+                                    } else {
+                                        switch (value) {
+                                            case 0:
+                                                e = '@Localizer["未知"]';
+                                                break;
+                                            case 1:
+                                                e = '<font color="green">@Localizer["未开始"]</font>';
+                                                break;
+                                            case 2:
+                                                e = '<font color="green">@Localizer["进行中"]</font>';
+                                                break;
+                                            case 3:
+                                                e = '<font color="green">@Localizer["已结课"]</font>';
+                                                break;
+                                            case 4:
+                                                e = '<font color="red">@Localizer["已过期"]</font>';
+                                                break;
+                                        }
+                                    }
+                                    return e;
+                                }
+                            },
+                            {
+                                title: '@Localizer["操作"]', field: 'operation', align: 'center', width: 60, formatter: function (value, row) {
+                                    var e = '<a href="javascript:void(0);" class="edit mr-2" onclick="mainGrid.editrow(' + row.UserLessonid + ');"><i class="fas fa-edit text-info font-16"></i></a> ';
+                                    e += '<a href="javascript:void(0);" onclick="mainGrid.delrow(' + row.UserLessonid + ')"><i class="fas fa-trash-alt text-danger font-16"></i></a>';
+                                    return e;
+                                }
+                            }
+                        ]]
+                });
+                var p = $('#' + fillDataContralId).datagrid('getPager');
+                $(p).pagination({
+                    onBeforeRefresh: function () {
+                        //alert('before refresh');
+                    }
+                });
+
+            },
+            getSelected: function () {
+                return $('#' + fillDataContralId).datagrid('getSelected');
+            },
+            getSelections: function () {
+                return $('#' + fillDataContralId).datagrid('getSelections');
+            },
+            Reflesh: function () {
+                $('#' + fillDataContralId).datagrid("reload");
+            },
+            doSearch: function () {
+                $('#' + fillDataContralId).datagrid('clearSelections');
+                $('#' + fillDataContralId).datagrid('load', {
+                    keys: $('#input_keys').val(),
+                    menke_state: $('#sel_menke_state').val(),
+                    istrial: $('#sel_istrial').val(),
+                    status: $('#sel_status').val(),
+                    is_user_courseid: $('#sel_is_user_courseid').val(),
+                    begintime: $('#input_begintime').val(),
+                    endtime: $('#input_endtime').val()
+                });
+            },
+            editrow: function (id) {
+                if (id) {
+                    $('#win').window({
+                        width: $(window).width() * 0.9,
+                        height: $(window).height() * 0.9,
+                        modal: true,
+                        title: "@Localizer["修改已排课节"]"
+                    });
+                    $('#win').html("<iframe id='if1' src='UserLessonReadAdd?UserLessonid=" + id + "&dtime=" + new Date() + "'>");
+                    $('#win').window({
+                        onResize: function () { //当面板关闭之前触发的事件
+                            $("#win iframe").width($(this).width() - 15);
+                            $("#win iframe").height($(this).height() - 15);
+                        }
+                    });
+                } else {
+                    alert('@Localizer["请选择要修改的行"]');
+                }
+            },
+			unionid: function (user_lessionid) {
+				$.get(actionURL + "?action=unionid&UserLessonid="+user_lessionid, function (data) {
+                    var json = eval("(" + data + ")");
+                    if (json.errorcode == 0) $('#' + fillDataContralId).datagrid('reload');
+					$.messager.show({
+						title: '@Localizer["关联网站相关ID"]', msg: json.msg, timeout: 3000, showType: 'slide' });
+                });
+			},
+			union_student: function (userid) {
+				$.get(actionURL + "?action=union_student&Userid="+userid, function (data) {
+                    var json = eval("(" + data + ")");
+                    if (json.errorcode == 0) $('#' + fillDataContralId).datagrid('reload');
+					$.messager.show({
+						title: '@Localizer["关联学生ID"]', msg: json.msg, timeout: 3000, showType: 'slide' });
+                });
+			},
+			union_teacher: function (teacherid) {
+				$.get(actionURL + "?action=union_teacher&Teacherid="+teacherid, function (data) {
+                    var json = eval("(" + data + ")");
+                    if (json.errorcode == 0) $('#' + fillDataContralId).datagrid('reload');
+					$.messager.show({
+						title: '@Localizer["关联老师ID"]', msg: json.msg, timeout: 3000, showType: 'slide' });
+                });
+			},
+			open_user: function (userid) {
+				parent.main_click("User/ListAdd?Userid="+userid,"学生资料");
+			},
+			open_teacher: function (teacherid) {
+				parent.main_click("Teacher/ListAdd?Teacherid="+teacherid,"学生资料");
+			},
+			open_report: function (user_lessionid,meke_userid) {
+                if (user_lessionid) {
+                    $('#win').window({
+                        width: $(window).width() * 0.9,
+                        height: $(window).height() * 0.9,
+                        modal: true,
+                        title: "@Localizer["课节报告"]"
+                    });
+                    $('#win').html("<iframe id='if1' src='UserLessonReport?UserLessonid=" + user_lessionid + "&MenkeUserId="+ meke_userid +"&dtime=" + new Date() + "'>");
+                    $('#win').window({
+                        onResize: function () { //当面板关闭之前触发的事件
+                            $("#win iframe").width($(this).width() - 15);
+                            $("#win iframe").height($(this).height() - 15);
+                        }
+                    });
+                } else {
+                    alert('@Localizer["请选择要修改的行"]');
+                }
+			},
+			sync: function () {
+                if (confirm("@Localizer["仅支持同步最近一天的数据"]?")) {
+				    $.get(actionURL + "?action=sync", function (data) {
+                        var json = eval("(" + data + ")");
+                        if (json.errorcode == 0) $('#' + fillDataContralId).datagrid('reload');
+					    $.messager.show({
+						    title: '@Localizer["同步拓课云排课信息"]', msg: json.msg, timeout: 3000, showType: 'slide' });
+                    });
+                }
+			}
+        }
+        $(function () {
+            mainGrid.databind();
+        });
+        //监听，页面变化重画宽高；
+        $(window).resize(function () {
+            $('#' + fillDataContralId).datagrid('resize', {
+                width: function () { return document.body.clientWidth; },
+                height: function () { return document.body.clientHeight; },
+            });
+        });
+	</script>
+}

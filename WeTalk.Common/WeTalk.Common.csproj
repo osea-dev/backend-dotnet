@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+      <PackageReference Include="Aspose.Cells" Version="21.6.0" />
+      <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.1" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.1" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+      <PackageReference Include="RSAExtensions" Version="1.1.0" />
+      <PackageReference Include="SharpZipLib" Version="1.3.3" />
+      <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta13" />
+      <PackageReference Include="WebApiClient.Extensions.DependencyInjection" Version="2.0.3" />
+      <PackageReference Include="WebApiClient.JIT" Version="1.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WeTalk.Models\WeTalk.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="LogHelper\Seri\" />
+  </ItemGroup>
+
+</Project>

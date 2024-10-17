@@ -1,0 +1,205 @@
+﻿@using WeTalk.Web.ViewModels.System;
+@using Microsoft.AspNetCore.Mvc.Localization
+@using WeTalk.Interfaces
+@inject IHtmlLocalizer<LangResource> Localizer
+@section HeadCss{
+	<link href="@Url.Content("/assets/css/icon.css")" rel="stylesheet" />
+	<link href="@Url.Content("/assets/css/plugins/datapicker/datepicker3.css")" rel="stylesheet" />
+}
+
+<div class="row" >
+	<div class="col-12">
+		<div class="card">
+			<div class="card-body">
+				<div class="input-group">
+					<span class="input-group-btn">
+						<select class="form-control m-b" name="account" id="sel_status">
+							<option value="">@Localizer["状态"]</option>
+							<option value="-1">@Localizer["已删除"]</option>
+							<option value="0">@Localizer["待完善"]</option>
+							<option value="1">@Localizer["正常"]</option>
+						</select>
+					</span>
+					<span class="input-group-btn">
+						<input type="text" placeholder="@Localizer["关键词"]" id="input_keys" class="form-control" />
+					</span>
+					<span class="input-group-btn">
+						<div class="input-daterange input-group">
+							<input type="text" id="input_begintime" class="input-sm form-control datepicker" name="start" placeholder="@Localizer["创建起始时间"]" />
+							<span class="input-group-addon">-</span>
+							<input type="text" id="input_endtime" class="input-sm form-control datepicker" name="end" placeholder="@Localizer["创建结束时间"]" />
+						</div>
+					</span>
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-outline-info search" onclick="mainGrid.doSearch();"> <i class="fa fa-search"></i>@Localizer["搜索"]</button>
+					</span>
+				</div>
+				<table id="table_view" />
+			</div>
+		</div>
+	</div> <!-- end col -->
+</div>
+<div id="win" />
+
+@section Scripts{
+
+	<script src="@Url.Content("/assets/plugins/datapicker/bootstrap-datepicker.js")"></script>
+	<script>
+        $('.datepicker').datepicker({
+            keyboardNavigation: false,
+            forceParse: false,
+            autoclose: true
+        });
+
+		var actionURL = "ListReadData";
+        var fillDataContralId = "table_view";
+        var mainGrid = {
+            databind: function () {
+                /*开始加载数据*/
+                $('#' + fillDataContralId).datagrid({
+                    url: actionURL,
+                    idField: 'Userid', //主键
+                    width: (($(window).width()-60) * 0.98),
+                    height: (($(window).height() - 70) * 0.98),
+                    fitColumns: true,
+                    singleSelect: false, //单选
+                    pageList: [10, 20, 50, 100],
+                    pageSize: 20,
+                    pagination: true,
+					toolbar: [],
+                    onDblClickRow: function (rowIndex, rowData) {
+                        if ($('#a_edit').size() > 0) {
+                            mainGrid.edit();
+                        }
+                    },
+                    onLoadSuccess: function () {
+		                @Html.Raw(ViewBag.ScriptStr)
+                    },
+                    columns: [
+                        [
+							{ title: '选择', checkbox: true, field: 'id', width: 30, sortable: true },
+							{ title: 'ID', field: true, field: 'Userid', width: 30, sortable: true },
+							{ title: '@Localizer["头像"]', field: 'HeadImg', width: 100, formatter: function (value, row) {
+                                return "<img src=\""+ value +"\" width=\"100\">";
+                            }},
+							{ title: '@Localizer["电子邮件"]', field: 'Email', width: 100, sortable: true },
+							{ title: '@Localizer["姓名"]', field: 'Name', width: 60 },
+							{ title: '@Localizer["手机"]', field: 'Mobile', width: 100 },
+							{ title: '@Localizer["性别"]', field: 'Gender', width: 40, sortable: true, formatter: function (value, row) {
+                                switch(value){
+                                    case "0":
+                                      return "@Localizer["女"]";
+                                    break;
+                                    case "1":
+                                      return "@Localizer["男"]";
+                                    break;
+                                }
+                                return "";
+                            } },
+							{ title: '@Localizer["出生日期"]', field: 'Birthdate', width: 60, sortable: true },
+							{ title: '@Localizer["注册时间"]', field: 'Regtime', width: 100, sortable: true },
+							{ title: '@Localizer["状态"]', field: 'Status', width: 60, sortable: true, formatter: function (value, row) {
+                                var e='';    
+                                switch(value){
+                                    case "0":
+                                        e='@Localizer["未完善"]';
+                                        break;
+                                    case "1":
+                                        e = '<font color="green">@Localizer["已启用"]</font>';
+                                        break;
+                                    case "-1":
+                                        e = '<font color="red">@Localizer["删除"]</font>';
+                                        break;
+                                    } 
+                                    return e;
+                                }
+                            },
+                            {
+                                title: '@Localizer["关联拓课云"]', field: 'MenkeUserId', width: 40,  formatter: function (value, row) {
+                                    var e = '';
+                                    if (value > 0) {
+                                        e = "<font color=\"green\">@Localizer["已关联"]</font>";
+                                    } else {
+                                        e = "<a href=\"javascript:void(0);\" onclick=\"mainGrid.union(" + row.Userid + ")\" style=\"color:red\">@Localizer["未关联"]</a>";
+                                    }
+                                    return e;
+                                }
+                            },
+                            {
+                                title: '@Localizer["操作"]', field: 'operation', align: 'center', width: 100, formatter: function (value, row) {
+                                    var e = '<a href="javascript:void(0);" class="edit mr-2" onclick="mainGrid.editrow(' + row.Userid + ');"><i class="fas fa-book-open text-info font-16"></i></a> ';
+                                    return e;
+                                }
+                            }
+                        ]]
+                });
+                var p = $('#' + fillDataContralId).datagrid('getPager');
+                $(p).pagination({
+                    onBeforeRefresh: function () {
+                        //alert('before refresh');
+                    }
+                });
+
+            },
+            getSelected: function () {
+                return $('#' + fillDataContralId).datagrid('getSelected');
+            },
+            getSelections: function () {
+                return $('#' + fillDataContralId).datagrid('getSelections');
+            },
+            Reflesh: function () {
+                $('#' + fillDataContralId).datagrid("reload");
+            },
+            doSearch: function () {
+                $('#' + fillDataContralId).datagrid('clearSelections');
+                $('#' + fillDataContralId).datagrid('load', {
+                    keys: $('#input_keys').val(),
+                    status: $('#sel_status').val(),
+                    begintime: $('#input_begintime').val(),
+                    endtime: $('#input_endtime').val()
+                });
+            },
+            editrow: function (id) {
+
+                if (id) {
+                    $('#win').window({
+                        width: $(window).width() * 0.9,
+                        height: $(window).height() * 0.9,
+                        modal: true,
+                        title: "@Localizer["查看用户"]"
+                    });
+                    $('#win').html("<iframe id='if1' src='ListReadAdd?Userid=" + id + "&dtime=" + new Date() + "'>");
+                    $('#win').window({
+                        onResize: function () { //当面板关闭之前触发的事件
+                            $("#win iframe").width($(this).width() - 15);
+                            $("#win iframe").height($(this).height() - 15);
+                        }
+                    });
+                } else {
+                    alert('@Localizer["请选择要修改的行"]');
+                }
+            },
+            union: function (Userid) {
+                if (Userid) {
+                    $.get(actionURL + "?action=union&Userid=" + Userid, function (data) {
+                        var json = eval("(" + data + ")");
+                        if (json.errorcode == 0) $('#' + fillDataContralId).datagrid('reload');
+                        $.messager.show({ title: '关联学生', msg: json.msg, timeout: 3000, showType: 'slide' });
+                    });
+                } else {
+                    alert('请选择要修改的行。');
+                }
+            }
+        }
+        $(function () {
+            mainGrid.databind();
+        });
+        //监听，页面变化重画宽高；
+        $(window).resize(function () {
+            $('#' + fillDataContralId).datagrid('resize', {
+                width: function () { return document.body.clientWidth; },
+                height: function () { return document.body.clientHeight; },
+            });
+        });
+	</script>
+}

@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "WeTalk.Console": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "NETCORE_ENVIRONMENT": "Development"
+      },
+      "remoteDebugEnabled": false,
+      "nativeDebugging": false
+    }
+  }
+}

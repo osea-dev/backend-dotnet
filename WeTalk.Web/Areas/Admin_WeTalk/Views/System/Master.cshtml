@@ -1,0 +1,279 @@
+﻿@using WeTalk.Web.ViewModels.System;
+@using Microsoft.AspNetCore.Mvc.Localization
+@using WeTalk.Interfaces
+@inject IHtmlLocalizer<LangResource> Localizer
+
+@section HeadCss{
+    <link href="@Url.Content("/assets/css/icon.css")" rel="stylesheet" />
+    <link href="@Url.Content("/assets/css/plugins/datapicker/datepicker3.css")" rel="stylesheet" />
+}
+
+<div class="row" style="padding-top:10px;">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+				<div class="input-group">
+					<span class="input-group-btn" style="display:none;">
+						<select class="form-control m-b" name="account" id="sel_status">
+							<option value="">@Localizer["状态"]</option>
+							<option value="-1">@Localizer["已冻结"]</option>
+							<option value="0">@Localizer["待审核"]</option>
+							<option value="1">@Localizer["正常"]</option>
+						</select>
+					</span>
+					<span class="input-group-btn">
+						<input type="text" placeholder="@Localizer["关键词"]" id="input_keys" class="form-control" />
+					</span>
+					<span class="input-group-btn">
+						<div class="input-daterange input-group">
+							<input type="text" id="input_begintime" class="input-sm form-control datepicker" name="start" placeholder="@Localizer["创建起始时间"]" />
+							<span class="input-group-addon">-</span>
+							<input type="text" id="input_endtime" class="input-sm form-control datepicker" name="end" placeholder="@Localizer["创建结束时间"]" />
+						</div>
+					</span>
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-outline-info search" onclick="mainGrid.doSearch();"> <i class="fa fa-search"></i>@Localizer["搜索"]</button>
+					</span>
+				</div>
+                <table id="table_view" />
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div>
+<div id="win" />
+
+@section Scripts{
+
+    <script src="@Url.Content("/assets/js/plugins/datapicker/bootstrap-datepicker.js")"></script>
+
+    <script>
+        
+        $('.datepicker').datepicker({
+            keyboardNavigation: false,
+            forceParse: false,
+            autoclose: true
+        });
+
+        var actionURL = "MasterData";
+        var fillDataContralId = "table_view";
+        var mainGrid = {
+            databind: function () {
+                /*开始加载数据*/
+                $('#' + fillDataContralId).datagrid({
+                    url: actionURL,
+                    idField: 'AdminMasterid', //主键
+                    width: (($(window).width()-60) * 0.98),
+                    height: (($(window).height() - 70) * 0.98),
+                    fitColumns: true,
+                    singleSelect: false, //单选
+                    pageList: [10, 20, 50, 100],
+                    pageSize: 20,
+                    pagination: true,
+                    toolbar: [{
+                        id: 'add',
+                        text: '@Localizer["添加"]',
+                        iconCls: 'icon-add',
+                        handler: function () {
+                            mainGrid.add();
+                        }
+                    }, '-', {
+                        id: 'edit',
+                        text: '@Localizer["修改"]',
+                        iconCls: 'icon-edit',
+                        handler: function () {
+                            mainGrid.edit();
+                        }
+                    }, '-', {
+                        id: 'del',
+                        text: '@Localizer["删除"]',
+                        iconCls: 'icon-remove',
+                        handler: function () {
+                            mainGrid.del();
+                        }
+                    }],
+                    onDblClickRow: function (rowIndex, rowData) {
+                        if ($('#a_edit').size() > 0) {
+                            mainGrid.edit();
+                        }
+                    },
+                    onLoadSuccess: function () {
+		                @Html.Raw(ViewBag.ScriptStr)
+                        },
+                    columns: [
+                        [
+                            { title: 'ID', checkbox: true, field: 'id', width: 30, sortable: true },
+                            { title: 'ID', field: true, field: 'AdminMasterid', width: 30, sortable: true },
+							{ title: '@Localizer["用户"]', field: 'Username', width: 100, align: 'center', sortable: true },
+                            { title: '@Localizer["权限组"]', field: 'RoleName', width: 100, align: 'center' },
+                            { title: '@Localizer["姓名"]', field: 'Name', width: 100, align: 'center', sortable: true },
+                            { title: 'IP', field: 'Ip', width: 120, sortable: true },
+                            { title: '@Localizer["最后登陆时间"]', field: 'Lasttime', width: 120, sortable: true },
+                            { title: '@Localizer["登陆次数"]', field: 'Loginnum', align: 'center', width: 120, sortable: true },
+                            {
+                                title: '@Localizer["操作"]', field: 'operation', align: 'center', width: 200, formatter: function (value, row) {
+                                    var e = '<a href="javascript:void(0);" class="edit mr-2" onclick="mainGrid.editrow(' + row.AdminMasterid + ');"><i class="fas fa-edit text-info font-16"></i></a> ';
+                                    e += '<a href="javascript:void(0);" onclick="mainGrid.delrow(' + row.AdminMasterid + ')"><i class="fas fa-trash-alt text-danger font-16"></i></a>';
+                                    return e;
+                                }
+                            }
+
+                        ]]
+                });
+                var p = $('#' + fillDataContralId).datagrid('getPager');
+                $(p).pagination({
+                    onBeforeRefresh: function () {
+                        //alert('before refresh');
+                    }
+                });
+
+            },
+            getSelected: function () {
+                return $('#' + fillDataContralId).datagrid('getSelected');
+            },
+            getSelections: function () {
+                return $('#' + fillDataContralId).datagrid('getSelections');
+            },
+            Reflesh: function () {
+                var queryParams = { key_word: $("#key_word").val() };
+                DataGridExtend.searchGrid("divSysUserView", queryParams, actionURL);
+            },
+            GetSelectedRow: function () {
+                return $('#' + fillDataContralId).datagrid('getSelected');
+            },
+            doSearch: function () {
+                $('#' + fillDataContralId).datagrid('clearSelections');
+                $('#' + fillDataContralId).datagrid('load', {
+					isagent: $('#sel_isagent').val(),
+					status: $('#sel_status').val(),
+                    begintime: $('#input_begintime').val(),
+                    endtime: $('#input_endtime').val(),
+                    keys: $('#input_keys').val()
+                });
+            },
+            add: function () {
+
+                $('#win').window({
+                    width: $(window).width() * 0.8,
+                    height: $(window).height() * 0.8,
+                    modal: true,
+                    title: "@Localizer["添加用户"]"
+                });
+                $('#win').html("<iframe id='if1' src='MasterAdd'>");
+                $('#win').window({
+                    onResize: function () { //当面板关闭之前触发的事件
+                        $("#win iframe").width($(this).width() - 15);
+                        $("#win iframe").height($(this).height() - 15);
+                    }
+                });
+
+                //PW.getWindow("MasterAdd?treeid=", '新增用户', 720, 438);
+            },
+            edit: function () {
+                var rowdata = mainGrid.getSelected();
+                if (rowdata) {
+                    $('#win').window({
+                        width: $(window).width() * 0.8,
+                        height: $(window).height() * 0.8,
+                        modal: true,
+                        title: "@Localizer["修改用户"]"
+                    });
+                    $('#win').html("<iframe id='if1' src='MasterAdd?AdminMasterid=" + rowdata.AdminMasterid + "'>");
+                    $('#win').window({
+                        onResize: function () { //当面板关闭之前触发的事件
+                            $("#win iframe").width($(this).width() - 15);
+                            $("#win iframe").height($(this).height() - 15);
+                        }
+                    });
+                } else {
+                    alert('@Localizer["请选择要修改的行"]');
+                }
+            },
+            editrow: function (id) {
+
+                if (id) {
+                    $('#win').window({
+                        width: $(window).width() * 0.8,
+                        height: $(window).height() * 0.8,
+                        modal: true,
+                        title: "@Localizer["修改用户"]"
+                    });
+                    $('#win').html("<iframe id='if1' src='MasterAdd?AdminMasterid=" + id + "&dtime=" + new Date() + "'>");
+                    $('#win').window({
+                        onResize: function () { //当面板关闭之前触发的事件
+                            $("#win iframe").width($(this).width() - 15);
+                            $("#win iframe").height($(this).height() - 15);
+                        }
+                    });
+                } else {
+                    alert('@Localizer["请选择要修改的行"]');
+                }
+            },
+            del: function () {
+                var AdminMasterids = "0";
+                var rowdata = mainGrid.getSelections();
+                if (confirm("@Localizer["您确定要删除"]?")) {
+                    if (rowdata.length > 0) {
+                        for (var i = 0; i < rowdata.length; i++) {
+                            AdminMasterids = AdminMasterids + "," + rowdata[i].AdminMasterid;
+                        }
+                        $.get(actionURL + "?action=del&AdminMasterids=" + AdminMasterids, function (data) {
+                            var json = eval("(" + data + ")");
+                            if (json.errorcode == 0) $('#' + fillDataContralId).datagrid('reload');
+                            $.messager.show({ title: '@Localizer["删除用户"]', msg: json.msg, timeout: 3000, showType: 'slide' });
+                        });
+                    } else {
+                        alert('@Localizer["请选择要修改的行"]');
+                    }
+                }
+            },
+            delrow: function (AdminMasterid) {
+                if (confirm("@Localizer["您确定要删除"]?")) {
+                    if (AdminMasterid > 0) {
+                        $.get(actionURL + "?action=del&AdminMasterids=" + AdminMasterid, function (data) {
+                            var json = eval("(" + data + ")");
+                            if (json.errorcode == 0) $('#' + fillDataContralId).datagrid('reload');
+                            $.messager.show({ title: '@Localizer["删除用户"]', msg: json.msg, timeout: 3000, showType: 'slide' });
+                        });
+                    } else {
+                        alert('@Localizer["请选择要修改的行"]');
+                    }
+                }
+            },
+            enableu: function () {
+                var row = mainGrid.getSelected()
+                if (row) {
+                    $.get(actionURL + "?action=enableu&AdminMasterid=" + row.AdminMasterid, function (data) {
+                        var json = eval("(" + data + ")");
+                        if (json.errorcode == 0) $('#' + fillDataContralId).datagrid('reload');
+                        $.messager.show({ title: '@Localizer["启用用户"]' + row.username, msg: json.msg, timeout: 3000, showType: 'slide' });
+                    });
+                } else {
+                    alert('@Localizer["请选择要修改的行"]');
+                }
+
+            }, enablef: function () {
+                var row = mainGrid.getSelected()
+                if (row) {
+                    $.get(actionURL + "?action=enablef&AdminMasterid=" + row.AdminMasterid, function (data) {
+                        var json = eval("(" + data + ")");
+                        if (json.errorcode == 0) $('#' + fillDataContralId).datagrid('reload');
+                        $.messager.show({ title: '@Localizer["禁用用户"]' + row.username, msg: json.msg, timeout: 3000, showType: 'slide' });
+                    });
+                } else {
+                    alert('@Localizer["请选择要修改的行"]');
+                }
+
+            }
+        }
+        $(function () {
+            mainGrid.databind();
+        });
+        //监听，页面变化重画宽高；
+        $(window).resize(function () {
+            $('#' + fillDataContralId).datagrid('resize', {
+                width: function () { return document.body.clientWidth; },
+                height: function () { return document.body.clientHeight; },
+            });
+        });
+    </script>
+}

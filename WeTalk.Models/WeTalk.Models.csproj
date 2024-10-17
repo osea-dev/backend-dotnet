@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="SqlSugar\**" />
+    <Compile Remove="View\**" />
+    <EmbeddedResource Remove="SqlSugar\**" />
+    <EmbeddedResource Remove="View\**" />
+    <None Remove="SqlSugar\**" />
+    <None Remove="View\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
+    <PackageReference Include="SqlSugar.MySqlConnectorCore" Version="5.10.3.32" />
+    <PackageReference Include="SqlSugarCore" Version="5.1.3.35" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Redis\Data\" />
+  </ItemGroup>
+
+</Project>

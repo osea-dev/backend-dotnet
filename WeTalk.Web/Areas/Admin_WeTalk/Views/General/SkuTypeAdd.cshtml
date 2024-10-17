@@ -1,0 +1,103 @@
+﻿@using WeTalk.Web.ViewModels.General;
+@using Microsoft.AspNetCore.Mvc.Localization
+@using WeTalk.Interfaces
+@inject IHtmlLocalizer<LangResource> Localizer
+@model SkuTypeAdd
+@section HeadCss{
+	<link href="~/css/plugins/datapicker/bootstrap-datetimepicker.css" rel="stylesheet" />
+}
+
+
+<form asp-action="SkuTypeAdd">
+	<div class="row" style="margin-top:10px;">
+		<div class="col-lg-12">
+			<div class="card">
+                @await Component.InvokeAsync("LanguageTag", new { lang = Model.Lang })
+				<div class="card-body">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="form-group row" style="display:none;">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["图标字"]</label>
+								<div class="col-sm-8">
+									<input asp-for="IcoFont" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["上课方式"]<i class="mdi mdi-google-translate"></i></label>
+								<div class="col-sm-8">
+									<input asp-for="Title" class="form-control" required type="text">
+								</div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["教室"]</label>
+                                <div class="col-sm-8">
+									<select asp-for="MenkeTemplateId" asp-items="Model.MenkeTemplateItem" class="form-control"></select>
+                                </div>
+                            </div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["最小年龄"]</label>
+								<div class="col-sm-8">
+									<input asp-for="AgeMin" class="form-control" min="0" max="200" step="1" required type="number">
+                                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>@Localizer["0表示不设置下限"]</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["最大年龄"]</label>
+								<div class="col-sm-8">
+									<input asp-for="AgeMax" class="form-control" min="0" max="200" step="1" required type="number">
+                                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>@Localizer["0表示不设置上限"]</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-number-input" class="col-sm-3 col-form-label text-right">@Localizer["排序"]</label>
+								<div class="col-sm-8">
+									<input asp-for="Sort" class="form-control" required type="number">
+									<span class="help-block m-b-none"><i class="fa fa-info-circle"></i>@Localizer["排序字段从小到大排序"]</span>
+									<span class="help-block m-b-none"><i class="fa fa-info-circle"></i>@Localizer["排序字段值相同的情况下,按最新时间发布的排最前面"]</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["状态"]</label>
+								<div class="col-sm-8">
+									<select asp-for="Status" class="form-control">
+										<option value="1">@Localizer["启用"]</option>
+										<option value="0">@Localizer["不启用"]</option>
+									</select>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-8 ml-auto">
+									<input asp-for="Lang" type="hidden" />
+									<input asp-for="SkuTypeid" type="hidden" />
+									<button type="submit" class="btn btn-primary dictionaryadd dictionaryedit">@Localizer["保存信息"]</button>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div><!--end card-body-->
+			</div><!--end card-->
+		</div><!--end col-->
+	</div><!--end row-->
+</form>
+
+@section Scripts{
+	<!-- Required datatable js -->
+	<script type="text/javascript" src="@Url.Content("/assets/js/jquery.easyui.min.js")"></script>
+	<script type="text/javascript" src="@Url.Content("/assets/js/plugins/datapicker/bootstrap-datetimepicker.min.js")"></script>
+
+	<script>
+		@Html.Raw(ViewBag.ScriptStr)
+		$(document).ready(function () {
+			$('.datetimepicker').datetimepicker({
+				//language: 'zh-CN',//显示中文
+				forceParse: true,
+				format: 'yyyy-mm-dd hh:ii:ss',//显示格式
+				initialDate: new Date().Format("yyyy-MM-dd hh:mm:ss"),
+				autoclose: true,//选中自动关闭
+				todayBtn: true,//显示今日按钮*/
+				minuteStep: 1
+			});
+		});
+	</script>
+}

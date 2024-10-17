@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8" />
+	<title>Metrica - Responsive Bootstrap 4 Admin Dashboard</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta content="A premium admin dashboard template by Mannatthemes" name="description" />
+	<meta content="Mannatthemes" name="author" />
+
+	<!-- App favicon -->
+	<link rel="shortcut icon" href="/assets/images/favicon.ico">
+
+	<!-- App css -->
+	<link href="/assets/css/bootstrap.min.441.css" rel="stylesheet" type="text/css" />
+	<link href="/assets/css/icons.css" rel="stylesheet" type="text/css" />
+	<link href="/assets/css/metisMenu.min.css" rel="stylesheet" type="text/css" />
+	<link href="/assets/css/style.css" rel="stylesheet" type="text/css" />
+	<link href="/assets/css/easyui.css" rel="stylesheet" />
+	<link href="/assets/css/bootstrap.min.441.css" rel="stylesheet" />
+	@RenderSection("HeadCss", required: false)
+	<environment include="Development">
+	</environment>
+	<environment exclude="Development">
+	</environment>
+</head>
+<body>
+	<div class="container-fluid">
+		<!-- Page-Title -->
+		<div class="row" style="display:none;">
+			<div class="col-sm-12">
+				<div class="page-title-box">
+					<div class="float-right">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="javascript:void(0);">Metrica</a></li>
+							<li class="breadcrumb-item"><a href="javascript:void(0);">Others</a></li>
+							<li class="breadcrumb-item active">Datatable</li>
+						</ol>
+					</div>
+					<h4 class="page-title">Datatable</h4>
+				</div><!--end page-title-box-->
+			</div><!--end col-->
+		</div><!--end row-->
+		<!-- end page title end breadcrumb -->
+		@RenderBody()
+
+
+
+	</div>
+
+	<!-- jQuery  -->
+	<script src="/assets/js/jquery.min.js"></script>
+	<script src="/assets/js/jquery-ui.min.js"></script>
+	<script src="/assets/js/bootstrap.bundle.min.js"></script>
+	<script src="/assets/js/metisMenu.min.js"></script>
+	<script src="/assets/js/waves.min.js"></script>
+	<script src="/assets/js/jquery.slimscroll.min.js"></script>
+	<script src="/assets/js/jquery.easyui.min.js"></script>
+	@RenderSection("Scripts", required: false)
+	<script>
+		var ispost = false;
+		$("form").on('submit', () => {
+			if (ispost) {
+				return confirm("您确定需要重复提交?");
+			}
+			ispost = true;
+		});
+	</script>
+	<!-- App js -->
+	<script src="/assets/js/app.js"></script>
+</body>
+</html>

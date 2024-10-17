@@ -1,0 +1,81 @@
+services:
+  we-talk-api:
+    container_name: wetalk.api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5001:80"
+    environment:
+      - ASPNETCORE_URLS=http://+:80  # Bind to all network interfaces
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__MainDB=server=mysql;database=wetalk;uid=wetalk_web;pwd=FdO42-ddI4_G4r
+    depends_on:
+      - mysql
+      - redis
+    # environment:
+    #   - ASPNETCORE_ENVIRONMENT=Development
+    # depends_on:
+    #   - mysql
+    #   - redis
+
+
+  # we-talk-web:
+  #   container_name: wetalk.web
+  #   build:
+  #     context: ./WeTalk.Web
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "5002:80"
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ImgRoot=/app/wwwroot
+  #     - ApiRoot=/app/wwwroot
+  #     - ConnectionStrings__MainDB=server=mysql;database=wetalk;uid=wetalk_web;pwd=FdO42-ddI4_G4r
+  #   depends_on:
+  #     - redis
+    # environment:
+    #   - ASPNETCORE_ENVIRONMENT=Development
+    # depends_on:
+    #   - redis
+
+  # we-talk-console:
+  #   container_name: wetalk.console
+  #   build:
+  #     context: ./WeTalk.Console
+  #     dockerfile: Dockerfile
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+    
+  mysql:
+    image: mysql:8.0
+    container_name: wetalk.mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: FdO42-ddI4_G4r
+      MYSQL_DATABASE: wetalk
+      MYSQL_USER: wetalk_web
+      MYSQL_PASSWORD: FdO42-ddI4_G4r
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker-volumes/mysql:/var/lib/mysql
+  
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: wetalk.phpmyadmin
+    environment:
+      - PMA_HOST=mysql
+      - MYSQL_ROOT_PASSWORD=FdO42-ddI4_G4r
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
+
+  redis:
+    image: redis:alpine
+    container_name: wetalk.redis
+    command: redis-server --requirepass Ue2l8ke36922888
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./docker-volumes/redis:/data

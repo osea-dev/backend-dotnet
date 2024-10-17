@@ -1,0 +1,118 @@
+﻿@using WeTalk.Common.Helper;
+@using WeTalk.Web.ViewModels.News;
+@using Microsoft.AspNetCore.Mvc.Localization
+@using WeTalk.Interfaces
+@inject IHtmlLocalizer<LangResource> Localizer
+@model CommentAdd
+@section HeadCss{
+	<link href="/assets/css/plugins/datapicker/bootstrap-datetimepicker.css" rel="stylesheet" />
+	<link href="@Url.Content("/assets/css/plugins/switchery/switchery.css")" rel="Stylesheet" type="text/css" />
+	<link href="@Url.Content("/assets/plugins/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+}
+<form asp-action="CommentAdd" enctype="multipart/form-data">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["新闻标题"]</label>
+								<div class="col-sm-8">
+									@Model.Title
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["评论内容"]</label>
+								<div class="col-sm-8">
+									@Model.Message
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-number-input" class="col-sm-3 col-form-label text-right">@Localizer["评论时间"]</label>
+								<div class="col-sm-8">
+									@DateHelper.ConvertIntToDateTime(Model.Dtime.ToString(),"Local")
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-number-input" class="col-sm-3 col-form-label text-right">@Localizer["评论人"]</label>
+								<div class="col-sm-8">
+									@Model.Name
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-number-input" class="col-sm-3 col-form-label text-right">@Localizer["评论人手机"]</label>
+								<div class="col-sm-8">
+									@Model.Mobile
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-number-input" class="col-sm-3 col-form-label text-right">IP</label>
+								<div class="col-sm-8">
+									@Model.Ip
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["状态"]</label>
+								<div class="col-sm-8">
+									<select asp-for="Status" class="form-control">
+										<option value="1">@Localizer["启用"]</option>
+										<option value="0">@Localizer["停用"]</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["备注"]：</label>
+								<div class="col-sm-8">
+									<textarea asp-for="Message1" class="form-control" style="width:70%;height:94px;"></textarea>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-8 ml-auto">
+									<input asp-for="NewsCommentid" type="hidden" />
+									<button type="submit" class="btn btn-primary dictionaryadd dictionaryedit" id="btn_save">@Localizer["保存信息"]</button>
+								</div>
+							</div>
+							<br>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["操作日志"]</label>
+								<div class="col-sm-8">
+									@Html.Raw(Model.Remark)
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div><!--end card-body-->
+			</div><!--end card-->
+		</div><!--end col-->
+	</div><!--end row-->
+	<div id="win1"></div>
+</form>
+
+@section Scripts{
+	<!-- Required datatable js -->
+	<script type="text/javascript" src="@Url.Content("/assets/js/jquery.easyui.min.js")"></script>
+	<script type="text/javascript" src="@Url.Content("/assets/plugins/datapicker/bootstrap-datetimepicker.min.js")"></script>
+	<script src="@Url.Content("/assets/plugins/switchery/switchery.js")"></script>
+	<script src="@Url.Content("/assets/plugins/select2/select2.min.js")"></script>
+	
+	<script type="text/javascript">
+		@Html.Raw(ViewBag.ScriptStr)
+		var switchery = new Switchery($(".js-switch")[0], {
+			color: '#1AB394'
+		});
+		
+		$(document).ready(function () {
+			$('.datetimepicker').datetimepicker({
+				//language: 'zh-CN',//显示中文
+				forceParse: true,
+				format: 'yyyy-mm-dd hh:ii:ss',//显示格式
+				initialDate: new Date().Format("yyyy-MM-dd hh:mm:ss"),
+				autoclose: true,//选中自动关闭
+				todayBtn: true,//显示今日按钮*/
+				minuteStep: 1
+			});
+		});
+	</script>
+}

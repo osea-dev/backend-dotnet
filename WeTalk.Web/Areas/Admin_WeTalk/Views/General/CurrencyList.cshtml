@@ -1,0 +1,266 @@
+﻿@using WeTalk.Web.ViewModels.General;
+@using Microsoft.AspNetCore.Mvc.Localization
+@using WeTalk.Interfaces
+@inject IHtmlLocalizer<LangResource> Localizer
+
+@section HeadCss{
+    <!-- DataTables -->
+    <link href="@Url.Content("/assets/plugins/datatables/dataTables.bootstrap4.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("/assets/plugins/datatables/buttons.bootstrap4.min.css")" rel="stylesheet" type="text/css" />
+    <!-- Responsive datatable examples -->
+    <link href="@Url.Content("/assets/plugins/datatables/responsive.bootstrap4.min.css")" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/icon.css" rel="stylesheet" />
+}
+
+<div class="row" style="padding-top:10px;">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="table_view" class="easyui-datagrid" />
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div>
+<div id="win"/>
+
+@section Scripts{
+    <!-- Required datatable js -->
+    <script src="@Url.Content("/assets/plugins/datatables/jquery.dataTables.min.js")"></script>
+    <script src="@Url.Content("/assets/plugins/datatables/dataTables.bootstrap4.min.js")"></script>
+    <!-- Buttons examples -->
+    <script src="@Url.Content("/assets/plugins/datatables/dataTables.buttons.min.js")"></script>
+    <script src="@Url.Content("/assets/plugins/datatables/buttons.bootstrap4.min.js")"></script>
+    <script src="@Url.Content("/assets/plugins/datatables/jszip.min.js")"></script>
+    <script src="@Url.Content("/assets/plugins/datatables/pdfmake.min.js")"></script>
+    <script src="@Url.Content("/assets/plugins/datatables/vfs_fonts.js")"></script>
+    <script src="@Url.Content("/assets/plugins/datatables/buttons.html5.min.js")"></script>
+    <script src="@Url.Content("/assets/plugins/datatables/buttons.print.min.js")"></script>
+    <script src="@Url.Content("/assets/plugins/datatables/buttons.colVis.min.js")"></script>
+    <!-- Responsive examples -->
+    <script src="@Url.Content("/assets/plugins/datatables/dataTables.responsive.min.js")"></script>
+    <script src="@Url.Content("/assets/plugins/datatables/responsive.bootstrap4.min.js")"></script>
+    <script src="@Url.Content("/assets/pages/jquery.datatable.init.js")"></script>
+
+    <script>
+        //$('.tablelist tbody tr:odd').addClass('odd');
+
+		var actionURL = "./CurrencyListData";
+        var fillDataContralId = "table_view";
+        var mainGrid = {
+            databind: function () {
+                /*开始加载数据*/
+                $('#' + fillDataContralId).datagrid({
+                    url: actionURL,
+					idField: 'PubCurrencyid', //主键
+					width: (($(window).width() - 20) * 0.98),
+					height: (($(window).height() - 60) * 0.98),
+                    fitColumns: true,
+                    singleSelect: false, //单选
+                    pageList: [10, 20, 50, 100],
+                    pageSize: 20,
+                    pagination: true,
+                    toolbar: [{
+                        text: '@Localizer["添加"]',
+                        iconCls: 'icon-add',
+                        handler: function () {
+                            mainGrid.add();
+                        }
+                    }, '-', {
+                        text: '@Localizer["修改"]',
+                        iconCls: 'icon-edit',
+                        handler: function () {
+                            mainGrid.edit();
+                        }
+                    }, '-', {
+                        text: '@Localizer["删除"]',
+                        iconCls: 'icon-no',
+                        handler: function () {
+                            mainGrid.del();
+                        }
+                    }],
+					onCheck: function (row) {
+						t = $(this);
+						opts = t.datagrid("options");
+						if (opts.checkOnSelect && opts.singleSelect) { return; }
+						var idField = opts.idField, id = row[idField], children, checked, parent = row;
+						//如果当前节点被勾选,那么勾选该节点的子节点
+						$.each(t.datagrid("getChildren", id), function (i, n) {
+							t.datagrid("select", n[idField]);
+						});
+					},
+					onUncheck: function (row) {
+						t = $(this);
+                        opts = t.datagrid("options");
+                        if (opts.checkOnSelect && opts.singleSelect) { return; }
+                        var idField = opts.idField, id = row[idField], children, checked, parent = t.datagrid("getParent", id);
+						$.each(t.datagrid("getChildren", id), function (i, n) {
+							t.datagrid("unselect", n[idField]);
+						});
+					},
+                    onLoadSuccess: function () {
+		                @Html.Raw(ViewBag.ScriptStr)
+                    },
+                    columns: [[
+                        { title: '@Localizer["选择"]', checkbox: true, field: 'check', width: 30, sortable: true },
+                        { title: 'ID', field: 'PubCurrencyid', width: 40, sortable: true },
+                        { title: '@Localizer["币种"]', field: 'Currency', width: 150, sortable: true },
+                        { title: '@Localizer["大州"]', field: 'States', width: 100, sortable: true },
+                        { title: '@Localizer["国家"]', field: 'Country', width: 150, sortable: true },
+                        { title: '@Localizer["国家代码"]', field: 'CountryCode', width: 100, sortable: true },
+                        //{ title: '@Localizer["电话区号"]', field: 'MobileCode', width: 150, sortable: true },
+                        { title: '@Localizer["创建时间"]', field: 'Dtime', width: 100, sortable: true },
+                        { title: '@Localizer["前台启用"]', field: 'Isuse', width: 100, sortable: true , formatter: function (value, row) {
+                                var e = '';
+                                if (value=="1") {
+                                    e = '<font color="green">@Localizer["启用"]</font>';
+                                }else{
+                                    e = '@Localizer["禁用"]';
+                                }
+                                return e;
+                            }
+                        },
+                        { title: '@Localizer["排序"]', field: 'Sort', width: 100, sortable: true },
+                        { title: '@Localizer["状态"]', field: 'Status', width: 100, sortable: true, formatter: function (value, row) {
+                                var e = '';
+                                if (value=="1") {
+                                    e = '<font color="green">@Localizer["已启用"]</font>';
+                                }else{
+                                    e='@Localizer["禁用"]';
+                                }
+                                return e;
+                            }
+                        },
+                        {
+                            title: '@Localizer["操作"]', field: 'operation', align: 'center', width: 100, formatter: function (value, row) {
+                                var e = '<a href="javascript:void(0);" class="edit mr-2" onclick="mainGrid.editrow(' + row.PubCurrencyid + ');"><i class="fas fa-edit text-info font-16"></i></a> ';
+                                e += '<a href="javascript:void(0);" onclick="mainGrid.delrow(' + row.PubCurrencyid + ')"><i class="fas fa-trash-alt text-danger font-16"></i></a>';
+                                return e;
+                            }
+                        }
+                    ]]
+                });
+
+            },
+            getSelected: function () {
+                return $('#' + fillDataContralId).datagrid('getSelected');
+			},
+			getSelections: function () {
+				return $('#' + fillDataContralId).datagrid('getSelections');
+			},
+            Reflesh: function () {
+                $('#' + fillDataContralId).datagrid("reload");
+            },
+            GetSelectedRow: function () {
+                return $('#' + fillDataContralId).datagrid('getSelected');
+            },
+            doSearch: function () {
+                $('#' + fillDataContralId).datagrid('clearSelections');
+                $('#' + fillDataContralId).datagrid('load', {
+                    keys: $('#input_keys').val(),
+                    status: $('#sel_status').val()
+                });
+            },
+            add: function () {
+                $('#win').window({
+                    width: $(window).width() * 0.8,
+                    height: $(window).height() * 0.8,
+                    modal: true,
+                    title: "@Localizer["添加币种"]"
+                });
+                $('#win').html("<iframe id='if1' style='width:100%;height:100%' src='CurrencyAdd?Fid=0'>");
+                $('#win').window({
+                    onResize: function () { //当面板关闭之前触发的事件
+                        $("#win iframe").width($(this).width() - 15);
+                        $("#win iframe").height($(this).height() - 15);
+                    }
+                });
+            },
+            edit: function () {
+                var rowdata = mainGrid.getSelected()
+                if (rowdata) {
+                    $('#win').window({
+                        width: $(window).width() * 0.8,
+                        height: $(window).height() * 0.8,
+                        modal: true,
+                        title: "@Localizer["修改币种"]"
+                    });
+                    $('#win').html("<iframe id='if1' style='width:100%;height:100%;frameborder:0' src='CurrencyAdd?PubCurrencyid=" + rowdata.PubCurrencyid + "'>");
+                    $('#win').window({
+                        onResize: function () { //当面板关闭之前触发的事件
+                            $("#win iframe").width($(this).width() - 15);
+                            $("#win iframe").height($(this).height() - 15);
+                        }
+                    });
+                } else {
+                    alert('@Localizer["请选择要修改的行"]');
+                }
+            },
+            editrow: function (id) {
+
+                if (id) {
+                    $('#win').window({
+                        width: $(window).width() * 0.8,
+                        height: $(window).height() * 0.8,
+                        modal: true,
+                        title: "@Localizer["修改币种"]"
+                    });
+                    $('#win').html("<iframe id='if1' src='CurrencyAdd?PubCurrencyid=" + id + "'>");
+                    $('#win').window({
+                        onResize: function () { //当面板关闭之前触发的事件
+                            $("#win iframe").width($(this).width() - 15);
+                            $("#win iframe").height($(this).height() - 15);
+                        }
+                    });
+                } else {
+                    alert('@Localizer["请选择要修改的行"]');
+                }
+            },
+            delrow: function (id) {
+                if (confirm("@Localizer["您确定要删除"]?")) {
+                    if (id > 0) {
+                        $.get(actionURL + "?action=del&PubCurrencyids=" + id, function (data) {
+                            var json = eval("(" + data + ")");
+                            if (json.errorcode == 0) $('#' + fillDataContralId).datagrid('reload');
+							$.messager.show({ title: '@Localizer["删除币种"]', msg: json.msg, timeout: 3000, showType: 'slide' });
+                        });
+                    } else {
+                        alert('@Localizer["请选择要修改的行"]。');
+                    }
+                }
+            },
+			del: function () {
+				var PubCurrencyids = "0";
+				var rowdata = mainGrid.getSelections();
+                if (confirm("@Localizer["您确定要删除"]?")) {
+					if (rowdata) {
+						for (var i = 0; i < rowdata.length; i++) {
+							PubCurrencyids = PubCurrencyids + "," + rowdata[i].PubCurrencyid;
+						}
+						$.get(actionURL + "?action=del&PubCurrencyids=" + PubCurrencyids, function (data) {
+                            var json = eval("(" + data + ")");
+                            if (json.errorcode == 0) $('#' + fillDataContralId).datagrid('reload');
+                            $.messager.show({ title: '@Localizer["删除币种"]', msg: json.msg, timeout: 3000, showType: 'slide' });
+                        });
+                    } else {
+                        alert('@Localizer["请选择要修改的行"]');
+                    }
+                }
+            }
+        }
+        $(function () {
+            mainGrid.databind();
+        });
+
+        //监听，页面变化重画宽高；
+        $(window).resize(function () {
+            $('#' + fillDataContralId).datagrid('resize', {
+                width: function () { return document.body.clientWidth; },
+                height: function () { return document.body.clientHeight; },
+            });
+        });
+
+        function showImg(value, index) {
+            return '<img src="' + value + '" width="150" />';
+        }
+    </script>
+}

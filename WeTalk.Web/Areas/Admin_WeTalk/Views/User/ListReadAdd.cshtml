@@ -1,0 +1,143 @@
+﻿@using WeTalk.Web.ViewModels.User;
+@using Microsoft.AspNetCore.Mvc.Localization
+@using WeTalk.Interfaces
+@inject IHtmlLocalizer<LangResource> Localizer
+@model ListAdd
+@section HeadCss{
+    <link href="/assets/css/icon.css" rel="stylesheet" />
+    <link href="/lib/layui-src/build/css/layui.css" rel="stylesheet" />
+	<style>
+		.col-sm-8{
+			padding-top:7px;
+		}
+	</style>
+}
+<form asp-action="ListReadAdd">
+    <div class="row" style="padding-top:10px;">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+						<div class="col-lg-12">
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["电子邮箱"]</label>
+								<div class="col-sm-8">
+									@Model.Email
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["手机号码"]</label>
+								<div class="col-sm-8">
+									@Model.MobileCode - @Model.Mobile
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["关联拓课云的学生ID"]</label>
+								<div class="col-sm-8">
+									@Model.MenkeUserId
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["头像"]</label>
+								<div class="col-sm-8">
+									<a href="@Model.HeadImg" target="_blank"><img src="@Model.HeadImg?width=100" width="100" class="img" /></a>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["性别"]</label>
+								<div class="col-sm-8">
+									@(Model.Gender==1?"男":"女")
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["姓"]</label>
+								<div class="col-sm-8">
+									@Model.FirstName
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["名"]</label>
+								<div class="col-sm-8">
+									@Model.LastName
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["出生日期"]</label>
+								<div class="col-sm-8">
+									@Model.Birthdate
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["母语"]</label>
+								<div class="col-sm-8">
+									@Model.Native
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["文化程度"]</label>
+								<div class="col-sm-8">
+									@Model.Education
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["注册时间"]</label>
+								<div class="col-sm-8">
+									@Model.Regtime
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["时区"]</label>
+								<div class="col-sm-8">
+									@Model.Timezone
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-number-input" class="col-sm-3 col-form-label text-right">@Localizer["状态"]</label>
+								<div class="col-sm-8">
+									@switch (Model.Status)
+									{
+										case 1:
+											@Localizer["启用"]
+											break;
+										case 0:
+											@Localizer["待完善"]
+											break;
+										case -1:
+											@Localizer["删除"]
+											break;
+									}
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["备注"]</label>
+								<div class="col-sm-8">
+									<textarea asp-for="Message" class="form-control" style="width:70%;height:94px;"></textarea>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-8 ml-auto">
+									<input asp-for="Userid" type="hidden" />
+									<button type="submit" onclick="return chk();" class="btn btn-primary">@Localizer["保存信息"]</button>
+								</div>
+							</div>
+							<br>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["操作日志"]</label>
+								<div class="col-sm-8">
+									@Html.Raw(Model.Remark)
+								</div>
+							</div>
+						</div>
+
+                    </div>
+                </div><!--end card-body-->
+            </div><!--end card-->
+        </div><!--end col-->
+    </div><!--end row-->
+</form>
+
+@section Scripts{
+    <script>
+		@Html.Raw(ViewBag.ScriptStr)
+    </script>
+}

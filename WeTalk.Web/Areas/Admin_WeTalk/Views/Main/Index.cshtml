@@ -1,0 +1,252 @@
+﻿
+@model WeTalk.Web.ViewModels.Main
+@using Microsoft.AspNetCore.Mvc.Localization
+@using WeTalk.Interfaces
+@inject IHtmlLocalizer<LangResource> Localizer
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Metrica - Responsive Bootstrap 4 Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="A premium admin dashboard template by Mannatthemes" name="description" />
+    <meta content="Mannatthemes" name="author" />
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="/assets/images/favicon.ico">
+
+    <!--Morris Chart CSS -->
+    <link rel="stylesheet" href="/assets/plugins/morris/morris.css">
+
+    <!-- App css -->
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/icons.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/metisMenu.min.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body style="overflow:hidden">
+	<!-- Top Bar Start -->
+	<div class="topbar">
+
+		<!-- LOGO -->
+		<div class="topbar-left">
+			<a href="./projects/index.html" class="logo">
+				<span>
+					<img src="/assets/images/logo-sm.png" alt="logo-small" class="logo-sm">
+				</span>
+				<span>
+					<img src="/assets/images/logo-dark.png" alt="logo-large" class="logo-lg">
+				</span>
+			</a>
+		</div>
+		<!--end logo-->
+		<!-- Navbar -->
+		<nav class="navbar-custom">
+			<ul class="list-unstyled topbar-nav float-right mb-0">
+				<li class="hidden-sm">
+					<a class="nav-link dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="javascript: void(0);" role= "button"
+					   aria-haspopup="false" aria-expanded="false">
+						@Model.LangTtile <i class="mdi mdi-chevron-down"></i>
+					</a>
+					<div class="dropdown-menu dropdown-menu-right">
+						@Html.Raw(Model.LangList)
+					</div>
+				</li>
+
+				<li class="dropdown notification-list" style="display:none;">
+					<a class="nav-link dropdown-toggle arrow-none waves-light waves-effect" data-toggle="dropdown" href="#" role="button"
+					   aria-haspopup="false" aria-expanded="false">
+						<i class="dripicons-bell noti-icon"></i>
+						<span class="badge badge-danger badge-pill noti-icon-badge">2</span>
+					</a>
+					<div class="dropdown-menu dropdown-menu-right dropdown-lg">
+						<!-- item-->
+						<h6 class="dropdown-item-text">
+							Notifications (18)
+						</h6>
+						<div class="slimscroll notification-list">
+							<!-- item-->
+							<a href="javascript:void(0);" class="dropdown-item notify-item active">
+								<div class="notify-icon bg-success"><i class="mdi mdi-cart-outline"></i></div>
+								<p class="notify-details">Your order is placed<small class="text-muted">Dummy text of the printing and typesetting industry.</small></p>
+							</a>
+							<!-- item-->
+							<a href="javascript:void(0);" class="dropdown-item notify-item">
+								<div class="notify-icon bg-warning"><i class="mdi mdi-message"></i></div>
+								<p class="notify-details">New Message received<small class="text-muted">You have 87 unread messages</small></p>
+							</a>
+							<!-- item-->
+							<a href="javascript:void(0);" class="dropdown-item notify-item">
+								<div class="notify-icon bg-info"><i class="mdi mdi-glass-cocktail"></i></div>
+								<p class="notify-details">Your item is shipped<small class="text-muted">It is a long established fact that a reader will</small></p>
+							</a>
+							<!-- item-->
+							<a href="javascript:void(0);" class="dropdown-item notify-item">
+								<div class="notify-icon bg-primary"><i class="mdi mdi-cart-outline"></i></div>
+								<p class="notify-details">Your order is placed<small class="text-muted">Dummy text of the printing and typesetting industry.</small></p>
+							</a>
+							<!-- item-->
+							<a href="javascript:void(0);" class="dropdown-item notify-item">
+								<div class="notify-icon bg-danger"><i class="mdi mdi-message"></i></div>
+								<p class="notify-details">New Message received<small class="text-muted">You have 87 unread messages</small></p>
+							</a>
+						</div>
+						<!-- All-->
+						<a href="javascript:void(0);" class="dropdown-item text-center text-primary">
+							View all <i class="fi-arrow-right"></i>
+						</a>
+					</div>
+				</li>
+
+				<li class="dropdown">
+					<a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button"
+					   aria-haspopup="false" aria-expanded="false">
+						<div class="avatar-box thumb-sm align-self-center mr-2">
+							<span class="avatar-title bg-warning rounded-circle"><i class="far fa-user"></i></span>
+						</div>
+						<span class="ml-1 nav-user-name hidden-sm">@Model.AdminName <i class="mdi mdi-chevron-down"></i> </span>
+					</a>
+					<div class="dropdown-menu dropdown-menu-right">
+						<a class="dropdown-item" asp-controller="System" asp-action="Pwd"><i class="dripicons-user text-muted mr-2"></i> @Localizer["修改密码"]</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" asp-controller="Login" asp-action="Exit"><i class="dripicons-exit text-muted mr-2"></i> @Localizer["退出"]</a>
+					</div>
+				</li>
+			</ul><!--end topbar-nav-->
+
+			<ul class="list-unstyled topbar-nav mb-0">
+				<li>
+					<button class="button-menu-mobile nav-link waves-effect waves-light">
+						<i class="dripicons-menu nav-icon"></i>
+					</button>
+				</li>
+				<li class="hide-phone app-search">
+					<form role="search" class="">
+						<input type="text" placeholder="Search..." class="form-control" />
+						<a href=""><i class="fas fa-search"></i></a>
+					</form>
+				</li>
+			</ul>
+		</nav>
+		<!-- end navbar-->
+	</div>
+	<!-- Top Bar End -->
+
+	<div class="page-wrapper">
+		<!-- Left Sidenav -->
+		<div class="left-sidenav">
+			<div class="main-icon-menu">
+				<nav class="nav">
+					@Html.Raw(Model.LeftHtml_f)
+				</nav><!--end nav-->
+			</div><!--end main-icon-menu-->
+			<div class="main-menu-inner">
+				<div class="menu-body slimscroll">
+					@Html.Raw(Model.LeftHtml)
+				</div><!--end menu-body-->
+			</div><!-- end main-menu-inner-->
+		</div>
+		<!-- end left-sidenav-->
+		<div class="content-wrapper">
+			<!-- content-tabs -->
+			<div class="row content-tabs">
+				<button class="roll-nav roll-left J_tabLeft">
+					<i class="fa fa-backward"></i>
+				</button>
+				<nav class="page-tabs J_menuTabs">
+					<div class="page-tabs-content">
+						<a href="javascript:;" class="active J_menuTab" data-id="">@Localizer["首页"]</a>
+					</div>
+				</nav>
+				<button class="roll-nav roll-right J_tabRight">
+					<i class="fa fa-forward"></i>
+				</button>
+				<div class="btn-group roll-nav roll-right">
+					<button class="dropdown J_tabClose" data-toggle="dropdown">
+						@Localizer["关闭操作"]<span class="caret"></span>
+
+					</button>
+					<ul role="menu" class="dropdown-menu dropdown-menu-right">
+						<li class="J_tabShowActive">
+							<a>@Localizer["定位当前选项卡"]</a>
+						</li>
+						<li class="divider"></li>
+						<li class="J_tabCloseAll">
+							<a>@Localizer["关闭全部选项卡"]</a>
+						</li>
+						<li class="J_tabCloseOther">
+							<a>@Localizer["关闭其他选项卡"]</a>
+						</li>
+					</ul>
+				</div>
+				<a class="roll-nav roll-right J_tabExit" style="display:none;"><i class="fa fa fa-sign-out"></i> @Localizer["退出"]</a>
+			</div>
+			<!-- end content-tabs -->
+			<!-- Page Content-->
+			<div class="page-content">
+				<iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="" frameborder="0" data-id="index_v1" seamless></iframe>
+			</div>
+			<!-- end page content -->
+			<!--footer-->
+			<footer class="footer text-center text-sm-left">
+				&copy; 2020 WeTalk <span class="text-muted d-none d-sm-inline-block float-right">Crafted with <i class="mdi mdi-heart text-danger"></i> by UeLike.com</span>
+			</footer>
+			<!--end footer-->
+		</div>
+		<a href="#" id="a_href" class="nav-link J_menuItem" style="width:0px;height:0px;"></a>
+	</div>
+	<!-- end page-wrapper -->
+	<!-- jQuery  -->
+	<script src="/assets/js/jquery.min.js"></script>
+	<script src="/assets/js/bootstrap.bundle.min.js"></script>
+	<script src="/assets/js/metisMenu.min.js"></script>
+	<script src="/assets/js/waves.min.js"></script>
+	<script src="/assets/js/jquery.slimscroll.min.js"></script>
+	<script src="/assets/js/contabs.js"></script>
+
+	<!--Plugins-->
+	<!-- <script src="/assets/plugins/morris/morris.min.js"></script>
+	<script src="/assets/plugins/raphael/raphael.min.js"></script>
+	<script src="/assets/plugins/moment/moment.js"></script>
+	<script src="/assets/plugins/apexcharts/apexcharts.min.js"></script>
+
+
+	<script src="/assets/pages/jquery.projects_dashboard.init.js"></script> -->
+	<!-- App js -->
+	<script src="/assets/js/app.js"></script>
+
+	<script>
+
+		//load
+		function EasyUILoad() {
+			$("<div class=\"datagrid-mask\"></div>").css({ "position": "absolute", "z-index": "9999", "background-color": "#000", "opacity": "0.3", "display": "block", "width": "100%", "height": "100%" }).prependTo("body");
+			$("<div class=\"datagrid-mask-msg\"></div>").html("<img src='img/loading.gif' class='img1' />").prependTo("body").css({ "position": "absolute", "z-index": "99999", display: "block", left: ($(document.body).outerWidth(true) - 190) / 2, top: ($(window).height() - 45) / 2 });
+		}
+		//display Load
+		function dispalyEasyUILoad() {
+			$(".datagrid-mask").remove();
+			$(".datagrid-mask-msg").remove();
+		}
+		function main_click(url, title) {
+			$("#a_href").html(title);
+			$("#a_href").attr("href", url);
+			$("#a_href").click();
+			$("#a_href").html("");
+		}
+		function setlang(lang){
+			$.get("Main/SetLang?lang="+lang+"&dtime="+new Date(),function(data){
+				if(data.StatusCode==0){
+					history.go(0);
+				}else{
+					alert(data.Message);
+				}
+			});
+		}
+	</script>
+</body>
+
+</html>

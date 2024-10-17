@@ -1,0 +1,163 @@
+﻿@using WeTalk.Web.ViewModels.User;
+@using Microsoft.AspNetCore.Mvc.Localization
+@using WeTalk.Interfaces
+@inject IHtmlLocalizer<LangResource> Localizer
+@model UserLessonReport
+@section HeadCss{
+<link href="/assets/css/icon.css" rel="stylesheet" />
+<link href="/lib/layui-src/build/css/layui.css" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/plugins/intlTelInput/intlTelInput.css">
+<style>
+    .col-sm-8 {
+        padding-top: 7px;
+    }
+    .fas{
+        color:#f8af00;
+    }
+</style>
+
+}
+
+
+<form asp-action="UserLessonReport">
+    <div class="row" style="padding-top:10px;">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["课程名称"]</label>
+                                <div class="col-sm-8">
+                                    @Model.MenkeCourseName
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["课节名称"]</label>
+                                <div class="col-sm-8">
+                                    @Model.MenkeLessonName
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["上课时间"]</label>
+                                <div class="col-sm-8">
+                                    @Model.Begintime - @Model.Endtime
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["老师"]</label>
+                                <div class="col-sm-8">
+                                    @Model.TeacherName
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["老师手机"]</label>
+                                <div class="col-sm-8">
+                                    @Model.TeacherMobileCode - @Model.TeacherMobile
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["学生"]</label>
+                                <div class="col-sm-8">
+                                    @Model.StudentName
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["学生手机"]</label>
+                                <div class="col-sm-8">
+                                    @Model.StudentMobileCode - @Model.StudentMobile
+                                </div>
+                            </div>
+                            @if (Model.IsReport)
+                            {
+                                <div class="form-group row">
+                                    <label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["评语"]</label>
+                                    <div class="col-sm-8">
+                                        @Model.Message
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["学习情况"]</label>
+                                    <div class="col-sm-8">
+                                        <table class="table">
+                                            <tr>
+                                                <td>@Localizer["作业完成情况"]:@for(var i=0;i<Model.Homework;++i){<i class="fas fa-star"></i>}</td>
+                                                <td>@Localizer["注意力"]:@for(var i=0;i<Model.Attention;++i){<i class="fas fa-star"></i>}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>@Localizer["上课积极性"]:@for(var i=0;i<Model.Enthusiasm;++i){<i class="fas fa-star"></i>}</td>
+                                                <td>@Localizer["听"]:@for(var i=0;i<Model.Hear;++i){<i class="fas fa-star"></i>}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>@Localizer["说"]:@for(var i=0;i<Model.Say;++i){<i class="fas fa-star"></i>}</td>
+                                                <td>@Localizer["读"]:@for(var i=0;i<Model.Read;++i){<i class="fas fa-star"></i>}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>@Localizer["写"]:@for(var i=0;i<Model.Write;++i){<i class="fas fa-star"></i>}</td>
+                                                <td>@Localizer["思"]:@for(var i=0;i<Model.Thinking;++i){<i class="fas fa-star"></i>}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>@Localizer["情商"]:@for(var i=0;i<Model.EmotionalQuotient;++i){<i class="fas fa-star"></i>}</td>
+                                                <td>@Localizer["爱商"]:@for(var i=0;i<Model.LoveQuotient;++i){<i class="fas fa-star"></i>}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>@Localizer["逆商"]:@for(var i=0;i<Model.InverseQuotient;++i){<i class="fas fa-star"></i>}</td>
+                                                <td>@Localizer["课堂综合表现"]:@for(var i=0;i<Model.Performance;++i){<i class="fas fa-star"></i>}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="form-group row">
+                                    <label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["报告情况"]</label>
+                                    <div class="col-sm-8">
+                                        <font size="6">@Localizer["老师尚未给出课堂报告"]</font>
+                                    </div>
+                                </div>  
+                            }
+
+                        </div>
+
+                    </div>
+                </div><!--end card-body-->
+            </div><!--end card-->
+        </div><!--end col-->
+    </div><!--end row-->
+</form>
+
+@section Scripts{
+<script src="/assets/plugins/intlTelInput/intlTelInput.js"></script>
+<script>
+    @Html.Raw(ViewBag.ScriptStr)
+
+    var input = document.querySelector("#Mobile");
+    var iti = window.intlTelInput(input, {
+      // allowDropdown: false,
+      // autoHideDialCode: false,
+      // autoPlaceholder: "off",
+      // dropdownContainer: document.body,
+      // excludeCountries: ["us"],
+      // formatOnDisplay: false,
+      // geoIpLookup: function(callback) {
+      //   $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+      //     var countryCode = (resp && resp.country) ? resp.country : "";
+      //     callback(countryCode);
+      //   });
+      // },
+      // hiddenInput: "full_number",
+      // initialCountry: "auto",
+      // localizedCountries: { 'de': 'Deutschland' },
+      // nationalMode: false,
+      // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+      // placeholderNumberType: "MOBILE",
+      // preferredCountries: ['cn', 'jp'],
+      separateDialCode: true,
+      utilsScript: "/assets/plugins/intlTelInput/utils.js",
+    });
+    input.addEventListener("countrychange", function() {
+      $("#MobileCode").val(iti.getSelectedCountryData().dialCode);
+    });
+</script>
+}

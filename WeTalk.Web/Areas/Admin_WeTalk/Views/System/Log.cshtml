@@ -1,0 +1,158 @@
+﻿@using WeTalk.Web.ViewModels.System;
+@using Microsoft.AspNetCore.Mvc.Localization
+@using WeTalk.Interfaces
+@inject IHtmlLocalizer<LangResource> Localizer
+
+@section HeadCss{
+    <link href="@Url.Content("/assets/css/icon.css")" rel="stylesheet" />
+}
+
+<div class="row" style="padding-top:10px;">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+				<div class="input-group">
+					<span class="input-group-btn" style="display:none;">
+						<select class="form-control m-b" name="account" id="sel_status">
+							<option value="">@Localizer["状态"]</option>
+							<option value="-1">@Localizer["已冻结"]</option>
+							<option value="0">@Localizer["待审核"]</option>
+							<option value="1">@Localizer["正常"]</option>
+						</select>
+					</span>
+					<span class="input-group-btn">
+						<input type="text" placeholder="@Localizer["关键词"]" id="input_keys" class="form-control" />
+					</span>
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-outline-info search" onclick="mainGrid.doSearch();"> <i class="fa fa-search"></i>@Localizer["搜索"]</button>
+					</span>
+					<input type="text" id="tmp" style="height:1;width:1;opacity: 0;" />
+				</div>
+                <table id="table_view" />
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div>
+<div id="win" />
+@section Scripts{
+
+    <script>
+        //$('.tablelist tbody tr:odd').addClass('odd');
+
+        var actionURL = "LogData";
+        var fillDataContralId = "table_view";
+        var mainGrid = {
+            databind: function () {
+                /*开始加载数据*/
+                $('#' + fillDataContralId).datagrid({
+                    url: actionURL,
+                    idField: 'PubLogid', //主键
+                    width: (($(window).width()-60) * 0.98),
+                    height: (($(window).height() - 70) * 0.98),
+                    fitColumns: true,
+                    singleSelect: false, //单选
+                    pageList: [10, 20, 50, 100],
+                    pageSize: 20,
+                    pagination: true,
+                    //rownumbers: true, //行号
+                    toolbar: [{
+                        id: 'del',
+                        text: '@Localizer["删除"]',
+                        iconCls: 'icon-no',
+                        handler: function () {
+                            mainGrid.del();
+                        }
+                    }
+                    ],
+                    onDblClickRow: function (rowIndex, rowData) {
+                        mainGrid.edit();
+                    },
+                    onLoadSuccess: function () {
+		                @Html.Raw(ViewBag.ScriptStr)
+                    },
+                    columns: [[
+                            { title: '@Localizer["选择"]',checkbox:true, field: 'check', width: 30, sortable: true},
+						    { title: 'ID', field: 'PubLogid', width: 30, sortable: true },
+                            { title: '@Localizer["用户"]', field: 'Username', width: 100, sortable: true },
+                            { title: 'IP', field: 'Ip', width: 150, sortable: true },
+						    { title: '@Localizer["登录说明"]', field: 'Content', width: 200, sortable: true },
+						    {
+								title: '@Localizer["请求URL"]', field: 'Url', width: 200, sortable: true, formatter: function (val, row) {
+								    if (val) { return '<a href="javascript:void(0)" onclick="onCopy($(this).next())">【@Localizer["复制"]】</a><span title="' + val.replace(/\"/g, '\'') + '">' + val + '</span>'; } else {
+									    return val;
+								    }
+							    }
+						    },
+                            { title: '@Localizer["登录时间"]', field: 'Dtime', width: 120, sortable: true }
+                        ]]
+                });
+
+            },
+            getSelected: function () {
+                return $('#' + fillDataContralId).datagrid('getSelected');
+            },
+            getSelections: function () {
+                return $('#' + fillDataContralId).datagrid('getSelections');
+            },
+            Reflesh: function () {
+                $('#' + fillDataContralId).datagrid("reload");
+            },
+            doSearch: function () {
+                $('#' + fillDataContralId).datagrid('clearSelections');
+                $('#' + fillDataContralId).datagrid('load', {
+                    keys: $('#input_keys').val(),
+                    status: $('#sel_status').val()
+                });
+            },
+            del: function () {
+                var PubLogids = "0";
+                var rowdata = mainGrid.getSelections();
+                if (confirm("@Localizer["您确定要删除"]?")) {
+                    if (rowdata.length > 0) {
+                        for (var i = 0; i < rowdata.length; i++) {
+                            if (rowdata[i].isadmin == "1") {
+                                alert("@Localizer["系统级参数不允许删除"]！");
+                                return;
+                            }
+                            PubLogids = PubLogids + "," + rowdata[i].PubLogid;
+                        }
+                        $.get(actionURL + "?action=del&PubLogids=" + PubLogids, function (data) {
+                            var json = eval("(" + data + ")");
+                            if (json.errorcode == 0) $('#' + fillDataContralId).datagrid('reload');
+                            $.messager.show({ title: '@Localizer["删除信息"]', msg: json.msg, timeout: 3000, showType: 'slide' });
+                        });
+                    } else {
+                        alert('@Localizer["请选择要修改的行"]');
+                    }
+                }
+            }
+        }
+        $(function () {
+            mainGrid.databind();
+        });
+
+        //监听，页面变化重画宽高；
+        $(window).resize(function () {
+            $('#' + fillDataContralId).datagrid('resize', {
+                width: function () { return document.body.clientWidth; },
+                height: function () { return document.body.clientHeight; },
+            });
+        });
+
+		//复制按钮
+		function onCopy(obj) {
+			//if(!obj) alert('没标识数据源');
+			var tar = obj || '#copy';
+			var content = $(tar).html() || $(tar).val();//input的时候取value
+			//textarea缓存要复制的内容
+			$('#tmp').val(content);
+			$('#tmp').select();
+			try {
+				document.execCommand("Copy"); //内容复制到剪切板
+				alert('@Localizer["复制成功"]');
+			} catch (e) {
+				alert('@Localizer["浏览器不支持快捷复制，请选中内容后，CTRL+C"]');
+			}
+		}
+    </script>
+}

@@ -1,0 +1,214 @@
+﻿@using WeTalk.Web.ViewModels.User;
+@using Microsoft.AspNetCore.Mvc.Localization
+@using WeTalk.Interfaces
+@inject IHtmlLocalizer<LangResource> Localizer
+@model ListAdd
+@section HeadCss{
+    <link href="/assets/css/icon.css" rel="stylesheet" />
+    <link href="/lib/layui-src/build/css/layui.css" rel="stylesheet" />
+	<link rel="stylesheet" href="/assets/css/plugins/intlTelInput/intlTelInput.css">
+	<style>
+		.col-sm-8{
+			padding-top:7px;
+		}
+	</style>
+}
+
+
+<form asp-action="ListAdd">
+    <div class="row" style="padding-top:10px;">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+						<div class="col-lg-12">
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["电子邮箱"]</label>
+								<div class="col-sm-8">
+									<input asp-for="Email" class="form-control" type="email" required>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["用户密码"]</label>
+								<div class="col-sm-8">
+									<input asp-for="Userpwd" class="form-control" type="password">
+                                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>@Localizer["如果不修改密码,请勿填写内容"]</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["手机号码"]</label>
+								<div class="col-sm-8">
+									@if (Model.IsModifyMobile == 0 && Model.Userid>0)
+									{
+										@(Model.MobileCode +" "+ @Model.Mobile)
+										<span class="help-block m-b-none" style="color:red"><i class="fa fa-info-circle"></i>@Localizer["已排课学生不允许修改手机"]</span>
+									}
+									else
+									{
+										<input asp-for="Mobile" class="form-control" required type="tel">
+										<input asp-for="MobileCode" type="hidden" />
+										<input asp-for="CountryCode" type="hidden" />
+										@if (Model.MenkeUserId > 0)
+										{	<br/>
+											<span class="help-block m-b-none" style="color:red"><i class="fa fa-info-circle"></i>@Localizer["注意:修改已关联的用户手机将会同步在拓课云新建一个新手机用户,并且旧手机用户仍会一直存在"]</span>
+										}
+									}
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["关联拓课云的学生ID"]</label>
+								<div class="col-sm-8">
+									@Model.MenkeUserId
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["头像"]</label>
+								<div class="col-sm-8">
+									<ul class="agile-list" style="padding: 10px 0;">
+										<li class="info-element">
+											<input name="input_img" class="form-control" type="file" />
+											@if (!string.IsNullOrEmpty(Model.HeadImg))
+											{
+												<div class="agile-detail row">
+													<div class="col-sm-6" style="padding-top: 7px;" id="div_img">
+														<input type="checkbox" name="chk_img" value="1" style="margin-right:10px;" />
+														<span>@Localizer["删除图片"]</span>
+														<a href="@Model.HeadImg" target="_blank"><img src="@Model.HeadImg?width=100" width="100" class="img" /></a>
+													</div>
+													<div class="col-sm-6">
+													</div>
+												</div>
+											}
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["性别"]</label>
+								<div class="col-sm-8">
+									<select asp-for="Gender" class="form-control">
+										<option value="1">@Localizer["男"]</option>
+										<option value="0">@Localizer["女"]</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["姓"]</label>
+								<div class="col-sm-8">
+									<input asp-for="FirstName" class="form-control" required type="text">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["名"]</label>
+								<div class="col-sm-8">
+									<input asp-for="LastName" class="form-control" required type="text">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["出生日期"]</label>
+								<div class="col-sm-8">
+									<input asp-for="Birthdate" class="form-control"required type="date">
+                                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>@Localizer["学生最小年龄为2岁"]</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["母语"]</label>
+								<div class="col-sm-8">
+									<select asp-for="Native" asp-items="Model.CountryItem" class="form-control" >
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["文化程度"]</label>
+								<div class="col-sm-8">
+									<input asp-for="Education" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["注册时间"]</label>
+								<div class="col-sm-8">
+									@Model.Regtime
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["时区"]</label>
+								<div class="col-sm-8">
+									<select asp-for="Timezoneid" asp-items="Model.UtcItem" class="form-control" >
+									</select>
+                                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>@Localizer["以用户最后一次登录的时区为准"]</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-number-input" class="col-sm-3 col-form-label text-right">@Localizer["状态"]</label>
+								<div class="col-sm-8">
+									<select asp-for="Status" class="form-control">
+										<option value="1">@Localizer["启用"]</option>
+										<option value="0">@Localizer["待完善"]</option>
+										<option value="-1">@Localizer["删除"]</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["备注"]</label>
+								<div class="col-sm-8">
+									<textarea asp-for="Message" class="form-control" style="width:70%;height:94px;"></textarea>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-8 ml-auto">
+									<input asp-for="Userid" type="hidden" />
+									<button type="submit" onclick="return chk();" class="btn btn-primary">@Localizer["保存信息"]</button>
+								</div>
+							</div>
+							<br>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["操作日志"]</label>
+								<div class="col-sm-8">
+									@Html.Raw(Model.Remark)
+								</div>
+							</div>
+						</div>
+
+                    </div>
+                </div><!--end card-body-->
+            </div><!--end card-->
+        </div><!--end col-->
+    </div><!--end row-->
+</form>
+
+@section Scripts{
+	<script src="/assets/plugins/intlTelInput/intlTelInput.js"></script>
+    <script>
+		@Html.Raw(ViewBag.ScriptStr)
+		var input = document.querySelector("#Mobile");
+		
+		var iti = window.intlTelInput(input, {
+			formatOnDisplay: false,
+			separateDialCode: true,
+			utilsScript: "/assets/plugins/intlTelInput/utils.js",
+		});
+		if("@Model.Mobile".length>0){
+			iti.setNumber("+@(Model.MobileCode+Model.Mobile)");
+			$("#CountryCode").val(iti.getSelectedCountryData().iso2);
+		}else{
+			iti.setNumber("+86");
+			$("#MobileCode").val(86);
+			$("#CountryCode").val(iti.getSelectedCountryData().iso2);
+		}
+		input.addEventListener("countrychange", function() {
+		  $("#MobileCode").val(iti.getSelectedCountryData().dialCode);
+		  $("#CountryCode").val(iti.getSelectedCountryData().iso2);
+		});
+		function chk(){
+			if(!iti.isValidNumber()){
+			  alert("@Localizer["输入的手机格式不正确"]");
+			  $("#Mobile").focus();
+			  return false;
+			}
+			return true;
+		}
+		if(@Model.Timezoneid=="0"){
+			$("#Timezoneid option:contains("+ Intl.DateTimeFormat().resolvedOptions().timeZone +")").attr("selected",true);
+		}
+    </script>
+}

@@ -1,0 +1,218 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using WeTalk.Interfaces
+@inject IHtmlLocalizer<LangResource> Localizer
+@section HeadCss{
+	<link href="@Url.Content("/assets/css/icon.css")" rel="stylesheet" />
+	<link href="@Url.Content("/assets/css/plugins/datapicker/bootstrap-datetimepicker.css")" rel="stylesheet" />
+}
+
+<div class="row" style="padding-top:10px;">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-body">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <input type="text" placeholder="URL @Localizer[" 关键词"]" id="input_url" class="form-control" />
+                    </span>
+                    <span class="input-group-btn">
+                        <input type="text" placeholder="IP" id="input_ip" class="form-control" />
+                    </span>
+                    <span class="input-group-btn">
+                        <input type="text" placeholder="Requestbody" id="input_request" class="form-control" />
+                    </span>
+                    <span class="input-group-btn">
+                        <input type="text" placeholder="Responsebody" id="input_response" class="form-control" />
+                    </span>
+                    <span class="input-group-btn">
+                        <input type="text" placeholder="Limit" id="input_limit" value="100" class="form-control" />
+                    </span>
+                    <span class="input-group-btn" style="display:none;">
+                        <input type="text" placeholder="@Localizer["其它关键词"]" id="input_keys" class="form-control" />
+                    </span>
+                    <span class="input-group-btn">
+                        <div class="input-daterange input-group">
+                            <input type="datetime" id="input_begintime" class="input-sm form-control datetimepicker" value="@ViewBag.Begintime" name="start" placeholder="@Localizer["起始时间"]" />
+                            <span class="input-group-addon">-</span>
+                            <input type="datetime" id="input_endtime" class="input-sm form-control datetimepicker" name="end" placeholder="@Localizer["结束时间"]" />
+                        </div>
+                    </span>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-outline-info search" onclick="mainGrid.doSearch();"> <i class="fa fa-search"></i>@Localizer["搜索"]</button>
+                    </span>
+                    <input type="text" id="tmp" style="height:1;width:1;opacity: 0;" />
+                </div>
+				<table id="table_view" />
+			</div>
+		</div>
+	</div> <!-- end col -->
+</div>
+<div id="win" />
+@section Scripts{
+
+	<script src="/assets/plugins/datapicker/bootstrap-datetimepicker.min.js"></script>
+	<script src="/assets/plugins/datapicker/bootstrap-datetimepicker.zh-CN.js"></script>
+	<script>
+        $('.datetimepicker').datetimepicker({
+			language: 'zh-CN',
+			format: 'yyyy-mm-dd hh:ii:ss',
+            keyboardNavigation: false,
+            forceParse: false,
+            autoclose: true
+        });
+		function params() {
+			return {
+                key_url: $('#input_url').val(),
+                ip: $('#input_ip').val(),
+				key_request: $('#input_request').val(),
+				key_response: $('#input_response').val(),
+				ismpcrawler: $("#chk_mpcrawler").prop("checked") ? 1 : 0,
+                limit: $('#input_limit').val(),
+				keys: $('#input_keys').val(),
+				begintime: $('#input_begintime').val(),
+				endtime: $('#input_endtime').val()
+			};
+		}
+		var actionURL = "ApiLogData";
+        var fillDataContralId = "table_view";
+        var mainGrid = {
+            databind: function () {
+                /*开始加载数据*/
+                $('#' + fillDataContralId).datagrid({
+					url: actionURL,
+					queryParams: params(),
+                    idField: 'Logsid', //主键
+                    width: (($(window).width()-60) * 0.98),
+                    height: (($(window).height() - 100) * 0.98),
+                    fitColumns: true,
+					singleSelect: false, //单选
+                    pageList: [10, 20, 50, 100],
+                    pageSize: 20,
+                    pagination: true,
+                    //rownumbers: true, //行号
+                    toolbar: [{
+                        id: 'del',
+                        text: '@Localizer["删除"]',
+                        iconCls: 'icon-no',
+                        handler: function () {
+                            mainGrid.del();
+                        }
+                    }
+                    ],
+                    onDblClickRow: function (rowIndex, rowData) {
+                        mainGrid.edit();
+                    },
+                    onLoadSuccess: function () {
+		                @Html.Raw(ViewBag.ScriptStr)
+					},
+					columns: [[
+						{ title: '选择', checkbox: true, field: 'check', width: 30, sortable: true },
+						{ title: 'ID', field: 'Logsid', width: 30, sortable: true },
+						{
+							title: 'Url', field: 'Url', width: 220, sortable: true, formatter: function (val, row) {
+								var e = val;
+								e = e.replace("&timestamp", "&amp;timestamp");
+								return e;
+							}
+						},
+						{ title: 'Method', field: 'Method', width: 30, sortable: true },
+						{
+							title: 'Requestbody', field: 'Requestbody', width: 100, sortable: true, formatter: function (val, row) {
+								if (val) { return '<a href="javascript:void(0)" onclick="onCopy1(' + row.Logsid + ',0)">【@Localizer["复制"]】</a><span title="' + val.replace(/\"/g, '\'') + '">' + val + '</span>'; } else {
+									return val;
+								}
+							}
+						},
+						{
+							title: 'Responsebody', field: 'Responsebody', width: 300, sortable: true, formatter: function (val, row) {
+								if (val) { return '<a href="javascript:void(0)" onclick="onCopy1(' + row.Logsid + ',1)">【@Localizer["复制返回值"]】</a><span title="' + val.replace(/\"/g, '\'') + '">' + val + '</span>'; } else {
+									return val;
+								}
+							}
+						},
+                        { title: 'Ip', field: 'Ip', width: 60, sortable: true },
+                        { title: '@Localizer["接收时间"]', field: 'Excutestarttime', width: 60, sortable: true },
+                        { title: '@Localizer["返回时间"]', field: 'Excuteendtime', width: 60, sortable: true },
+						{ title: '@Localizer["日志时间"]', field: 'Dtime', width: 60, sortable: true }
+					]]
+                });
+
+            },
+            getSelected: function () {
+                return $('#' + fillDataContralId).datagrid('getSelected');
+            },
+            getSelections: function () {
+                return $('#' + fillDataContralId).datagrid('getSelections');
+            },
+            Reflesh: function () {
+                $('#' + fillDataContralId).datagrid("reload");
+            },
+			doSearch: function () {
+                $('#' + fillDataContralId).datagrid('clearSelections');
+				$('#' + fillDataContralId).datagrid('load', params());
+            },
+            del: function () {
+                var Logsids = "0";
+                var rowdata = mainGrid.getSelections();
+                if (confirm("@Localizer["您确定要删除"]?")) {
+                    if (rowdata.length > 0) {
+                        for (var i = 0; i < rowdata.length; i++) {
+                            if (rowdata[i].isadmin == "1") {
+                                alert("@Localizer["系统级参数不允许删除"]！");
+                                return;
+                            }
+                            Logsids = Logsids + "," + rowdata[i].Logsid;
+                        }
+                        $.get(actionURL + "?action=del&Logsids=" + Logsids, function (data) {
+                            var json = eval("(" + data + ")");
+                            if (json.errorcode == 0) $('#' + fillDataContralId).datagrid('reload');
+                            $.messager.show({ title: '@Localizer["删除信息"]', msg: json.msg, timeout: 3000, showType: 'slide' });
+                        });
+                    } else {
+                        alert('@Localizer["请选择要修改的行"]。');
+                    }
+                }
+            }
+        }
+        $(function () {
+			mainGrid.databind();
+        });
+
+        //监听，页面变化重画宽高；
+        $(window).resize(function () {
+            $('#' + fillDataContralId).datagrid('resize', {
+                width: function () { return document.body.clientWidth; },
+                height: function () { return document.body.clientHeight; },
+            });
+        });
+
+		//复制按钮
+		function onCopy(obj) {
+			//if(!obj) alert('没标识数据源');
+			var tar = obj || '#copy';
+			var content = $(tar).html() || $(tar).val();//input的时候取value
+			//textarea缓存要复制的内容
+			$('#tmp').val(content);
+			$('#tmp').select();
+			try {
+				document.execCommand("Copy"); //内容复制到剪切板
+				alert('@Localizer["复制成功"]');
+			} catch (e) {
+				alert('@Localizer["浏览器不支持快捷复制,请选中内容后"]，CTRL+C');
+			}
+		}
+		//复制按钮
+		function onCopy1(logsid,type) {
+			$.get("./GetLogData?type=" + type+"&logsid=" + logsid + "&date=" + new Date(), function (data) {
+				//textarea缓存要复制的内容
+				$('#tmp').val(data);
+				$('#tmp').select();
+				try {
+					document.execCommand("Copy"); //内容复制到剪切板
+					alert('@Localizer["复制成功"]');
+				} catch (e) {
+					alert('@Localizer["浏览器不支持快捷复制,请选中内容后"]，CTRL+C');
+				}
+			});
+		}
+	</script>
+}

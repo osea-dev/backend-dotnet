@@ -1,0 +1,382 @@
+﻿@using WeTalk.Interfaces;
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<LangResource> Localizer
+@using WeTalk.Web.ViewModels.Course;
+@model OfflineListAdd
+@section HeadCss{
+	<link href="/assets/css/plugins/datapicker/bootstrap-datetimepicker.css" rel="stylesheet" />
+	<link href="@Url.Content("/assets/css/plugins/switchery/switchery.css")" rel="Stylesheet" type="text/css" />
+
+	<script src="/editor-page/app/resource/script/jquery.min.js"></script>
+	<script src="/editor-page/lib/jsmoEditor.umd.min.js"></script>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			box-sizing: border-box;
+			padding-top: 10px;
+			background: #fff;
+		}
+		.editor-container {
+			position: relative;
+			min-height: 500px;
+			margin: 0 auto;
+			border: 1px solid rgb(245 245 245);
+		}
+	</style>
+}
+<form asp-action="OfflineListAdd" enctype="multipart/form-data">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+                @await Component.InvokeAsync("LanguageTag", new { lang = Model.Lang })
+				<div class="card-body">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["课程名称"]<i class="mdi mdi-google-translate"></i></label>
+								<div class="col-sm-8">
+									<input asp-for="Title" class="form-control" required type="text">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["关联老师"]</label>
+								<div class="col-sm-8">
+									<select asp-for="Teacherid" asp-items="Model.TeacherItem" class="form-control" ></select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["标签"]<i class="mdi mdi-google-translate"></i></label>
+								<div class="col-sm-8">
+									<div class="input-group">
+										<input asp-for="Keys" class="form-control" type="text">
+										<span class="help-block m-b-none"><i class="fa fa-info-circle"></i> @Localizer["多个标签用英文逗号隔开"]</span>
+									</div>
+								</div>
+                            </div>
+                            <div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["课节数"]</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group">
+                                        <input asp-for="LessonCount" class="form-control" type="number" step="1">
+                                    </div>
+                                </div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["学习人数"]</label>
+								<div class="col-sm-8">
+									<div class="input-group">
+										<input asp-for="StudentCount" class="form-control" type="number" step="1">
+									</div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["上课时间"]</label>
+								<div class="col-sm-8">
+									<div class="input-group">
+										<input asp-for="LessonStart" type="datetime" class="form-control datetimepicker" asp-format="{0:yyyy-MM-dd HH:mm:ss}" placeholder="@Localizer["发布时间"]" />
+									</div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["上课地址"]<i class="mdi mdi-google-translate"></i></label>
+								<div class="col-sm-8">
+									<input asp-for="Address" class="form-control" required type="text">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["简介"]<i class="mdi mdi-google-translate"></i></label>
+								<div class="col-sm-8">
+									<input asp-for="Message" class="form-control" placeholder="@Localizer["一句话介绍"]" type="text">
+								</div>
+                            </div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["缩略图"]</label>
+								<div class="col-sm-8">
+									<ul class="agile-list" style="padding: 10px 0;">
+										<li class="info-element">
+											<input name="input_thumb" class="form-control" type="file" />
+											@if (!string.IsNullOrEmpty(Model.Img))
+											{
+												<div class="agile-detail row">
+													<div class="col-sm-6" style="padding-top: 7px; display:flex; align-items:center;" id="div_img">
+														<input type="checkbox" name="chk_thumb" value="1" class="checkbox" style="margin-right:10px;" />
+														<span>@Localizer["删除图片"]</span>
+														<a href="@Model.Img" target="_blank" style="margin-left:30px;">[@Localizer["预览"]]</a>
+													</div>
+													<div class="col-sm-6">
+													</div>
+												</div>
+											}
+											<span class="help-block m-b-none"><i class="fa fa-info-circle"></i> @Localizer["请上传jpg格式图片,尺寸建议:"]600*367</span>
+										</li>
+									</ul>
+								</div>
+							</div>							
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">Banner(H5)</label>
+								<div class="col-sm-8">
+									<ul class="agile-list" style="padding: 10px 0;">
+										<li class="info-element">
+											<input name="input_banner_h5" class="form-control" type="file" />
+											@if (!string.IsNullOrEmpty(Model.BannerH5))
+											{
+												<div class="agile-detail row">
+													<div class="col-sm-6" style="padding-top: 7px; display:flex; align-items:center;" id="div_img">
+														<input type="checkbox" name="chk_banner_h5" value="1" class="checkbox" style="margin-right:10px;" />
+														<span>@Localizer["删除图片"]</span>
+														<a href="@Model.BannerH5" target="_blank" style="margin-left:30px;">[@Localizer["预览"]]</a>
+													</div>
+													<div class="col-sm-6">
+													</div>
+												</div>
+											}
+											<span class="help-block m-b-none"><i class="fa fa-info-circle"></i> @Localizer["请上传jpg格式图片"]</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">Banner(PC)</label>
+								<div class="col-sm-8">
+									<ul class="agile-list" style="padding: 10px 0;">
+										<li class="info-element">
+											<input name="input_banner" class="form-control" type="file" />
+											@if (!string.IsNullOrEmpty(Model.Banner))
+											{
+												<div class="agile-detail row">
+													<div class="col-sm-6" style="padding-top: 7px; display:flex; align-items:center;" id="div_img">
+														<input type="checkbox" name="chk_banner" value="1" class="checkbox" style="margin-right:10px;" />
+														<span>@Localizer["删除图片"]</span>
+														<a href="@Model.Banner" target="_blank" style="margin-left:30px;">[@Localizer["预览"]]</a>
+													</div>
+													<div class="col-sm-6">
+													</div>
+												</div>
+											}
+											<span class="help-block m-b-none"><i class="fa fa-info-circle"></i> @Localizer["请上传jpg格式图片,尺寸建议:"]1920*595</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+							@foreach (var item in Model.ListPubCurrency)
+							{
+								<div class="form-group row">
+									<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["价格"] (@item.Country)</label>
+									<div class="col-sm-3 input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">@Localizer["原价"] @item.CurrencyCode</span>
+										</div>
+										<input type="number" currency_id="@item.PubCurrencyid" value="@item.MarketPrice" name="input_market_price_@item.PubCurrencyid" class="form-control" step="0.01" min="0" required />
+									</div>
+									<div class="col-sm-2 input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">@Localizer["拆扣"]</span>
+										</div>
+										<input type="number" value="@(item.MarketPrice==0?"1":(item.Price/item.MarketPrice).ToString("0.00"))" step="0.01" min="0.01" max="1" currency_id="@item.PubCurrencyid" name="input_discount_@item.PubCurrencyid" class="form-control" required />
+									</div>
+									<div class="col-sm-3 input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">@Localizer["售价"] @item.CurrencyCode</span>
+										</div>
+										<input type="number" currency_id="@item.PubCurrencyid" value="@item.Price" step="0.01" name="input_price_@item.PubCurrencyid" class="form-control" required />
+									</div>
+								</div>
+							}
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["默认价格"] (@Localizer["美元"])</label>
+								<div class="col-sm-3 input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">@Localizer["默认原价"]USD</span>
+									</div>
+									<input asp-for="MarketPrice" step="0.01" min="0" class="form-control" required type="number" />
+								</div>
+								<div class="col-sm-2 input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">@Localizer["拆扣"]</span>
+									</div>
+									<input type="number" value="@(Model.MarketPrice==0?"1":(Model.Price/Model.MarketPrice).ToString("0.00"))" step="0.01" min="0.01" max="1" name="input_discount" class="form-control" required />
+								</div>
+								<div class="col-sm-3 input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">@Localizer["售价"]USD</span>
+									</div>
+									<input asp-for="Price" step="0.01" min="0" class="form-control" required type="number">
+								</div>
+								<span class="help-block m-b-none offset-sm-3"><i class="fa fa-info-circle"></i>@Localizer["当前用户如定位不属于指定国家则自动采用默认价格结算"]</span>
+							</div>
+
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["内容"]<i class="mdi mdi-google-translate"></i></label>
+								<div class="col-sm-8">
+									<div class="editor-container"></div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["是否推荐"]</label>
+								<div class="col-sm-8">
+									<select asp-for="Recommend" class="form-control">
+										<option value="0">@Localizer["未推荐"]</option>
+										<option value="1">@Localizer["推荐"]</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-number-input" class="col-sm-3 col-form-label text-right">@Localizer["访问量"]</label>
+								<div class="col-sm-8">
+									@Model.Hits
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-number-input" class="col-sm-3 col-form-label text-right">@Localizer["创建时间"]</label>
+								<div class="col-sm-8">
+									@Model.Dtime
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-number-input" class="col-sm-3 col-form-label text-right">@Localizer["排序"]</label>
+								<div class="col-sm-8">
+									<input asp-for="Sort" class="form-control" required type="number">
+									<span class="help-block m-b-none"><i class="fa fa-info-circle"></i>@Localizer["排序字段从小到大排序"]</span>
+									<span class="help-block m-b-none"><i class="fa fa-info-circle"></i>@Localizer["排序字段值相同的情况下,按最新时间发布的排最前面"]</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-number-input" class="col-sm-3 col-form-label text-right">@Localizer["发布时间"]</label>
+								<div class="col-sm-8">
+									<input asp-for="Sendtime" type="datetime" class="form-control datetimepicker" asp-format="{0:yyyy-MM-dd HH:mm:ss}" placeholder="@Localizer["发布时间"]" />
+									<span class="help-block m-b-none"><i class="fa fa-info-circle"></i> @Localizer["排序字段相同的情况下，按发布时间倒序排列（最新时间排前面）"]</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["状态"]</label>
+								<div class="col-sm-8">
+									<select asp-for="Status" class="form-control">
+										<option value="1">@Localizer["启用"]</option>
+										<option value="0">@Localizer["停用"]</option>
+									</select>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-8 ml-auto">
+									<input asp-for="Intro" type="hidden">
+                                    <input asp-for="OfflineCourseid" type="hidden" />
+                                    <input asp-for="Lang" type="hidden" />
+									<button type="submit" class="btn btn-primary dictionaryadd dictionaryedit" id="btn_save">@Localizer["保存信息"]</button>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div><!--end card-body-->
+			</div><!--end card-->
+		</div><!--end col-->
+	</div><!--end row-->
+	
+<div id="win1" />
+</form>
+@section Scripts{
+	<!-- Required datatable js -->
+	<script type="text/javascript" src="@Url.Content("/assets/js/jquery.easyui.min.js")"></script>
+	<script type="text/javascript" src="@Url.Content("/assets/plugins/datapicker/bootstrap-datetimepicker.min.js")"></script>
+	<script src="@Url.Content("/assets/plugins/switchery/switchery.js")"></script>
+	<script src="@Url.Content("/assets/plugins/select2/select2.min.js")"></script>
+
+	<script type="text/javascript">
+		$(function () {
+			$(".editor-container").each((i, dom) => {
+				jsmoEditor
+					.createPageEditor(dom, {
+						appName: "custom",
+						// 指向 app 文件夹的路径,执行文件所在
+						appPath: "/editor-page/app/",
+						editorData: "@Html.Raw(Model.EncryptData)",
+						// 是否开启线上页面库
+						pageShop: false,
+						// 是否允许上传代码
+						removeUpload: false,
+						// 模块管理
+						moduleLib: {
+							// 是否开启线上模块库
+							Offline: false,
+							// type: "MODULES" | "MODULES_FOOTER";
+							type: "MODULES",
+						},
+						uploadConfig: {
+							uploadPath: "/Api/EditPage/UploadFile",
+							resourceLink: "",
+							uploadName: "Filedata",
+							uploadData: {},
+							imageDataPath: "data",
+							uploadFileExt: ["jpg", "png", "gif", "jpeg"],
+							imageUploadSize: "1024",
+							uploadFileSize: "2048",
+						},
+						// 上传相关参数配置
+						// uploadConfig: {
+						//     uploadPath: string; //API路径
+						//     uploadName: string; //上传FILE控件名，
+						//     publicPath: string; //
+						//     resourceLink: string; //资源链接的域名
+						//     uploadFileSize: number;//上传文件大小限制
+						//     uploadFileExt: string[];
+						//     uploadData: { [key: string]: string };//自定义的参数，随图上传时附上
+						//     imageUploadSize: number;//上传图片大小限制
+						//     imageDataPath: number;//返回的KEY名
+						// },
+						on: {
+							saveEditor({ data, encrypt_data }) {
+								console.log(encrypt_data);
+								$("#Intro").val("{\"encrypt_data\":" + JSON.stringify(encrypt_data) + ",\"data\":" + JSON.stringify(data) + "}");
+							},
+						},
+					}).init();
+			});
+		});
+		@Html.Raw(ViewBag.ScriptStr)
+
+		
+		$(document).ready(function () {
+			$('.datetimepicker').datetimepicker({
+				//language: 'zh-CN',//显示中文
+				forceParse: true,
+				format: 'yyyy-mm-dd hh:ii:ss',//显示格式
+				initialDate: new Date().Format("yyyy-MM-dd hh:mm:ss"),
+				autoclose: true,//选中自动关闭
+				todayBtn: true,//显示今日按钮*/
+				minuteStep: 1
+			});
+			
+			$("input[name*='input_market_price_']").change(function () {
+				var market_price = $(this).val();
+				var discount = $("[name='input_discount_" + $(this).attr("currency_id") + "']").val();
+				if (discount > 0) {
+					$("[name='input_price_" + $(this).attr("currency_id") + "']").val((market_price * discount).toFixed(2));
+				}else{
+					$("[name='input_price_" + $(this).attr("currency_id") + "']").val(market_price);
+				}
+			});
+			$("input[name*='input_discount_']").change(function(){
+				if ($(this).val()>0){
+					var market_price = $("[name='input_market_price_"+$(this).attr("currency_id")+"']").val();
+					$("[name='input_price_" + $(this).attr("currency_id") + "']").val((market_price * $(this).val()).toFixed(2));
+				}
+			});
+			$("input[name='MarketPrice']").change(function () {
+				var discount = $("[name='input_discount']").val();
+				if (discount > 0) {
+					$("[name='Price']").val((discount * $(this).val()).toFixed(2));
+				}
+			});
+			$("input[name='input_discount']").change(function () {
+				if ($(this).val() > 0) {
+					var market_price = $("[name='MarketPrice']").val();
+					$("[name='Price']").val((market_price * $(this).val()).toFixed(2));
+				}
+			});
+		});
+
+	</script>
+}

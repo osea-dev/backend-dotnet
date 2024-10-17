@@ -1,0 +1,27 @@
+//Keys：接口数据缓存键值
+//Dependency：Paras依赖项,Keys依赖此项的所有键,每个依赖项都需要有专门方法处理
+{
+  "ApiCache": {
+    "IsEnable": true,
+    "GetCardInfo": {
+      "Key": "GetCardInfo.cardid:{cardid}",
+      "Expire": 7200
+    },
+    "GetMyCard": {
+      "Key": "GetMyCard.cardid:{cardid}",
+      "Expire": 7200
+    },
+    "GetCompanyCards": {
+      "Key": "GetCompanyCards.userid:{userid}",
+      "Expire": 7200
+    },
+    "GetCompanyHome": {
+      "Key": "GetCompanyHome.companyid:{companyid}",
+      "Expire": 7200
+    },
+    "Cards": {
+      "Key": "Cards.companyid:{companyid}.page:{page}",
+      "Expire": 7200
+    }
+  }
+}

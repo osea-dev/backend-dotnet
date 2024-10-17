@@ -1,0 +1,373 @@
+﻿
+@using WeTalk.Web.ViewModels.Teacher;
+@using Microsoft.AspNetCore.Mvc.Localization
+@using WeTalk.Interfaces
+@inject IHtmlLocalizer<LangResource> Localizer
+@section HeadCss{
+	<link href="@Url.Content("/assets/css/icon.css")" rel="stylesheet" />
+    <!-- DataTables -->
+    <link href="@Url.Content("/assets/plugins/datatables/dataTables.bootstrap4.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("/assets/plugins/datatables/buttons.bootstrap4.min.css")" rel="stylesheet" type="text/css" />
+    <!-- Responsive datatable examples -->
+    <link href="@Url.Content("/assets/plugins/datatables/responsive.bootstrap4.min.css")" rel="stylesheet" type="text/css" />
+}
+
+<div class="row" >
+	<div class="col-12">
+		<div class="card">
+			<div class="card-body">
+				<div class="input-group">
+					<span class="input-group-btn">
+						<input type="text" placeholder="@Localizer["关键词"]" id="input_keys" class="form-control" />
+					</span>
+					<span class="input-group-btn">
+						<select class="form-control m-b" name="account" id="sel_status">
+							<option value="">@Localizer["状态"]</option>
+							<option value="0">@Localizer["未启用"]</option>
+							<option value="1">@Localizer["已启用"]</option>
+						</select>
+					</span>
+					<span class="input-group-btn">
+						<div class="input-daterange input-group">
+							<input type="text" id="input_begintime" class="input-sm form-control datepicker" name="start" placeholder="@Localizer["起始时间"]" />
+							<span class="input-group-addon">-</span>
+							<input type="text" id="input_endtime" class="input-sm form-control datepicker" name="end" placeholder="@Localizer["结束时间"]" />
+						</div>
+					</span>
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-outline-info search" onclick="mainGrid.doSearch();"> <i class="fa fa-search"></i>@Localizer["搜索"]</button>
+					</span>
+				</div>
+				<table id="table_view" class="easyui-datagrid" />
+			</div>
+		</div>
+	</div> <!-- end col -->
+</div>
+<div id="win" />
+
+@section Scripts{
+    <!-- Required datatable js -->
+    <script src="@Url.Content("/assets/plugins/datatables/jquery.dataTables.min.js")"></script>
+    <script src="@Url.Content("/assets/plugins/datatables/dataTables.bootstrap4.min.js")"></script>
+    <!-- Buttons examples -->
+    <script src="@Url.Content("/assets/plugins/datatables/dataTables.buttons.min.js")"></script>
+    <script src="@Url.Content("/assets/plugins/datatables/buttons.bootstrap4.min.js")"></script>
+    <script src="@Url.Content("/assets/plugins/datatables/jszip.min.js")"></script>
+    <script src="@Url.Content("/assets/plugins/datatables/pdfmake.min.js")"></script>
+    <script src="@Url.Content("/assets/plugins/datatables/vfs_fonts.js")"></script>
+    <script src="@Url.Content("/assets/plugins/datatables/buttons.html5.min.js")"></script>
+    <script src="@Url.Content("/assets/plugins/datatables/buttons.print.min.js")"></script>
+    <script src="@Url.Content("/assets/plugins/datatables/buttons.colVis.min.js")"></script>
+    <!-- Responsive examples -->
+    <script src="@Url.Content("/assets/plugins/datatables/dataTables.responsive.min.js")"></script>
+    <script src="@Url.Content("/assets/plugins/datatables/responsive.bootstrap4.min.js")"></script>
+    <script src="@Url.Content("/assets/pages/jquery.datatable.init.js")"></script>
+    <script type="text/javascript" src="@Url.Content("/assets/js/jquery.easyui.min.js")"></script>
+
+	<script src="@Url.Content("/assets/plugins/datapicker/bootstrap-datepicker.js")"></script>
+	<script>
+        $('.datepicker').datepicker({
+            keyboardNavigation: false,
+            forceParse: false,
+            autoclose: true
+        });
+
+		var actionURL = "CategoryData";
+        var fillDataContralId = "table_view";
+        var mainGrid = {
+            databind: function () {
+                /*开始加载数据*/
+                $('#' + fillDataContralId).treegrid({
+                    url: actionURL,
+                    idField: 'TeacherCategoryid', //主键
+                    width: (($(window).width()-60) * 0.98),
+                    height: (($(window).height() - 70) * 0.98),
+                    fitColumns: true,
+                    singleSelect: false, //单选
+                    pageList: [10, 20, 50, 100],
+                    pageSize: 20,
+                    pagination: true,
+					toolbar: [{
+						id: 'add',
+						text: '@Localizer["添加"]',
+						iconCls: 'icon-add',
+						handler: function () {
+							mainGrid.add();
+						    }
+					    }, '-', {
+							id: 'enableu',
+							text: '@Localizer["启用"]',
+							iconCls: 'icon-ok',
+							handler: function () {
+								mainGrid.enableu();
+							}
+						}, '-', {
+							id: 'enablef',
+							text: '@Localizer["停用"]',
+							iconCls: 'icon-ban',
+							handler: function () {
+								mainGrid.enablef();
+							}
+						}, '-',{
+						    id: 'del',
+						    text: '@Localizer["删除"]',
+							iconCls: 'icon-cancel',
+						    handler: function () {
+							    mainGrid.del();
+						    }
+					    }
+                    ],
+					onCheck: function (row) {
+						t = $(this);
+						opts = t.treegrid("options");
+						if (opts.checkOnSelect && opts.singleSelect) { return; }
+						var idField = opts.idField, id = row[idField], children, checked, parent = row;
+						//如果当前节点被勾选,那么勾选该节点的子节点
+						$.each(t.treegrid("getChildren", id), function (i, n) {
+							t.treegrid("select", n[idField]);
+						});
+					},
+					onUncheck: function (row) {
+						t = $(this);
+                        opts = t.treegrid("options");
+                        if (opts.checkOnSelect && opts.singleSelect) { return; }
+                        var idField = opts.idField, id = row[idField], children, checked, parent = t.treegrid("getParent", id);
+						$.each(t.treegrid("getChildren", id), function (i, n) {
+							t.treegrid("unselect", n[idField]);
+						});
+					},
+                    onLoadSuccess: function () {
+		                @Html.Raw(ViewBag.ScriptStr)
+                    },
+                    treeField: 'Title',
+                    columns: [
+                        [
+							{ title: '@Localizer["选择"]', checkbox: true, field: 'id', width: 30, sortable: true },
+							{ title: 'ID', field: true, field: 'TeacherCategoryid', width: 50, sortable: true },
+							{ title: '@Localizer["分类名称"]', field: true, field: 'Title', width: 200, sortable: true },
+							{ title: '@Localizer["创建时间"]', field: 'Dtime', width: 100, sortable: true },
+							{
+                                title: '@Localizer["状态"]', field: 'Status', width: 60, sortable: true, formatter: function (value, row) {
+									var e = ' ';
+                                    switch (value) {
+										case "0":
+											e = "<font color='red'>@Localizer["未启用"]</font>";
+                                            break;
+										case "1":
+											e = "@Localizer["已启用"]";
+                                            break;
+                                    }									
+									return e;
+                                }
+							},
+							{ title: '@Localizer["排序"]', field: 'Sort', width: 60, sortable: true },
+							{
+                                title: '@Localizer["锁定状态"]', field: 'Isadmin', width: 60, sortable: true, formatter: function (value, row) {
+									var e = ' ';
+                                    switch (value) {
+										case "1":
+											e = "<font color='red'>@Localizer["锁定"]</font>";
+                                            break;
+										case "0":
+											e = "@Localizer["否"]";
+                                            break;
+                                    }									
+									return e;
+                                }
+							},
+                            {
+                                title: '@Localizer["添加子类"]', field: 'add', width: 100, formatter: function (value, row) {
+                                    var e = '';
+                                    if (row.Depth == "1") {
+                                        e = '<a href="javascript:void(0);"onclick="mainGrid.addrow(' + row.TeacherCategoryid + ');">@Localizer["添加"]</a> ';                                        
+                                    }
+                                    return e;
+                                }
+                            },
+                            {
+                                title: '@Localizer["操作"]', field: 'operation', align: 'center', width: 60, formatter: function (value, row) {
+                                    var e = '<a href="javascript:void(0);" class="edit mr-2" onclick="mainGrid.editrow(' + row.TeacherCategoryid + ');"><i class="fas fa-edit text-info font-16"></i></a> ';
+                                    e += '<a href="javascript:void(0);" onclick="mainGrid.delrow(' + row.TeacherCategoryid + ',' + row.Isadmin +')"><i class="fas fa-trash-alt text-danger font-16"></i></a>';
+                                    return e;
+                                }
+                            }
+                        ]]
+                });
+            },
+            getSelected: function () {
+                return $('#' + fillDataContralId).datagrid('getSelected');
+            },
+            getSelections: function () {
+                return $('#' + fillDataContralId).datagrid('getSelections');
+            },
+            Reflesh: function () {
+                $('#' + fillDataContralId).datagrid("reload");
+            },
+            GetSelectedRow: function () {
+                return $('#' + fillDataContralId).treegrid('getSelected');
+            },
+            doSearch: function () {
+                $('#' + fillDataContralId).treegrid('clearSelections');
+                $('#' + fillDataContralId).treegrid('load', {
+					keys: $('#input_keys').val(),
+                    status: $('#sel_status').val(),
+                    begintime: $('#input_begintime').val(),
+                    endtime: $('#input_endtime').val()
+                });
+			},
+			add: function () {
+				$('#win').window({
+					width: $(window).width() * 0.8,
+					height: $(window).height() * 0.8,
+					modal: true,
+					title: "@Localizer["添加分类"]"
+				});
+				$('#win').html("<iframe id='if1' src='CategoryAdd'>");
+				$('#win').window({
+					onResize: function () { //当面板关闭之前触发的事件
+						$("#win iframe").width($(this).width() - 15);
+						$("#win iframe").height($(this).height() - 15);
+					}
+				});
+			},
+            addrow: function (fid) {
+                $('#win').window({
+                    width: $(window).width() * 0.8,
+                    height: $(window).height() * 0.8,
+                    modal: true,
+                    title: "@Localizer["添加分类"]"
+                });
+                $('#win').html("<iframe id='if1' style='width:100%;height:100%' src='CategoryAdd?fid=" + fid + "'>");
+                $('#win').window({
+                    onResize: function () { //当面板关闭之前触发的事件
+                        $("#win iframe").width($(this).width() - 15);
+                        $("#win iframe").height($(this).height() - 15);
+                    }
+                });
+            },
+            edit: function () {
+                var rowdata = mainGrid.getSelected()
+                if (rowdata) {
+                    $('#win').window({
+                        width: $(window).width() * 0.9,
+                        height: $(window).height() * 0.9,
+                        modal: true,
+                        title: "@Localizer["修改分类"]"
+                    });
+					$('#win').html("<iframe id='if1' src='CategoryAdd?TeacherCategoryid=" + rowdata.TeacherCategoryid + "'>");
+                    $('#win').window({
+                        onResize: function () { //当面板关闭之前触发的事件
+                            $("#win iframe").width($(this).width() - 15);
+                            $("#win iframe").height($(this).height() - 15);
+                        }
+                    });
+                } else {
+                    alert('@Localizer["请选择要修改的行"]。');
+                }
+            },
+            enableu: function () {
+				var Categoryids = "0";
+				var rowdata = mainGrid.getSelections();
+				if (rowdata.length > 0) {
+					for (var i = 0; i < rowdata.length; i++) {
+						Categoryids = Categoryids + "," + rowdata[i].TeacherCategoryid;
+					}
+					$.get(actionURL + "?action=enableu&TeacherCategoryids=" + Categoryids, function (data) {
+						var json = eval("(" + data + ")");
+						if (json.errorcode == 0) $('#' + fillDataContralId).datagrid('reload');
+						$.messager.show({ title: '@Localizer["启用分类信息"]', msg: json.msg, timeout: 3000, showType: 'slide' });
+					});
+				} else {
+					alert('@Localizer["请选择要修改的行"]。');
+				}
+
+            },
+            enablef: function () {
+				var Categoryids = "0";
+				var rowdata = mainGrid.getSelections();
+				if (rowdata.length > 0) {
+					for (var i = 0; i < rowdata.length; i++) {
+						Categoryids = Categoryids + "," + rowdata[i].TeacherCategoryid;
+					}
+					$.get(actionURL + "?action=enablef&TeacherCategoryids=" + Categoryids, function (data) {
+						var json = eval("(" + data + ")");
+						if (json.errorcode == 0) $('#' + fillDataContralId).datagrid('reload');
+						$.messager.show({ title: '@Localizer["禁用分类信息"]', msg: json.msg, timeout: 3000, showType: 'slide' });
+					});
+				} else {
+					alert('@Localizer["到"]请选择要修改的行。');
+				}
+			},
+            editrow: function (id) {
+
+                if (id) {
+                    $('#win').window({
+                        width: $(window).width() * 0.9,
+                        height: $(window).height() * 0.9,
+                        modal: true,
+                        title: "@Localizer["修改分类"]"
+                    });
+                    $('#win').html("<iframe id='if1' src='CategoryAdd?TeacherCategoryid=" + id + "&dtime=" + new Date() + "'>");
+                    $('#win').window({
+                        onResize: function () { //当面板关闭之前触发的事件
+                            $("#win iframe").width($(this).width() - 15);
+                            $("#win iframe").height($(this).height() - 15);
+                        }
+                    });
+                } else {
+                    alert('@Localizer["请选择要修改的行"]。');
+                }
+            },
+            delrow:function(id,isadmin){
+                if(isadmin==1){
+					alert("@Localizer["锁定分类无法删除"]");
+					return;
+				}
+                if (confirm("@Localizer["您确定要删除"]?")) {
+                    if (id > 0) {
+                        $.get(actionURL + "?action=del&TeacherCategoryid=" + id, function (data) {
+                            var json = eval("(" + data + ")");
+                            if (json.errorcode == 0) $('#' + fillDataContralId).treegrid('reload');
+                            $.messager.show({ title: '@Localizer["删除分类"]', msg: json.msg, timeout: 3000, showType: 'slide' });
+                        });
+                    } else {
+                        alert('@Localizer["请选择要修改的行"]。');
+                    }
+                }
+            },
+            del: function () {
+                var Categoryids = "0";
+                var rowdata = mainGrid.getSelections();
+                if (confirm("@Localizer["您确定要删除"]?")) {
+                    if (rowdata.length > 0) {
+                        for (var i = 0; i < rowdata.length; i++) {
+							if(rowdata[i].Isadmin==1){
+								alert("@Localizer["所选中的分类中涉及锁定分类"]");
+								return;
+							}
+                            Categoryids = Categoryids + "," + rowdata[i].Categoryid;
+                        }
+                        $.get(actionURL + "?action=del&TeacherCategoryids=" + Categoryids, function (data) {
+                            var json = eval("(" + data + ")");
+                            if (json.errorcode == 0) $('#' + fillDataContralId).treegrid('reload');
+                            $.messager.show({ title: '@Localizer["删除分类"]', msg: json.msg, timeout: 3000, showType: 'slide' });
+                        });
+                    } else {
+                        alert('@Localizer["请选择要修改的行"]。');
+                    }
+                }
+            }
+        }
+        $(function () {
+            mainGrid.databind();
+        });
+        //监听，页面变化重画宽高；
+        $(window).resize(function () {
+            $('#' + fillDataContralId).datagrid('resize', {
+                width: function () { return document.body.clientWidth; },
+                height: function () { return document.body.clientHeight; },
+            });
+        });
+	</script>
+    </script>
+}

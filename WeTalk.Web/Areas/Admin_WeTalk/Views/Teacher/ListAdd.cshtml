@@ -1,0 +1,375 @@
+﻿@using WeTalk.Web.ViewModels.Teacher;
+@using Microsoft.AspNetCore.Mvc.Localization
+@using WeTalk.Interfaces
+@inject IHtmlLocalizer<LangResource> Localizer
+@model ListAdd
+@section HeadCss{
+	<link href="/assets/css/plugins/datapicker/bootstrap-datetimepicker.css" rel="stylesheet" />
+	<link href="@Url.Content("/assets/css/plugins/switchery/switchery.css")" rel="Stylesheet" type="text/css" />
+	<link rel="stylesheet" href="/assets/css/plugins/intlTelInput/intlTelInput.css">
+	<style>
+		.col-sm-8 {
+			padding-top: 7px;
+		}
+	</style>
+}
+<form asp-action="ListAdd" enctype="multipart/form-data">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				@await Component.InvokeAsync("LanguageTag", new { lang = Model.Lang })
+				<div class="card-body">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["所属分类"]</label>
+								<div class="col-sm-8">
+                                    <input id="input_fid" name="input_fid" class="form-control" value="根分类" />
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["展示类型"]</label>
+								<div class="col-sm-8">
+									<select asp-for="Sty" class="form-control">
+										<option value="0">@Localizer["前台展示"]</option>
+										<option value="1">@Localizer["前台不展示"]</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["老师名称"]<i class="mdi mdi-google-translate"></i></label>
+								<div class="col-sm-8">
+									<input asp-for="Name" class="form-control" required type="text">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["手机号码"]</label>
+								<div class="col-sm-8">
+									<input asp-for="Mobile" class="form-control" minlength="5"  type="tel">
+									<input asp-for="MobileCode" class="form-control" type="hidden" />
+									<input asp-for="CountryCode" class="form-control" type="hidden">
+									<br/>
+									<span class="help-block m-b-none"><i class="fa fa-info-circle"></i>@Localizer["注意:更换号码,相当于在拓课云新建一个账号"]</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["电子邮箱"]</label>
+								<div class="col-sm-8">
+									<input asp-for="Email" class="form-control" required type="text">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["常用语言"]</label>
+								<div class="col-sm-8">
+									<select asp-for="TeacherLang" asp-items="Model.LangItems" class="form-control"></select>
+									<span class="help-block m-b-none"><i class="fa fa-info-circle"></i>@Localizer["注意:发送给老师的邮件会切换成老师常用语言发送"]</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["所在时区"]</label>
+								<div class="col-sm-8">
+									<select asp-for="Timezoneid" asp-items="Model.TimezoneItems" class="form-control"></select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["头像"]</label>
+								<div class="col-sm-8">
+									<ul class="agile-list" style="padding: 10px 0;">
+										<li class="info-element">
+											<input name="input_head_img" class="form-control" type="file" />
+											@if (!string.IsNullOrEmpty(Model.HeadImg))
+											{
+												<div class="agile-detail row">
+													<div class="col-sm-6" style="padding-top: 7px; display:flex; align-items:center;" id="div_head_img">
+														<input type="checkbox" name="chk_head_img" value="1" class="checkbox" style="margin-right:10px;" />
+														<span>@Localizer["删除图片"]</span>
+														<a href="@Model.HeadImg" target="_blank" style="margin-left:30px;">[@Localizer["预览"]]</a>
+													</div>
+													<div class="col-sm-6">
+													</div>
+												</div>
+											}
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["缩略图"]</label>
+								<div class="col-sm-8">
+									<ul class="agile-list" style="padding: 10px 0;">
+										<li class="info-element">
+											<input name="input_img" class="form-control" type="file" />
+											@if (!string.IsNullOrEmpty(Model.Img))
+											{
+												<div class="agile-detail row">
+													<div class="col-sm-6" style="padding-top: 7px; display:flex; align-items:center;" id="div_img">
+														<input type="checkbox" name="chk_img" value="1" class="checkbox" style="margin-right:10px;" />
+														<span>@Localizer["删除图片"]</span>
+														<a href="@Model.Img" target="_blank" style="margin-left:30px;">[@Localizer["预览"]]</a>
+													</div>
+													<div class="col-sm-6">
+													</div>
+												</div>
+											}
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["照片"]</label>
+								<div class="col-sm-8">
+									<ul class="agile-list" style="padding: 10px 0;">
+										<li class="info-element">
+											<input name="input_photo" class="form-control" type="file" />
+											@if (!string.IsNullOrEmpty(Model.Photo))
+											{
+												<div class="agile-detail row">
+													<div class="col-sm-6" style="padding-top: 7px; display:flex; align-items:center;" id="div_photo">
+														<input type="checkbox" name="chk_photo" value="1" class="checkbox" style="margin-right:10px;" />
+														<span>@Localizer["删除图片"]</span>
+														<a href="@Model.Photo" target="_blank" style="margin-left:30px;">[@Localizer["预览"]]</a>
+													</div>
+													<div class="col-sm-6">
+													</div>
+												</div>
+											}
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["性别"]</label>
+								<div class="col-sm-8">
+									<select asp-for="Gender" class="form-control">
+										<option value="1">@Localizer["男"]</option>
+										<option value="0">@Localizer["女"]</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["出生日期"]</label>
+								<div class="col-sm-8">
+									<input asp-for="Birthdate" class="form-control"required type="date">
+                                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>@Localizer["老师最小年龄为20岁"]</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["关联拓课云的老师ID"]</label>
+								<div class="col-sm-8">
+									@Model.MenkeUserId
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["标签"]<i class="mdi mdi-google-translate"></i></label>
+								<div class="col-sm-8">
+									<input asp-for="Keys" class="form-control" type="text">
+                                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> @Localizer["多个标签用英文逗号隔开"]</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["简介"]<i class="mdi mdi-google-translate"></i></label>
+								<div class="col-sm-8">
+                                    <textarea asp-for="Message" class="form-control" style="width:700px;height:94px"></textarea>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["出生地"]<i class="mdi mdi-google-translate"></i></label>
+								<div class="col-sm-8">
+									<input asp-for="Comefrom" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["教育"]<i class="mdi mdi-google-translate"></i></label>
+								<div class="col-sm-8">
+									<input asp-for="Edu" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["宗教信仰"]<i class="mdi mdi-google-translate"></i></label>
+								<div class="col-sm-8">
+									<input asp-for="Religion" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["座右铭"]<i class="mdi mdi-google-translate"></i></label>
+								<div class="col-sm-8">
+                                    <textarea asp-for="Motto" class="form-control" style="width:700px;height:94px"></textarea>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["哲学修养"]<i class="mdi mdi-google-translate"></i></label>
+								<div class="col-sm-8">
+                                    <textarea asp-for="Philosophy" class="form-control" style="width:700px;height:94px"></textarea>
+								</div>
+							</div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["数字标签"]</label>
+                                <div class="col-sm-8 row">
+									<div class="col-sm-3">
+										<input asp-for="Tag1" class="form-control" type="text" placeholder="请填写数字">
+									</div>
+									<div class="col-sm-3">
+										<input asp-for="Tag2" class="form-control" type="text" placeholder="请填写上标单位">
+									</div>
+									<div class="col-sm-3">
+										<input asp-for="Tag3" class="form-control" type="text" placeholder="请填写下标单位">
+									</div>
+									<div class="col-sm-3">
+										<input asp-for="Tag4" class="form-control" type="text" placeholder="请填写描述">
+									</div>
+									<div class="col-sm-3">
+										<input asp-for="Tag5" class="form-control" type="text" placeholder="请填写数字">
+									</div>
+									<div class="col-sm-3">
+										<input asp-for="Tag6" class="form-control" type="text" placeholder="请填写上标单位">
+									</div>
+									<div class="col-sm-3">
+										<input asp-for="Tag7" class="form-control" type="text" placeholder="请填写下标单位">
+									</div>
+									<div class="col-sm-3">
+										<input asp-for="Tag8" class="form-control" type="text" placeholder="请填写描述">
+									</div>
+									<div class="col-sm-3">
+										<input asp-for="Tag9" class="form-control" type="text" placeholder="请填写数字">
+									</div>
+									<div class="col-sm-3">
+										<input asp-for="Tag10" class="form-control" type="text" placeholder="请填写上标单位">
+									</div>
+									<div class="col-sm-3">
+										<input asp-for="Tag11" class="form-control" type="text" placeholder="请填写下标单位">
+									</div>
+									<div class="col-sm-3">
+										<input asp-for="Tag12" class="form-control" type="text" placeholder="请填写描述">
+									</div>
+                                </div>
+                            </div>
+							<div class="form-group row">
+								<label for="example-number-input" class="col-sm-3 col-form-label text-right">@Localizer["创建时间"]</label>
+								<div class="col-sm-8">
+									@Model.Dtime
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-number-input" class="col-sm-3 col-form-label text-right">@Localizer["排序"]</label>
+								<div class="col-sm-8">
+									<input asp-for="Sort" class="form-control" required type="number">
+									<span class="help-block m-b-none"><i class="fa fa-info-circle"></i>@Localizer["排序字段从小到大排序"]</span>
+									<span class="help-block m-b-none"><i class="fa fa-info-circle"></i>@Localizer["排序字段值相同的情况下,按最新时间发布的排最前面"]</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-number-input" class="col-sm-3 col-form-label text-right">@Localizer["发布时间"]</label>
+								<div class="col-sm-8">
+									<input asp-for="Sendtime" type="datetime" class="form-control datetimepicker" asp-format="{0:yyyy-MM-dd HH:mm:ss}" placeholder="发布时间" />
+                                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> @Localizer["排序字段相同的情况下，按发布时间倒序排列（最新时间排前面）"]</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["状态"]</label>
+								<div class="col-sm-8">
+									<select asp-for="Status" class="form-control">
+										<option value="1">@Localizer["启用"]</option>
+										<option value="0">@Localizer["停用"]</option>
+									</select>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-8 ml-auto">
+                                    <input asp-for="TeacherCategoryid" type="hidden" />
+                                    <input asp-for="Teacherid" type="hidden" />
+									<input asp-for="Lang" type="hidden" />
+									<button type="submit" class="btn btn-primary dictionaryadd dictionaryedit" onclick="return chk();" id="btn_save">@Localizer["保存信息"]</button>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div><!--end card-body-->
+			</div><!--end card-->
+		</div><!--end col-->
+	</div><!--end row-->
+</form>
+
+@section Scripts{
+	<!-- Required datatable js -->
+	<script type="text/javascript" src="@Url.Content("/assets/js/jquery.easyui.min.js")"></script>
+	<script type="text/javascript" src="@Url.Content("/assets/plugins/datapicker/bootstrap-datetimepicker.min.js")"></script>
+	<script src="@Url.Content("/assets/plugins/switchery/switchery.js")"></script>
+	<script src="/assets/plugins/intlTelInput/intlTelInput.js"></script>
+	
+	<script type="text/javascript">
+		@Html.Raw(ViewBag.ScriptStr)
+		var input = document.querySelector("#Mobile");
+		var iti = window.intlTelInput(input, {
+		  // allowDropdown: false,
+		  // autoHideDialCode: false,
+		  // autoPlaceholder: "off",
+		  // dropdownContainer: document.body,
+		  // excludeCountries: ["us"],
+		   formatOnDisplay: false,
+		  // geoIpLookup: function(callback) {
+		  //   $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+		  //     var countryCode = (resp && resp.country) ? resp.country : "";
+		  //     callback(countryCode);
+		  //   });
+		  // },
+		  // hiddenInput: "full_number",
+		  // initialCountry: "auto",
+		  // localizedCountries: { 'de': 'Deutschland' },
+		  // nationalMode: false,
+		  // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+		  // placeholderNumberType: "MOBILE",
+		  // preferredCountries: ['cn', 'jp'],
+		  separateDialCode: true,
+		  utilsScript: "/assets/plugins/intlTelInput/utils.js",
+		});
+		if("@Model.Mobile".length>0){
+			iti.setNumber("@(Model.Mobile)");			
+			iti.setCountry("@Model.CountryCode");
+		}else{
+			iti.setCountry("CN");
+			$("#MobileCode").val(86);
+			$("#CountryCode").val(iti.getSelectedCountryData().iso2);
+		}
+		input.addEventListener("countrychange", function() {
+		  $("#MobileCode").val(iti.getSelectedCountryData().dialCode);
+		  $("#CountryCode").val(iti.getSelectedCountryData().iso2);
+		});
+
+		$('#input_fid').combotree({
+            url:'../Teacher/CategoryClass?Categoryid=@Model.TeacherCategoryid&Fid=@ViewBag.Categoryid',
+			onLoadSuccess: function (node, data) {
+				if(@Model.TeacherCategoryid>0)$('#input_fid').combotree('setValue', @Model.TeacherCategoryid);
+			}
+		});
+		var switchery = new Switchery($(".js-switch")[0], {
+			color: '#1AB394'
+		});
+		$(".switchery").click(function () {
+			if ($(".js-switch").prop('checked')) {
+				$('#div_panle').show()
+			} else {
+				$('#div_panle').hide()
+			}
+		});
+		function chk(){
+			if ($("#Mobile").val().length>3 && !iti.isValidNumber()) {
+			  alert("@Localizer["输入的手机格式不正确"]");
+			  $("#Mobile").focus();
+			  return false;
+			}
+			return true;
+		}
+		$(document).ready(function () {
+			$('.datetimepicker').datetimepicker({
+				//language: 'zh-CN',//显示中文
+				forceParse: true,
+				format: 'yyyy-mm-dd hh:ii:ss',//显示格式
+				initialDate: new Date().Format("yyyy-MM-dd hh:mm:ss"),
+				autoclose: true,//选中自动关闭
+				todayBtn: true,//显示今日按钮*/
+				minuteStep: 1
+			});
+		});
+	</script>
+}

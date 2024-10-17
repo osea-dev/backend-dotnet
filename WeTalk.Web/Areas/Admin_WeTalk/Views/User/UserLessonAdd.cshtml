@@ -1,0 +1,164 @@
+﻿@using WeTalk.Common;
+@using WeTalk.Web.ViewModels.User;
+@using WeTalk.Common.Helper;
+@using Microsoft.AspNetCore.Mvc.Localization
+@using WeTalk.Interfaces
+@inject IHtmlLocalizer<LangResource> Localizer
+@model UserLessonAdd
+@section HeadCss{
+    <link href="/assets/css/icon.css" rel="stylesheet" />
+    <link href="/lib/layui-src/build/css/layui.css" rel="stylesheet" />
+	<link rel="stylesheet" href="/assets/css/plugins/intlTelInput/intlTelInput.css">
+	<style>
+		.col-sm-8{padding-top:7px;}
+	</style>
+}
+
+
+<form asp-action="UserLessonAdd">
+    <div class="row" style="padding-top:10px;">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+						<div class="col-lg-12">
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@(Localizer["课节名称"])(@Localizer["拓课云"])</label>
+								<div class="col-sm-8">
+									@Model.MenkeLessonName
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["课节状态"]</label>
+								<div class="col-sm-8">
+									@switch (Model.MenkeState)//1未开始2进行中3已结课4已过期
+									{
+										case 1:
+											@("未开始");
+											break;
+										case 2:
+											@("进行中");
+											break;
+										case 3:
+											@("已结课");
+											break;
+										case 4:
+											@("已过期");
+											break;
+									}
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["上课时间"]</label>
+								<div class="col-sm-8">
+									@DateHelper.ConvertIntToDateTime(Model.MenkeStarttime.ToString()).ToLocalTime() - 
+									@DateHelper.ConvertIntToDateTime(Model.MenkeEndtime.ToString()).ToLocalTime()
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["老师ID"]</label>
+								<div class="col-sm-8">
+									@if (Model.Teacherid > 0) {
+										@Model.Teacherid <a href="javascript:void(0);" onclick="javascript:parent.mainGrid.open_teacher(@Model.Teacherid);">[@Localizer["查阅详情"]]</a>
+									}
+									else
+									{
+										<a href="javascript:void(0);" onclick="javascript:parent.mainGrid.unionid(@Model.UserLessonid);" style="color:red;">@Localizer["未关联"]</a>
+									}									
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["老师姓名"]</label>
+								<div class="col-sm-8">
+									@Model.MenkeTeacherName
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["老师手机"]</label>
+								<div class="col-sm-8">
+									@Model.MenkeTeacherCode + @Model.MenkeTeacherMobile
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["学生ID"]</label>
+								<div class="col-sm-8">
+									@if (Model.Userid > 0) {
+										@Model.Userid <a href="javascript:void(0);" onclick="javascript:parent.mainGrid.open_user(@Model.Userid);">[@Localizer["查阅详情"]]</a>
+									}
+									else
+									{
+										<a href="javascript:void(0);" onclick="javascript:parent.mainGrid.unionid(@Model.UserLessonid);" style="color:red;">@Localizer["未关联"]</a>
+									}
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["学生姓名"]</label>
+								<div class="col-sm-8">
+									@Model.MenkeStudentName
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["学生手机"]</label>
+								<div class="col-sm-8">
+									@Model.MenkeStudentCode + @Model.MenkeStudentMobile
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["课节报告"]</label>
+								<div class="col-sm-8">
+									if@(Model.IsReport == 1){
+									@Localizer["报告已出"];
+									}else{
+									@Localizer["报告未出"]
+									}
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["老师评价密码"]</label>
+								<div class="col-sm-8">
+									<a href="@(Appsettings.app("Web:Host"))/user/teacher/@Model.MenkeLessonId" target="_blank">@Model.TeacherCode</a>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-number-input" class="col-sm-3 col-form-label text-right">@Localizer["显示状态"]</label>
+								<div class="col-sm-8">
+									<select asp-for="Status" class="form-control">
+										<option value="1">@Localizer["启用"]</option>
+										<option value="0">@Localizer["禁用"]</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["备注"]</label>
+								<div class="col-sm-8">
+									<textarea asp-for="Message" class="form-control" style="width:70%;height:94px;"></textarea>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-8 ml-auto">
+									<input asp-for="UserLessonid" type="hidden" />
+									<button type="submit" class="btn btn-primary">@Localizer["保存信息"]</button>
+								</div>
+							</div>
+							<br>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["操作日志"]</label>
+								<div class="col-sm-8">
+									@Html.Raw(Model.Remark)
+								</div>
+							</div>
+						</div>
+
+                    </div>
+                </div><!--end card-body-->
+            </div><!--end card-->
+        </div><!--end col-->
+    </div><!--end row-->
+</form>
+
+@section Scripts{
+	<script src="/assets/plugins/intlTelInput/intlTelInput.js"></script>
+    <script>
+		@Html.Raw(ViewBag.ScriptStr)
+    </script>
+}

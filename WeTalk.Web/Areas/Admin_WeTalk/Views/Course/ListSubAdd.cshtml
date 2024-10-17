@@ -1,0 +1,202 @@
+﻿@using WeTalk.Web.ViewModels.Course;
+@using Microsoft.AspNetCore.Mvc.Localization
+@using WeTalk.Interfaces
+@inject IHtmlLocalizer<LangResource> Localizer
+@model ListSubAdd
+@section HeadCss{
+	<link href="/assets/css/plugins/datapicker/bootstrap-datetimepicker.css" rel="stylesheet" />
+	<link href="@Url.Content("/assets/css/plugins/switchery/switchery.css")" rel="Stylesheet" type="text/css" />
+}
+<form asp-action="ListSubAdd" enctype="multipart/form-data">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-lg-12">
+							@*
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["关联[拓课云]课程"]</label>
+								<div class="col-sm-8">
+                                    <select asp-for="MenkeCourseId" asp-items="Model.MenkeCourseItem" class="form-control"></select>
+								</div>
+							</div>*@
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["上课方式"]</label>
+								<div class="col-sm-8">
+									<select asp-for="SkuTypeid" asp-items="Model.SkuTypeItem" class="form-control">
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["课时"]</label>
+								<div class="col-sm-8">
+									<input asp-for="ClassHour" class="form-control" required type="number">
+								</div>
+							</div>
+							@foreach(var item in Model.ListPubCurrency){
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["价格"] (@item.Country)</label>
+									<div class="col-sm-3 input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">@Localizer["原价"] @item.CurrencyCode</span>
+										</div>
+										<input type="number" currency_id="@item.PubCurrencyid" value="@item.MarketPrice" name="input_market_price_@item.PubCurrencyid" class="form-control" step="0.01" min="0" required />
+									</div>
+                                <div class="col-sm-2 input-group">
+                                    <div class="input-group-prepend">
+											<span class="input-group-text">@Localizer["拆扣"]</span>
+                                    </div>
+										<input type="number" value="@(item.MarketPrice==0?"1":(item.Price/item.MarketPrice).ToString("0.00"))" step="0.01" min="0.01" max="1" currency_id="@item.PubCurrencyid" name="input_discount_@item.PubCurrencyid" class="form-control" required />
+									</div>
+									<div class="col-sm-3 input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">@Localizer["售价"] @item.CurrencyCode</span>
+										</div>
+										<input type="number" currency_id="@item.PubCurrencyid" value="@item.Price" step="0.01" name="input_price_@item.PubCurrencyid" class="form-control" required />
+									</div>
+                            </div>
+							}
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["默认价格"] (@Localizer["美元"])</label>
+								<div class="col-sm-3 input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">@Localizer["默认原价"]USD</span>
+									</div>
+									<input asp-for="MarketPrice" step="0.01" min="0" class="form-control" required type="number" />
+								</div>
+								<div class="col-sm-2 input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">@Localizer["拆扣"]</span>
+									</div>
+									<input type="number" value="@(Model.MarketPrice==0?"1":(Model.Price/Model.MarketPrice).ToString("0.00"))" step="0.01" min="0.01" max="1" name="input_discount" class="form-control" required />
+								</div>
+								<div class="col-sm-3 input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">@Localizer["售价"]USD</span>
+									</div>
+									<input asp-for="Price" step="0.01" min="0" class="form-control" required type="number">
+								</div>
+								<span class="help-block m-b-none offset-sm-3"><i class="fa fa-info-circle"></i>@Localizer["当前用户如定位不属于指定国家则自动采用默认价格结算"]</span>
+                            </div>
+
+							<div class="form-group row">
+								<label for="example-number-input" class="col-sm-3 col-form-label text-right">@Localizer["创建时间"]</label>
+								<div class="col-sm-8">
+									@Model.Dtime
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-number-input" class="col-sm-3 col-form-label text-right">@Localizer["排序"]</label>
+								<div class="col-sm-8">
+									<input asp-for="Sort" class="form-control" required type="number">
+									<span class="help-block m-b-none"><i class="fa fa-info-circle"></i>@Localizer["排序字段从小到大排序"]</span>
+									<span class="help-block m-b-none"><i class="fa fa-info-circle"></i>@Localizer["排序字段值相同的情况下,按最新时间发布的排最前面"]</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["状态"]</label>
+								<div class="col-sm-8">
+									<select asp-for="Status" class="form-control">
+										<option value="1">@Localizer["启用"]</option>
+										<option value="0">@Localizer["停用"]</option>
+									</select>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-8 ml-auto">
+									<input asp-for="Courseid" type="hidden" />
+									<input asp-for="CourseSkuid" type="hidden" />
+									<button type="submit" class="btn btn-primary dictionaryadd dictionaryedit" id="btn_save">@Localizer["保存信息"]</button>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div><!--end card-body-->
+			</div><!--end card-->
+		</div><!--end col-->
+	</div><!--end row-->
+</form>
+
+<ul id="ul_template" style="display:none;">
+	<li class="info-element" id="li_new_{id}">
+		<input type="file" id="input_new_{id}" name="input_imgs" class="form-control" />
+		<div class="agile-detail row">
+			<div class="col-sm-6" style="padding-top:7px;">
+				<img src="/assets/css/icons/tip.png" />@Localizer["待上传"]"
+			</div>
+			<div class="col-sm-6">
+				<div class="float-right"><input type="button" onclick="del_file('li_new_{id}');" value="@Localizer["删除图片"]" /></div>
+			</div>
+		</div>
+	</li>
+</ul>
+
+@section Scripts{
+	<!-- Required datatable js -->
+	<script type="text/javascript" src="@Url.Content("/assets/js/jquery.easyui.min.js")"></script>
+	<script type="text/javascript" src="@Url.Content("/assets/plugins/datapicker/bootstrap-datetimepicker.min.js")"></script>
+	<script src="@Url.Content("/assets/plugins/switchery/switchery.js")"></script>
+	
+	<script type="text/javascript">
+		@Html.Raw(ViewBag.ScriptStr)
+		var switchery = new Switchery($(".js-switch")[0], {
+			color: '#1AB394'
+		});
+		$(".switchery").click(function () {
+			if ($(".js-switch").prop('checked')) {
+				$('#div_panle').show()
+			} else {
+				$('#div_panle').hide()
+			}
+		});
+		$(document).ready(function () {
+			$('.datetimepicker').datetimepicker({
+				//language: 'zh-CN',//显示中文
+				forceParse: true,
+				format: 'yyyy-mm-dd hh:ii:ss',//显示格式
+				initialDate: new Date().Format("yyyy-MM-dd hh:mm:ss"),
+				autoclose: true,//选中自动关闭
+				todayBtn: true,//显示今日按钮*/
+				minuteStep: 1
+			});
+			$("input[name*='input_market_price_']").change(function () {
+				var market_price = $(this).val();
+				var discount = $("[name='input_discount_" + $(this).attr("currency_id") + "']").val();
+				if (discount > 0) {
+					$("[name='input_price_" + $(this).attr("currency_id") + "']").val((market_price * discount).toFixed(2));
+				}else{
+					$("[name='input_price_" + $(this).attr("currency_id") + "']").val(market_price);
+				}
+			})
+			$("input[name*='input_discount_']").change(function(){
+				if ($(this).val()>0){
+					var market_price = $("[name='input_market_price_"+$(this).attr("currency_id")+"']").val();
+					$("[name='input_price_" + $(this).attr("currency_id") + "']").val((market_price * $(this).val()).toFixed(2));
+				}
+			})
+			//$("input[name*='input_price_']").change(function () {
+			//	var price = $(this).val();
+			//	var discount = $("[name='input_discount_" + $(this).attr("currency_id") + "']").val();
+			//	if (discount > 0) {
+			//		$("[name='input_market_price_" + $(this).attr("currency_id") + "']").val((price / discount).toFixed(2));
+			//	}else{
+			//		$("[name='input_market_price_" + $(this).attr("currency_id") + "']").val(price);
+			//	}
+			//})
+			$("input[name='MarketPrice']").change(function () {
+				var discount = $("[name='input_discount']").val();
+				if (discount > 0) {
+					$("[name='Price']").val((discount * $(this).val()).toFixed(2));
+				}
+			})
+			$("input[name='input_discount']").change(function () {
+				if ($(this).val() > 0) {
+					var market_price = $("[name='MarketPrice']").val();
+					$("[name='Price']").val((market_price * $(this).val()).toFixed(2));
+				}
+			})
+		});
+	</script>
+}

@@ -1,0 +1,113 @@
+﻿@using WeTalk.Web.ViewModels.System;
+@using Microsoft.AspNetCore.Mvc.Localization
+@using WeTalk.Interfaces
+@inject IHtmlLocalizer<LangResource> Localizer
+@model DictionaryAdd
+@section HeadCss{
+    <link href="@Url.Content("/assets/css/plugins/switchery/switchery.css")" rel="Stylesheet" type="text/css" />
+    }
+<form asp-action="DictionaryAdd">
+    <div class="row" style="padding-top:10px;">
+        <div class="col-lg-12">
+            <div class="card">
+				
+                <div class="card-body">
+                    <div class="row">
+						<div class="col-lg-12">
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["是否通用"]</label>
+								<div class="col-sm-8">
+									<input asp-for="IsCurrency" type="checkbox" class="js-switch i-checks" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr/>
+
+                @await Component.InvokeAsync("LanguageTag", new { lang = Model.Lang })
+                <div class="card-body">
+                    <div class="row">
+						<div class="col-lg-12">
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["字段名"]</label>
+								<div class="col-sm-8">
+									<input type="text" asp-for="Title" class="form-control" Disabled="@(Model.Isadmin)" Required="@(!Model.Isadmin)" />
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["字段Key"]</label>
+								<div class="col-sm-8">
+									<input type="text" asp-for="Key" class="form-control" Disabled="@(Model.Isadmin)" Required="@(!Model.Isadmin)" />
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["字段值"]<br>(@Localizer["最长255个字符"])</label>
+								<div class="col-sm-8">
+									@*<input asp-for="Val" class="form-control" required type="text">*@
+									@Html.TextBox("Val", Model.Val, new { @class = "form-control", maxlength = "255" })
+									<span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 文本字段</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["长字段值"]<br>(@Localizer["优先读取字段值，当其为空时，才读取长字段值"])</label>
+								<div class="col-sm-8">
+									@Html.TextArea("Longval", Model.Longval, new { @class = "form-control", rows = "15" })
+									<span class="help-block m-b-none"><i class="fa fa-info-circle"></i> @Localizer["文本字段"]</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["字段描述"]</label>
+								<div class="col-sm-8">
+									<textarea asp-for="Description" class="form-control" rows="5"></textarea>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">状态</label>
+								<div class="col-sm-8">
+									<select asp-for="Status" class="form-control">
+										<option value="1">@Localizer["正常"]</option>
+										<option value="0">@Localizer["冻结"]</option>
+									</select>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-8 ml-auto">
+									<input asp-for="PubConfigid" type="hidden" />
+									<input asp-for="Lang" type="hidden" />
+									<button type="submit" class="btn btn-primary dictionaryadd dictionaryedit">@Localizer["保存信息"]</button>
+								</div>
+							</div>
+						</div>
+
+                    </div>
+                </div><!--end card-body-->
+            </div><!--end card-->
+        </div><!--end col-->
+    </div><!--end row-->
+</form>
+    <script src="~/assets/plugins/switchery/switchery.js"></script>
+
+@section Scripts{
+    <!-- Required datatable js -->
+
+    <script>
+        var elem = $('.i-checks')[0];
+        var switchery = new Switchery(elem, {
+            color: '#1AB394'
+        });
+		
+		function chg_lang(){
+			if(elem.checked){
+				$("#div_LanguageTag").hide();
+			}else{
+				$("#div_LanguageTag").show();
+			}
+		}
+		$("#IsCurrency").change(function(){
+			chg_lang();
+		});
+		chg_lang();
+		@Html.Raw(ViewBag.ScriptStr)
+    </script>
+}

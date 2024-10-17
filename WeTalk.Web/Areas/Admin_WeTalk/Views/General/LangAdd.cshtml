@@ -1,0 +1,67 @@
+﻿@using WeTalk.Web.ViewModels.General;
+@using Microsoft.AspNetCore.Mvc.Localization
+@using WeTalk.Interfaces
+@inject IHtmlLocalizer<LangResource> Localizer
+@model LangAdd
+@section HeadCss{
+    <link href="/assets/css/icon.css" rel="stylesheet" />
+    <link href="/lib/layui-src/build/css/layui.css" rel="stylesheet" />
+}
+
+
+<form asp-action="LangAdd">
+    <div class="row" style="padding-top:10px;">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+						<div class="col-lg-12">
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["语言"]</label>
+								<div class="col-sm-8">
+									<input asp-for="Title" class="form-control" required type="text">
+                                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>@(Model.Languageid==0?@Localizer["添加新语言需要管理员同步修改配置文件"]:"")</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["语言代码"]</label>
+								<div class="col-sm-8">
+									<input asp-for="Lang" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-number-input" class="col-sm-3 col-form-label text-right">@Localizer["锁定状态"]</label>
+								<div class="col-sm-8">
+									@(Model.Isadmin==1?"锁定":"普通")
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-number-input" class="col-sm-3 col-form-label text-right">@Localizer["状态"]</label>
+								<div class="col-sm-8">
+									<select asp-for="Status" class="form-control">
+										<option value="1">@Localizer["启用"]</option>
+										<option value="0">@Localizer["禁用"]</option>
+									</select>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-8 ml-auto">
+									<input asp-for="Languageid" type="hidden" />
+									<input asp-for="Lang" type="hidden" />
+									<button type="submit" class="btn btn-primary">@Localizer["保存信息"]</button>
+								</div>
+							</div>
+						</div>
+
+                    </div>
+                </div><!--end card-body-->
+            </div><!--end card-->
+        </div><!--end col-->
+    </div><!--end row-->
+</form>
+
+@section Scripts{
+    <script>
+		@Html.Raw(ViewBag.ScriptStr)
+    </script>
+}

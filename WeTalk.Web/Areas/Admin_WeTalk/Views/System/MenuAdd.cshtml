@@ -1,0 +1,128 @@
+﻿@using WeTalk.Web.ViewModels.System;
+@using Microsoft.AspNetCore.Mvc.Localization
+@using WeTalk.Interfaces
+@inject IHtmlLocalizer<LangResource> Localizer
+@model MenuAdd
+@section HeadCss{
+    <link href="/assets/css/icon.css" rel="stylesheet" />
+    <link href="/lib/layui-src/build/css/layui.css" rel="stylesheet" />
+}
+
+
+<form asp-action="MenuAdd">
+    <div class="row" style="padding-top:10px;">
+        <div class="col-lg-12">
+            <div class="card">
+                @await Component.InvokeAsync("LanguageTag", new { lang = Model.Lang,Isadmin=1 })
+                <!--main_begin-->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-sm-3 col-form-label text-right">@Localizer["父菜单"]</label>
+                                <div class="col-sm-8">
+                                    <input id="input_fid" name="input_fid" class="form-control" value="@Localizer["根菜单"]" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["菜单标题"]<i class="mdi mdi-google-translate"></i></label>
+                                <div class="col-sm-8">
+                                    <input asp-for="Title" class="form-control" required type="text">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["菜单类型"]</label>
+                                <div class="col-sm-8">
+                                    <select asp-for="Sty" class="form-control">
+                                        <option value="1">@Localizer["普通菜单"]</option>
+                                        <option value="0">@Localizer["开发专用菜单"]</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["图标"]</label>
+                                <div class="col-sm-8">
+                                    <input asp-for="Ico" class="form-control" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["区域"]</label>
+                                <div class="col-sm-8">
+                                    <input asp-for="Area" class="form-control" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["控制器"] (Controller)</label>
+                                <div class="col-sm-8">
+                                    <input asp-for="Controller" class="form-control" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["动作"] (Action)</label>
+                                <div class="col-sm-8">
+                                    <input asp-for="Action" class="form-control" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="horizontalInput1" class="col-sm-3 col-form-label">@Localizer["页面访问参数"]</label>
+                                <div class="col-sm-8">
+                                    <input asp-for="Parameter" class="form-control" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["请求方式"]</label>
+                                <div class="col-sm-8">
+                                    <select asp-for="Method" class="form-control">
+                                        <option value="">All</option>
+                                        <option value="get,post">Get,Post</option>
+                                        <option value="get">Get</option>
+                                        <option value="post">Post</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-number-input" class="col-sm-3 col-form-label text-right">@Localizer["排序"]</label>
+                                <div class="col-sm-8">
+                                    <input asp-for="Sort" class="form-control" required type="number">
+                                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>@Localizer["排序字段从小到大排序"]</span>
+                                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>@Localizer["排序字段值相同的情况下,按最新时间发布的排最前面"]</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8 ml-auto">
+                                    <input asp-for="AdminMenuid" type="hidden" />
+                                    <input asp-for="Lang" type="hidden" />
+                                    <button type="submit" class="btn btn-primary">@Localizer["保存信息"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--main_end-->
+            </div><!--end card-->
+        </div><!--end col-->
+    </div><!--end row-->
+</form>
+
+@section Scripts{
+    <script src="@Url.Content("/lib/layui-src/build/layui.js")"></script>
+    <script>
+		$("#Ico").click(function (data) {//iframe层
+            parent.layer.open({
+                type: 2,
+                title: 'layer mobile页',
+                shadeClose: true,
+                shade: 0.8,
+                area: ['380px', '90%'],
+                content: 'http://layer.layui.com/mobile/' //iframe的url
+            });
+		})
+        $('#input_fid').combotree({
+            url:"MenuClass?lang=@Model.Lang&AdminMenuid=@Model.AdminMenuid&Fid=@Model.Fid",
+		    onLoadSuccess: function (node, data) {
+			    if(@Model.Fid>0)$('#input_fid').combotree('setValue', @Model.Fid);
+		    }
+        });
+		@Html.Raw(ViewBag.ScriptStr)
+    </script>
+}

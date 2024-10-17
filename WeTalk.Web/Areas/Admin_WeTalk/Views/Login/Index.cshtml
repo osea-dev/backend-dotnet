@@ -1,0 +1,241 @@
+﻿@using WeTalk.Interfaces
+@using WeTalk.Web.ViewModels
+@using Microsoft.AspNetCore.Mvc.Localization
+@using WeTalk.Interfaces
+@inject IHtmlLocalizer<LangResource> Localizer
+@model Login
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>WeTalk - @Localizer["登录"]</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="A premium admin dashboard template by Mannatthemes" name="description" />
+    <meta content="Mannatthemes" name="author" />
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="../assets/images/favicon.ico">
+
+    <!-- App css -->
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/icons.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/metisMenu.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/style.css" rel="stylesheet" type="text/css" />
+
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+    <script>if (window.top !== window.self) { window.top.location = window.location; }</script>
+</head>
+<body class="account-body accountbg">
+
+    <!-- Log In page -->
+    <div class="row vh-100 ">
+        <div class="col-12 align-self-center">
+            <div class="auth-page">
+                <div class="card auth-card shadow-lg">
+                    <div class="card-body">
+                        <div class="px-3">
+                            <div class="auth-logo-box">
+                                <a href="/analytics/analytics-index.html" class="logo logo-admin"><img src="/assets/images/logo-sm.png" height="55" alt="logo" class="auth-logo"></a>
+                            </div><!--end auth-logo-box-->
+
+                            <div class="text-center auth-logo-text">
+                                <h4 class="mt-0 mb-3 mt-5">@Localizer["欢迎使用众语时代管理后台"]</h4>
+                                <p class="text-muted mb-0">Sign in to continue to WeTalk.</p>
+                            </div> <!--end auth-logo-text-->
+
+
+							<div class="form-horizontal auth-form my-4">
+
+								<div class="form-group">
+									<label for="username">@Localizer["语言版本"]</label>
+									<div class="input-group mb-3">
+										<span class="auth-form-icon">
+											<i class="dripicons-user"></i>
+										</span>
+										<select asp-for="Lang" asp-items="Model.LangItem" class="form-control" ></select>
+									</div>
+								</div><!--end form-group-->
+
+								<div class="form-group">
+									<label for="username">@Localizer["用户名"]</label>
+									<div class="input-group mb-3">
+										<span class="auth-form-icon">
+											<i class="dripicons-user"></i>
+										</span>
+										<input asp-for="UserName" class="form-control" required placeholder="@Localizer["请输入账号"]" />
+									</div>
+								</div><!--end form-group-->
+
+								<div class="form-group">
+									<label for="userpassword">@Localizer["密码"]</label>
+									<div class="input-group mb-3">
+										<span class="auth-form-icon">
+											<i class="dripicons-lock"></i>
+										</span>
+										<input asp-for="Password" type="password" class="form-control" required placeholder="@Localizer["请输入密码"]" />
+									</div>
+								</div><!--end form-group-->
+
+								<div class="form-group row mt-4" @Html.Raw((Model.IsSMS == "1") ? "" : "style='display:none;'")>
+									<div class="col-sm-8"><input type="text" asp-for="SafeCode" class="form-control" placeholder="@Localizer["短信验证码"]" /></div>
+									<div class="col-sm-4  text-right">
+										<input type="button" class="form-control text-muted" id="btn" value="@Localizer["免费获取验证码"]" onclick="sendsms()" />
+									</div>
+								</div>
+								<div class="form-group row mt-4" style="display:none;">
+									<div class="col-sm-6">
+										<div class="custom-control custom-switch switch-success">
+											<input type="checkbox" class="custom-control-input" asp-for="IsCookie">
+											<label class="custom-control-label text-muted" for="customSwitchSuccess">@Localizer["记住我"]</label>
+										</div>
+									</div><!--end col-->
+									<div class="col-sm-6 text-right">
+										<a href="auth-recover-pw.html" class="text-muted font-13"><i class="dripicons-lock"></i> @Localizer["忘记密码"]?</a>
+									</div><!--end col-->
+								</div><!--end form-group-->
+
+								<div class="form-group mb-0 row">
+									<div class="col-12 mt-2">
+										<button class="btn btn-primary btn-round btn-block waves-effect waves-light" onclick="return formsubmit();" type="submit">@Localizer["登 录"]<i class="fas fa-sign-in-alt ml-1"></i></button>
+									</div><!--end col-->
+								</div> <!--end form-group-->
+							</div><!--end form-->
+                        </div><!--end /div-->
+
+                    </div><!--end card-body-->
+                </div><!--end card-->
+                <div class="account-social text-center mt-4" style="display:none;">
+                    <h6 class="my-4">Or Login With</h6>
+                    <ul class="list-inline mb-4">
+                        <li class="list-inline-item">
+                            <a href="" class="">
+                                <i class="fab fa-facebook-f facebook"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="" class="">
+                                <i class="fab fa-twitter twitter"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="" class="">
+                                <i class="fab fa-google google"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div><!--end account-social-->
+            </div><!--end auth-page-->
+        </div><!--end col-->
+    </div><!--end row-->
+    <!-- End Log In page -->
+    <!-- jQuery  -->
+    <script src="~/assets/js/jquery.min.js"></script>
+    <script src="~/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/js/metisMenu.min.js"></script>
+    <script src="~/assets/js/waves.min.js"></script>
+    <script src="~/assets/js/jquery.slimscroll.min.js"></script>
+
+    <!-- App js -->
+    <script src="~/assets/js/app.js"></script>
+    <script>
+		document.onkeydown = function (event) {
+							var e = event || window.event || arguments.callee.caller.arguments[0];
+            if (e && e.keyCode == 13) { // enter 键
+                //要做的事情
+                return formsubmit();
+					}
+        };
+        function formsubmit() {
+            var iscookie = 0;
+            if ($("#UserName").val().length < 1 || $("#UserName").val().length > 20) {
+                alert("@Localizer["请填写用户名"]！");
+                $("#UserName").focus();
+                return false;
+            }
+            if ($("#Password").val().length < 1 || $("#Password").val().length > 20) {
+                alert("@Localizer["请填写密码"]！");
+                $("#Password").focus();
+                return false;
+            }
+            if ($("#input_iscookie").is(':checked')) {
+                iscookie = 1;
+			}
+            //$(function() {
+            //    $.post("OkCookie", function() {}) //如果使用cookie,客户端必须向服务端发送一次请求////
+            //})
+            $.ajax({
+                type: "POST",
+                url: "/Admin_WeTalk/Login/Index",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                data: { "lang": $("#Lang").val(),"username": $("#UserName").val(), "password": $("#Password").val(), "safecode": $("#SafeCode").val(), "iscookie": $("#IsCookie").is(':checked') },
+                success: function (data) {
+					if (data.code==200) {
+						location.href = data.returnurl;// "@Model.ReturnUrl";
+					} else {
+						alert(data.msg);
+						return false;
+					}
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+        }
+
+        var countdown = 60;
+        function sendsms() {
+			var obj = $("#btn");
+             if ($("#UserName").val().length < 1 || $("#UserName").val().length > 20) {
+                alert("@Localizer["请填写用户名"]！");
+                $("#UserName").focus();
+                return false;
+            }
+            $.ajax({
+                type: "POST",
+                url: "/Admin_WeTalk/Login/SMS",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                data: { "username": $("#UserName").val(),"safecode": $("#SafeCode").val() },
+                success: function (data) {
+					if (data.indexOf("error") >= 0) {
+						alert(data);
+					} else {
+						settime(obj);
+					}
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+        }
+        function settime(obj) { //发送验证码倒计时
+            if (countdown == 0) {
+                obj.attr('disabled', false);
+                //obj.removeattr("disabled");
+                obj.val("@Localizer["免费获取验证码"]");
+                countdown = 60;
+                return;
+            } else {
+                obj.attr('disabled', true);
+                obj.val("@Localizer["重新发送"] (" + countdown + ")");
+                countdown--;
+            }
+            setTimeout(function () {
+                settime(obj)
+            }, 1000)
+        }
+    </script>
+</body>
+
+</html>

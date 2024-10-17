@@ -1,0 +1,230 @@
+﻿@using WeTalk.Web.ViewModels.Teacher;
+@using Microsoft.AspNetCore.Mvc.Localization
+@using WeTalk.Interfaces
+@inject IHtmlLocalizer<LangResource> Localizer
+@section HeadCss{
+	<link href="@Url.Content("/assets/css/icon.css")" rel="stylesheet" />
+	<link href="@Url.Content("/assets/css/plugins/datapicker/datepicker3.css")" rel="stylesheet" />
+}
+
+<div class="row" >
+	<div class="col-12">
+		<div class="card">
+			<div class="card-body">
+				<div class="input-group">
+					<span class="input-group-btn">
+						<select class="form-control m-b" name="sel_status" id="sel_status">
+							<option value="">@Localizer["状态"]</option>
+							<option value="0">@Localizer["停用"]</option>
+							<option value="1">@Localizer["启用"]</option>
+						</select>
+					</span>
+					<span class="input-group-btn">
+						<input type="text" placeholder="@Localizer["关键词"]" id="input_keys" class="form-control" />
+					</span>
+					<span class="input-group-btn">
+						<div class="input-daterange input-group">
+							<input type="text" id="input_begintime" class="input-sm form-control datepicker" name="start" placeholder="@Localizer["开课起始时间"]" />
+							<span class="input-group-addon"> - </span>
+							<input type="text" id="input_endtime" class="input-sm form-control datepicker" name="end" placeholder="@Localizer["开课结束时间"]" />
+						</div>
+					</span>
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-outline-info search" onclick="mainGrid.doSearch();"> <i class="fa fa-search"></i>@Localizer["搜索"]</button>
+					</span>
+				</div>
+				<table id="table_view" />
+			</div>
+		</div>
+	</div> <!-- end col -->
+</div>
+<div id="win" />
+
+@section Scripts{
+
+	<script src="@Url.Content("/assets/plugins/datapicker/bootstrap-datepicker.js")"></script>
+	<script>
+        $('.datepicker').datepicker({
+            keyboardNavigation: false,
+            forceParse: false,
+            autoclose: true
+        });
+
+		var actionURL = "AttendanceData";
+        var fillDataContralId = "table_view";
+        var mainGrid = {
+            databind: function () {
+                /*开始加载数据*/
+                $('#' + fillDataContralId).datagrid({
+                    url: actionURL,
+                    idField: 'MenkeAttendanceid', //主键
+                    width: (($(window).width()-60) * 0.98),
+                    height: (($(window).height() - 70) * 0.98),
+                    fitColumns: true,
+                    singleSelect: false, //单选
+                    pageList: [10, 20, 50, 100],
+                    pageSize: 20,
+                    pagination: true,
+					toolbar: [
+                        {
+                            text: '导出结果',
+                            iconCls: 'icon-redo',
+                            handler: function () {
+                                mainGrid.export();
+                            }
+                        }
+                    ],
+                    onDblClickRow: function (rowIndex, rowData) {
+                        if ($('#a_edit').size() > 0) {
+                            mainGrid.edit();
+                        }
+                    },
+                    onLoadSuccess: function () {
+		                @Html.Raw(ViewBag.ScriptStr)
+                    },
+                    columns: [
+                        [
+							{ title: '@Localizer["选择"]', checkbox: true, field: 'id', width: 30, sortable: true },
+                            { title: 'ID', field: true, field: 'MenkeAttendanceid', width: 30, sortable: true },
+                            { title: '@Localizer["拓课云课节ID"]', field: 'MenkeLessonId', width: 60, sortable: true },
+							{ title: '@Localizer["学生名称"]', field: 'Name', width: 60, sortable: true },
+                            { title: '@Localizer["学生手机"]', field: 'Mobile', width: 80, sortable: true },
+							{ title: '@Localizer["课程名称"]', field: 'MenkeCourseName', width: 100, sortable: true },
+							{ title: '@Localizer["课节名称"]', field: 'MenkeLessonName', width: 100, sortable: true },
+							{ title: '@Localizer["排课时间"]', field: 'Menketime', width: 90, sortable: true },
+							{ title: '@Localizer["上下课时间"]', field: 'Timeinfo', width: 120, sortable: true },
+                            { title: '@Localizer["进出教室时间"]', field: 'EOtime', width: 120, sortable: true },
+                            { title: '@Localizer["老师有效时长"]', field: 'TeacherThetime', width: 50, sortable: true },
+                            { title: '@Localizer["学生有效时长"]', field: 'StudentThetime', width: 50, sortable: true },
+							{ title: '@Localizer["迟到"]', field: 'MenkeAttendanceLate', width: 40, sortable: true , formatter: function (value, row) {
+                                    var e = '';
+                                    switch(value){
+                                        case 0:
+                                            e = "@Localizer["否"]";
+                                            break;
+                                        case 1:
+                                            e = "<font color=\"red\">@Localizer["是"]</font>";
+                                            break;
+                                    }
+                                    return e;
+                                } },
+							{ title: '@Localizer["早退"]', field: 'MenkeAttendanceLeaveEarly', width: 40, sortable: true , formatter: function (value, row) {
+                                    var e = '';
+                                    switch(value){
+                                        case 0:
+                                            e = "@Localizer["否"]";
+                                            break;
+                                        case 1:
+                                            e = "<font color=\"red\">@Localizer["是"]</font>";
+                                            break;
+                                    }
+                                    return e;
+                                } },
+							{ title: '@Localizer["缺勤"]', field: 'MenkeAttendanceAbsent', width: 40, sortable: true, formatter: function (value, row) {
+                                    var e = '';
+                                    switch(value){
+                                        case 0:
+                                            e = "@Localizer["否"]";
+                                            break;
+                                        case 1:
+                                            e = "<font color=\"red\">@Localizer["是"]</font>";
+                                            break;
+                                    }
+                                    return e;
+                                } 
+                            }
+       //                     ,
+							//{ title: '@Localizer["标识"]', field: 'Status', width: 40, sortable: true, formatter: function (value, row) {
+       //                             var e = '';
+       //                             if(value>0){
+       //                                 e = "<font color=\"green\">@Localizer["已处理"]</font>";
+       //                             }else{
+       //                                 e = "<font color=\"\">@Localizer["未处理"]</font>";
+       //                             }
+       //                             return e;
+       //                         } 
+       //                     }
+                        ]]
+                });
+                var p = $('#' + fillDataContralId).datagrid('getPager');
+                $(p).pagination({
+                    onBeforeRefresh: function () {
+                        //alert('before refresh');
+                    }
+                });
+            },
+            getSelected: function () {
+                return $('#' + fillDataContralId).datagrid('getSelected');
+            },
+            getSelections: function () {
+                return $('#' + fillDataContralId).datagrid('getSelections');
+            },
+            Reflesh: function () {
+                $('#' + fillDataContralId).datagrid("reload");
+            },
+            doSearch: function () {
+                $('#' + fillDataContralId).datagrid('clearSelections');
+                $('#' + fillDataContralId).datagrid('load', {
+                    keys: $('#input_keys').val(),
+                    status: $('#sel_status').val(),
+                    begintime: $('#input_begintime').val(),
+                    endtime: $('#input_endtime').val()
+                });
+            },            
+            export: function () {
+                if (confirm("@Localizer["确定要导出"]？")) {
+                    $.get(actionURL + "?action=export&keys="+ $('#input_keys').val()  + "&begintime="+ $('#input_begintime').val() +"&endtime="+ $('#input_endtime').val() +"&status="+ $('#sel_status').val() +"&dtime="+new Date(), function (data) {
+                        var json = eval("(" + data + ")");
+                        if (json.errorcode == 0) $('#' + fillDataContralId).datagrid('reload');
+                        jQuery('#win').html("<iframe id='if_down' style='display:none;' src='"+ json.filename +"'>");
+                        $.messager.show({ title: '@Localizer["导出明细"]', msg: json.msg, timeout: 3000, showType: 'slide' });
+                    }); 
+                }
+            },
+			enableu: function () {
+				var Teacherids = "0";
+				var rowdata = mainGrid.getSelections();
+				if (rowdata.length > 0) {
+					for (var i = 0; i < rowdata.length; i++) {
+						Teacherids = Teacherids + "," + rowdata[i].Teacherid;
+					}
+					$.get(actionURL + "?action=enableu&Teacherids=" + Teacherids, function (data) {
+                        var json = eval("(" + data + ")");
+                        if (json.errorcode == 0) $('#' + fillDataContralId).datagrid('reload');
+						$.messager.show({
+							title: '@Localizer["设置为已处理"]', msg: json.msg, timeout: 3000, showType: 'slide' });
+                    });
+                } else {
+                    alert('@Localizer["请选择要修改的行"]。');
+                }
+
+			}, enablef: function () {
+				var Teacherids = "0";
+				var rowdata = mainGrid.getSelections();
+				if (rowdata.length > 0) {
+					for (var i = 0; i < rowdata.length; i++) {
+						Teacherids = Teacherids + "," + rowdata[i].Teacherid;
+					}
+					$.get(actionURL + "?action=enablef&Teacherids=" + Teacherids, function (data) {
+                        var json = eval("(" + data + ")");
+                        if (json.errorcode == 0) $('#' + fillDataContralId).datagrid('reload');
+						$.messager.show({ title: '@Localizer["设置为未处理"]', msg: json.msg, timeout: 3000, showType: 'slide' });
+                    });
+                } else {
+                    alert('@Localizer["请选择要修改的行"]。');
+                }
+
+            }
+        }
+        $(function () {
+            mainGrid.databind();
+        });
+        //监听，页面变化重画宽高；
+        $(window).resize(function () {
+            $('#' + fillDataContralId).datagrid('resize', {
+                width: function () { return document.body.clientWidth; },
+                height: function () { return document.body.clientHeight; },
+            });
+        });
+	</script>
+}

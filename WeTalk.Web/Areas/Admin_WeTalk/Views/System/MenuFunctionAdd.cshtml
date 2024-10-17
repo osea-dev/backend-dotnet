@@ -1,0 +1,157 @@
+﻿@using WeTalk.Web.ViewModels.System;
+@using Microsoft.AspNetCore.Mvc.Localization
+@using WeTalk.Interfaces
+@inject IHtmlLocalizer<LangResource> Localizer
+@model MenuFunctionAdd
+@section HeadCss{
+    <!-- DataTables -->
+    <link href="@Url.Content("/assets/plugins/datatables/dataTables.bootstrap4.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("/assets/plugins/datatables/buttons.bootstrap4.min.css")" rel="stylesheet" type="text/css" />
+    <!-- Responsive datatable examples -->
+    <link href="@Url.Content("/assets/plugins/datatables/responsive.bootstrap4.min.css")" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/icon.css" rel="stylesheet" />
+    <link href="/lib/layui-src/build/css/layui.css" rel="stylesheet" />
+}
+
+
+<form asp-action="MenuFunctionAdd">
+    <div class="row" style="padding-top:10px;">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["所属菜单"]</label>
+                                <div class="col-sm-8">
+                                    @Model.MenuTitle
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-sm-3 col-form-label text-right">@Localizer["父控件页"]</label>
+                                <div class="col-sm-8">
+                                    <input id="input_fid" name="input_fid" class="form-control" value="@Localizer["根控件"]" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["控件名称"]</label>
+                                <div class="col-sm-8">
+                                    <input asp-for="Title" class="form-control" required type="text">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["控件介绍"]</label>
+                                <div class="col-sm-8">
+                                    <textarea asp-for="Intro" class="form-control" rows="5"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["方法名称"]</label>
+                                <div class="col-sm-8">
+                                    <input asp-for="FunctionName" class="form-control" type="text">
+                                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> @Localizer["注意:用于该控件对应的执行方法，必需和程序中的执行方法名一致，不含参数"]</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["控件ID"]</label>
+                                <div class="col-sm-8">
+                                    <input asp-for="ControlId" class="form-control" type="text">
+                                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> @Localizer["注意:该控件在页面的标识（重复ID默认为同一个ID）Html控件属性group或class中含 iscontol表示受控，服务端控件ID必需为此处填写的控件ID，匹配上才可以受控）"]</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["是否操作业页"]</label>
+                                <div class="col-sm-8">
+                                    <select asp-for="Ispage" class="form-control">
+                                        <option value="0">@Localizer["否"]</option>
+                                        <option value="1">@Localizer["是"]</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["区域 (Area)"]</label>
+                                <div class="col-sm-8">
+                                    <input asp-for="Area" class="form-control" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["控制器(Controller)"] </label>
+                                <div class="col-sm-8">
+                                    <input asp-for="Controller" class="form-control" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["动作(Action)"]</label>
+                                <div class="col-sm-8">
+                                    <input asp-for="Action" class="form-control" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="horizontalInput1" class="col-sm-3 col-form-label">@Localizer["页面访问参数"]</label>
+                                <div class="col-sm-8">
+                                    <input asp-for="Parameter" class="form-control" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label text-right">@Localizer["请求方式"]</label>
+                                <div class="col-sm-8">
+                                    <select asp-for="Method" class="form-control">
+                                        <option value="">All</option>
+                                        <option value="get,post">Get,Post</option>
+                                        <option value="get">Get</option>
+                                        <option value="post">Post</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-number-input" class="col-sm-3 col-form-label text-right">@Localizer["排序"]</label>
+                                <div class="col-sm-8">
+                                    <input asp-for="Sort" class="form-control" type="number">
+                                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>@Localizer["排序字段从小到大排序"]</span>
+                                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>@Localizer["排序字段值相同的情况下,按最新时间发布的排最前面"]</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8 ml-auto">
+                                    <input asp-for="AdminMenuFunctionid" type="hidden" />
+                                    <input asp-for="AdminMenuid" type="hidden" />
+                                    <button type="submit" class="btn btn-primary menufunctionadd menufunctionedit">@Localizer["保存信息"]</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div><!--end card-body-->
+            </div><!--end card-->
+        </div><!--end col-->
+    </div><!--end row-->
+</form>
+
+@section Scripts{
+    <!-- Required datatable js -->
+    <script src="@Url.Content("/assets/plugins/datatables/jquery.dataTables.min.js")"></script>
+    <script src="@Url.Content("/assets/plugins/datatables/dataTables.bootstrap4.min.js")"></script>
+    <!-- Buttons examples -->
+    <script src="@Url.Content("/assets/plugins/datatables/dataTables.buttons.min.js")"></script>
+    <script src="@Url.Content("/assets/plugins/datatables/buttons.bootstrap4.min.js")"></script>
+    <script src="@Url.Content("/assets/plugins/datatables/jszip.min.js")"></script>
+    <script src="@Url.Content("/assets/plugins/datatables/pdfmake.min.js")"></script>
+    <script src="@Url.Content("/assets/plugins/datatables/vfs_fonts.js")"></script>
+    <script src="@Url.Content("/assets/plugins/datatables/buttons.html5.min.js")"></script>
+    <script src="@Url.Content("/assets/plugins/datatables/buttons.print.min.js")"></script>
+    <script src="@Url.Content("/assets/plugins/datatables/buttons.colVis.min.js")"></script>
+    <!-- Responsive examples -->
+    <script src="@Url.Content("/assets/plugins/datatables/dataTables.responsive.min.js")"></script>
+    <script src="@Url.Content("/assets/plugins/datatables/responsive.bootstrap4.min.js")"></script>
+    <script src="@Url.Content("/assets/pages/jquery.datatable.init.js")"></script>
+
+    <script>
+		@Html.Raw(ViewBag.ScriptStr)
+		$('#input_fid').combotree({
+            url:'MenuFunctionClass?admin_menuid=@Model.AdminMenuid&admin_menu_functionid=@Model.AdminMenuFunctionid&Fid=@Model.Fid',
+            onLoadSuccess:function(node, data){
+                if(@Model.Fid>0)$('#input_fid').combotree('setValue', @Model.Fid);
+            }
+        });
+    </script>
+}

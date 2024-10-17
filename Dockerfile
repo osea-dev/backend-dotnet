@@ -52,7 +52,7 @@ EXPOSE 80
 EXPOSE 5001
 
 # Set environment variable for Development environment
-ENV ASPNETCORE_ENVIRONMENT Development
+ENV ASPNETCORE_ENVIRONMENT Production
 
 # Ensure Swagger and Upfile features are properly configured in appsettings
 COPY WeTalk.Web/appsettings.json /app/appsettings.json

@@ -11,7 +11,7 @@ services:
       - ASPNETCORE_URLS=http://+:80  # Bind to all network interfaces
       - ASPNETCORE_ENVIRONMENT=Production
       # - ConnectionStrings__MainDB=server=mysql;database=wetalk;uid=wetalk_web;pwd=FdO42-ddI4_G4r
-      - ConnectionStrings__MainDB=server=097e76a00d8b4cc98bd4f8e009a3c1bbin01.internal.ap-southeast-1.mysql.rds.myhuaweicloud.com;database=wetalk;uid=wetalk_web;pwd=p@w3rFUlLt3am@dm!nITiDep
+      - ConnectionStrings__MainDB=server=097e76a00d8b4cc98bd4f8e009a3c1bbin01.internal.ap-southeast-1.mysql.rds.myhuaweicloud.com;database=wetalk;uid=root;pwd=p@w3rFUlLt3am@dm!nITiDep
     networks:
       - app-network
     depends_on:
@@ -68,11 +68,13 @@ services:
     image: phpmyadmin/phpmyadmin
     container_name: wetalk.phpmyadmin
     environment:
-      - PMA_HOST=097e76a00d8b4cc98bd4f8e009a3c1bbin01.internal.ap-southeast-1.mysql.rds.myhuaweicloud.com  # Huawei RDS endpoint
+      - PMA_HOST=159.138.55.8  # Huawei RDS endpoint
+      # - PMA_HOST=097e76a00d8b4cc98bd4f8e009a3c1bbin01.internal.ap-southeast-1.mysql.rds.myhuaweicloud.com  # Huawei RDS endpoint
       - PMA_USER=root           # RDS user
       - PMA_PASSWORD=p@w3rFUlLt3am@dm!nITiDep  # RDS password
       - PMA_PORT=3306           # Default MySQL port
-      - PMA_HOSTS=097e76a00d8b4cc98bd4f8e009a3c1bbin01.internal.ap-southeast-1.mysql.rds.myhuaweicloud.com  # Ensure connection to your MySQL instance
+      # - PMA_HOSTS=097e76a00d8b4cc98bd4f8e009a3c1bbin01.internal.ap-southeast-1.mysql.rds.myhuaweicloud.com  # Ensure connection to your MySQL instance
+      - PMA_HOSTS=159.138.55.8  # Ensure connection to your MySQL instance
     
       # - PMA_HOST=mysql
       # - MYSQL_ROOT_PASSWORD=FdO42-ddI4_G4r

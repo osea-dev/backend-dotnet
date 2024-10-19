@@ -1,12 +1,9 @@
 services:
   we-talk-api:
     container_name: wetalk.api
-    # build:
-    #   context: .
-    #   dockerfile: Dockerfile
     image: jicoy0120/dotnet-img:1.0.0
     ports:
-      - "5001:80"
+      - "159.138.55.8:5001:80"
     environment:
       - ASPNETCORE_URLS=http://+:80  # Bind to all network interfaces
       - ASPNETCORE_ENVIRONMENT=Production
@@ -15,65 +12,21 @@ services:
     networks:
       - app-network
     depends_on:
-      # - mysql
       - redis
     # environment:
     #   - ASPNETCORE_ENVIRONMENT=Development
     # depends_on:
     #   - mysql
     #   - redis
-
-
-  # we-talk-web:
-  #   container_name: wetalk.web
-  #   build:
-  #     context: ./WeTalk.Web
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "5002:80"
-  #   environment:
-  #     - ASPNETCORE_ENVIRONMENT=Development
-  #     - ImgRoot=/app/wwwroot
-  #     - ApiRoot=/app/wwwroot
-  #     - ConnectionStrings__MainDB=server=mysql;database=wetalk;uid=wetalk_web;pwd=FdO42-ddI4_G4r
-  #   depends_on:
-  #     - redis
-    # environment:
-    #   - ASPNETCORE_ENVIRONMENT=Development
-    # depends_on:
-    #   - redis
-
-  # we-talk-console:
-  #   container_name: wetalk.console
-  #   build:
-  #     context: ./WeTalk.Console
-  #     dockerfile: Dockerfile
-  #   environment:
-  #     - ASPNETCORE_ENVIRONMENT=Development
-    
-  # mysql:
-  #   image: mysql:8.0
-  #   container_name: wetalk.mysql
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: FdO42-ddI4_G4r
-  #     MYSQL_DATABASE: wetalk
-  #     MYSQL_USER: wetalk_web
-  #     MYSQL_PASSWORD: FdO42-ddI4_G4r
-  #   ports:
-  #     - "3306:3306"
-  #   volumes:
-  #     - ./docker-volumes/mysql:/var/lib/mysql
   
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: wetalk.phpmyadmin
     environment:
       - PMA_HOST=159.138.55.8  # Huawei RDS endpoint
-      # - PMA_HOST=097e76a00d8b4cc98bd4f8e009a3c1bbin01.internal.ap-southeast-1.mysql.rds.myhuaweicloud.com  # Huawei RDS endpoint
       - PMA_USER=root           # RDS user
       - PMA_PASSWORD=p@w3rFUlLt3am@dm!nITiDep  # RDS password
       - PMA_PORT=3306           # Default MySQL port
-      # - PMA_HOSTS=097e76a00d8b4cc98bd4f8e009a3c1bbin01.internal.ap-southeast-1.mysql.rds.myhuaweicloud.com  # Ensure connection to your MySQL instance
       - PMA_HOSTS=159.138.55.8  # Ensure connection to your MySQL instance
     
       # - PMA_HOST=mysql
@@ -84,7 +37,7 @@ services:
       # p@w3rFUlLt3am@dm!nITiDep rds password
       # wt_p43wrFUlLt3AM@Dm!n ecs password
     ports:
-      - "8080:80"
+      - "159.138.55.8:8080:80"
     depends_on:
       - we-talk-api
     networks:

@@ -8,7 +8,8 @@ services:
       - ASPNETCORE_URLS=http://+:80  # Bind to all network interfaces
       - ASPNETCORE_ENVIRONMENT=Production
       # - ConnectionStrings__MainDB=server=mysql;database=wetalk;uid=wetalk_web;pwd=FdO42-ddI4_G4r
-      - ConnectionStrings__MainDB=server=097e76a00d8b4cc98bd4f8e009a3c1bbin01.internal.ap-southeast-1.mysql.rds.myhuaweicloud.com;database=wetalk;uid=root;pwd=p@w3rFUlLt3am@dm!nITiDep
+      # - ConnectionStrings__MainDB=server=097e76a00d8b4cc98bd4f8e009a3c1bbin01.internal.ap-southeast-1.mysql.rds.myhuaweicloud.com;database=wetalk;uid=root;pwd=p@w3rFUlLt3am@dm!nITiDep
+      - ConnectionStrings__MainDB=server=192.168.0.186:3306;database=wetalk;uid=root;pwd=p@w3rFUlLt3am@dm!nITiDep
     networks:
       - app-network
     depends_on:

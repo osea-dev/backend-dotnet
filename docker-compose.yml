@@ -18,11 +18,13 @@ services:
     image: phpmyadmin/phpmyadmin
     container_name: wetalk.phpmyadmin
     environment:
-      - PMA_HOST=159.138.55.8  # Huawei RDS endpoint
+      - PMA_HOST=192.168.0.186  # Huawei RDS endpoint thru private ip
+      # - PMA_HOST=159.138.55.8  # Huawei RDS endpoint thru eip
       - PMA_USER=root           # RDS user
       - PMA_PASSWORD=p@w3rFUlLt3am@dm!nITiDep  # RDS password
       - PMA_PORT=3306           # Default MySQL port
-      - PMA_HOSTS=159.138.55.8  # Ensure connection to your MySQL instance
+      # - PMA_HOSTS=159.138.55.8  # Ensure connection to your MySQL instance thru eip
+      - PMA_HOSTS=192.168.0.186  # Ensure connection to your MySQL instance thru private ip
       
       # p@w3rFUlLt3am@dm!nITiDep rds password
       # wt_p43wrFUlLt3AM@Dm!n ecs password
